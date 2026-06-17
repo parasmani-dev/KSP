@@ -1,0 +1,501 @@
+offender_id,offender_name,network_id,prior_crime_count,days_since_last_crime,network_connections,escalation_score,primary_crime_type,escalated_to,area,city,reoffended
+OFF0001,Ravi Kumar,NET2,13,51,7,1.26,Eve Teasing,Eve Teasing,HSR Layout,Bengaluru,1
+OFF0002,Salim Khan,NET2,18,64,8,1.6,Burglary,Assault,Dadar,Mumbai,1
+OFF0003,Arjun Singh,NET1,9,417,2,0.62,Murder,,T Nagar,Chennai,0
+OFF0004,Deepak Yadav,NET1,14,229,4,1,Extortion,,Whitefield,Bengaluru,0
+OFF0005,Rahul Sharma,NET0,10,336,0,0.6,Cybercrime,Cybercrime,Andheri,Mumbai,1
+OFF0006,Pradeep Mishra,NET1,2,49,0,0.32,Theft,,Chandni Chowk,Delhi,0
+OFF0007,Suresh Nair,NET3,11,558,1,0.7,Vandalism,Vandalism,HSR Layout,Bengaluru,1
+OFF0008,Vijay Dubey,NET3,12,238,4,0.88,Robbery,Extortion,Hebbal,Bengaluru,1
+OFF0009,Ankit Tiwari,NET2,15,301,6,1.14,Theft,Chain Snatching,Indiranagar,Bengaluru,1
+OFF0010,Mohit Gupta,NET4,2,615,2,0.2,Auto Theft,,Connaught Place,Delhi,0
+OFF0011,Sunil Patel,NET3,9,455,8,0.86,Eve Teasing,Eve Teasing,Bandra,Mumbai,1
+OFF0012,Rakesh Verma,NET3,5,398,9,0.66,Theft,Chain Snatching,Adyar,Chennai,1
+OFF0013,Nitin Chauhan,NET0,15,437,0,0.9,Vandalism,Vandalism,Bandra,Mumbai,1
+OFF0014,Aakash Mehta,NET1,1,147,5,0.26,Extortion,,Indiranagar,Bengaluru,0
+OFF0015,Sanjay Rawat,NET3,7,448,6,0.66,Chain Snatching,,Anna Nagar,Chennai,0
+OFF0016,Harish Bose,NET4,9,599,5,0.74,Kidnapping,Kidnapping,Kurla,Mumbai,1
+OFF0017,Manish Joshi,NET0,1,341,6,0.3,Drug Offense,,Dharavi,Mumbai,0
+OFF0018,Dinesh Reddy,NET4,5,104,6,0.54,Murder,,Dwarka,Delhi,0
+OFF0019,Gopal Rao,NET0,8,341,3,0.6,Chain Snatching,Assault,Dadar,Mumbai,1
+OFF0020,Tarun Pillai,NET3,9,111,9,0.9,Theft,Chain Snatching,Indiranagar,Bengaluru,1
+OFF0021,Farrukh Ansari,NET0,15,135,7,1.18,Fraud,Fraud,Andheri,Mumbai,1
+OFF0022,Imran Qureshi,NET2,7,306,6,0.66,Murder,,Banjara Hills,Hyderabad,0
+OFF0023,Babu Lal,NET3,15,104,1,0.94,Chain Snatching,Robbery,Andheri,Mumbai,1
+OFF0024,Chetan More,NET1,11,193,1,0.7,Murder,Murder,Lajpat Nagar,Delhi,1
+OFF0025,Devraj Nair,NET0,12,229,1,0.76,Burglary,,JP Nagar,Bengaluru,0
+OFF0026,Elamaran V,NET4,1,691,1,0.1,Extortion,,Anand Vihar,Delhi,0
+OFF0027,Fayaz Dar,NET2,6,193,7,0.64,Vandalism,,Kurla,Mumbai,0
+OFF0028,Ganesh Patil,NET1,7,389,1,0.46,Robbery,,Karol Bagh,Delhi,0
+OFF0029,Hemant Sahu,NET4,13,211,1,0.82,Burglary,Assault,Bandra,Mumbai,1
+OFF0030,Irfan Sheikh,NET0,8,170,0,0.48,Kidnapping,,T Nagar,Chennai,0
+OFF0031,Jayesh Pandey,NET1,2,8,1,0.36,Theft,,Secunderabad,Hyderabad,0
+OFF0032,Kiran Deshpande,NET3,18,359,6,1.32,Auto Theft,Auto Theft,Karol Bagh,Delhi,1
+OFF0033,Lokesh Yadav,NET4,4,415,0,0.24,Eve Teasing,,Whitefield,Bengaluru,0
+OFF0034,Mukesh Singh,NET2,15,417,5,1.1,Robbery,Extortion,Secunderabad,Hyderabad,1
+OFF0035,Naresh Jha,NET4,17,374,3,1.14,Cybercrime,Cybercrime,Banjara Hills,Hyderabad,1
+OFF0036,Omkar Desai,NET1,2,223,5,0.32,Murder,Murder,Bandra,Mumbai,1
+OFF0037,Pravin Kadam,NET2,2,173,3,0.24,Vandalism,,Saket,Delhi,0
+OFF0038,Qadir Shaikh,NET2,16,683,3,1.08,Eve Teasing,Eve Teasing,Secunderabad,Hyderabad,1
+OFF0039,Ratan Das,NET2,12,604,8,1.04,Fraud,Fraud,Lajpat Nagar,Delhi,1
+OFF0040,Sumit Bansal,NET4,15,224,6,1.14,Fraud,Fraud,Lajpat Nagar,Delhi,1
+OFF0041,Tushar Wagh,NET2,18,695,2,1.16,Kidnapping,Kidnapping,Goregaon,Mumbai,1
+OFF0042,Uday Kiran,NET4,18,609,4,1.24,Kidnapping,Kidnapping,Rohini,Delhi,1
+OFF0043,Vishal Thakur,NET3,11,531,7,0.94,Drug Offense,Drug Offense,Borivali,Mumbai,1
+OFF0044,Wasim Akram,NET3,3,581,9,0.54,Theft,,Madhapur,Hyderabad,0
+OFF0045,Yashraj Bhatt,NET0,6,708,1,0.4,Robbery,Assault,Connaught Place,Delhi,1
+OFF0046,Zahir Ahmad,NET4,5,309,0,0.3,Fraud,,Rohini,Delhi,0
+OFF0047,Ajay Lakhani,NET4,15,315,7,1.18,Eve Teasing,Eve Teasing,Anand Vihar,Delhi,1
+OFF0048,Brijesh Tomar,NET0,12,483,6,0.96,Auto Theft,Auto Theft,JP Nagar,Bengaluru,1
+OFF0049,Chandan Kumar,NET2,10,119,7,0.88,Robbery,Extortion,Karol Bagh,Delhi,1
+OFF0050,Dilnawaz Memon,NET1,7,659,5,0.62,Eve Teasing,,Dwarka,Delhi,0
+OFF0051,Ravi Kumar B,NET3,2,327,0,0.12,Burglary,,Kurla,Mumbai,0
+OFF0052,Salim Khan B,NET4,13,593,2,0.86,Cybercrime,Cybercrime,Dwarka,Delhi,1
+OFF0053,Arjun Singh B,NET1,6,486,3,0.48,Auto Theft,Auto Theft,Connaught Place,Delhi,1
+OFF0054,Deepak Yadav B,NET3,12,115,4,0.88,Burglary,Robbery,Secunderabad,Hyderabad,1
+OFF0055,Rahul Sharma B,NET3,3,442,1,0.22,Burglary,,Banjara Hills,Hyderabad,0
+OFF0056,Pradeep Mishra B,NET3,14,116,8,1.16,Auto Theft,Auto Theft,Anand Vihar,Delhi,1
+OFF0057,Suresh Nair B,NET0,2,160,4,0.28,Robbery,,Chandni Chowk,Delhi,0
+OFF0058,Vijay Dubey B,NET1,9,292,1,0.58,Extortion,,JP Nagar,Bengaluru,0
+OFF0059,Ankit Tiwari B,NET2,11,496,1,0.7,Assault,Extortion,Kurla,Mumbai,1
+OFF0060,Mohit Gupta B,NET1,17,230,5,1.22,Murder,Murder,Secunderabad,Hyderabad,1
+OFF0061,Sunil Patel B,NET3,9,153,9,0.9,Murder,,JP Nagar,Bengaluru,0
+OFF0062,Rakesh Verma B,NET3,2,264,7,0.4,Theft,Robbery,Rohini,Delhi,1
+OFF0063,Nitin Chauhan B,NET3,9,351,4,0.7,Murder,Murder,Lajpat Nagar,Delhi,1
+OFF0064,Aakash Mehta B,NET1,1,729,0,0.06,Assault,,Charminar,Hyderabad,0
+OFF0065,Sanjay Rawat B,NET4,17,515,2,1.1,Fraud,Fraud,Hebbal,Bengaluru,1
+OFF0066,Harish Bose B,NET4,16,530,4,1.12,Vandalism,Vandalism,Indiranagar,Bengaluru,1
+OFF0067,Manish Joshi B,NET3,1,249,0,0.06,Drug Offense,,Saket,Delhi,0
+OFF0068,Dinesh Reddy B,NET2,6,306,4,0.52,Theft,Chain Snatching,Karol Bagh,Delhi,1
+OFF0069,Gopal Rao B,NET1,1,209,3,0.18,Kidnapping,,Charminar,Hyderabad,0
+OFF0070,Tarun Pillai B,NET2,18,94,6,1.32,Auto Theft,Auto Theft,Saket,Delhi,1
+OFF0071,Farrukh Ansari B,NET1,16,38,2,1.24,Murder,Murder,Koramangala,Bengaluru,1
+OFF0072,Imran Qureshi B,NET1,17,514,2,1.1,Drug Offense,Drug Offense,Bandra,Mumbai,1
+OFF0073,Babu Lal B,NET0,7,150,3,0.54,Extortion,Murder,Dwarka,Delhi,1
+OFF0074,Chetan More B,NET2,1,628,7,0.34,Burglary,,Dadar,Mumbai,0
+OFF0075,Devraj Nair B,NET2,9,357,2,0.62,Vandalism,Vandalism,Dharavi,Mumbai,1
+OFF0076,Elamaran V B,NET2,1,550,0,0.06,Drug Offense,,Karol Bagh,Delhi,0
+OFF0077,Fayaz Dar B,NET1,9,2,3,0.86,Cybercrime,Cybercrime,Velachery,Chennai,1
+OFF0078,Ganesh Patil B,NET3,4,383,4,0.4,Kidnapping,,Goregaon,Mumbai,0
+OFF0079,Hemant Sahu B,NET2,1,649,2,0.14,Assault,,Goregaon,Mumbai,0
+OFF0080,Irfan Sheikh B,NET3,13,290,0,0.78,Burglary,Assault,Adyar,Chennai,1
+OFF0081,Jayesh Pandey B,NET2,12,138,1,0.76,Auto Theft,Auto Theft,Dadar,Mumbai,1
+OFF0082,Kiran Deshpande B,NET4,10,179,3,0.72,Fraud,Fraud,Banjara Hills,Hyderabad,1
+OFF0083,Lokesh Yadav B,NET1,7,700,4,0.58,Cybercrime,Cybercrime,HSR Layout,Bengaluru,1
+OFF0084,Mukesh Singh B,NET3,1,287,3,0.18,Burglary,,Adyar,Chennai,0
+OFF0085,Naresh Jha B,NET2,3,1,7,0.66,Assault,Murder,Banjara Hills,Hyderabad,1
+OFF0086,Omkar Desai B,NET1,17,332,5,1.22,Robbery,Assault,Dharavi,Mumbai,1
+OFF0087,Pravin Kadam B,NET0,13,470,5,0.98,Drug Offense,,Rohini,Delhi,0
+OFF0088,Qadir Shaikh B,NET1,9,417,3,0.66,Eve Teasing,Eve Teasing,Indiranagar,Bengaluru,1
+OFF0089,Ratan Das B,NET2,10,458,5,0.8,Auto Theft,Auto Theft,Dwarka,Delhi,1
+OFF0090,Sumit Bansal B,NET3,3,450,4,0.34,Fraud,,Anand Vihar,Delhi,0
+OFF0091,Tushar Wagh B,NET0,3,547,0,0.18,Theft,,Adyar,Chennai,0
+OFF0092,Uday Kiran B,NET2,13,293,3,0.9,Extortion,Murder,Secunderabad,Hyderabad,1
+OFF0093,Vishal Thakur B,NET0,10,315,5,0.8,Theft,Robbery,Koramangala,Bengaluru,1
+OFF0094,Wasim Akram B,NET4,9,658,1,0.58,Theft,Chain Snatching,Koramangala,Bengaluru,1
+OFF0095,Yashraj Bhatt B,NET3,11,296,2,0.74,Drug Offense,Drug Offense,HSR Layout,Bengaluru,1
+OFF0096,Zahir Ahmad B,NET4,10,649,1,0.64,Fraud,,Goregaon,Mumbai,0
+OFF0097,Ajay Lakhani B,NET1,8,113,2,0.56,Theft,,Bandra,Mumbai,0
+OFF0098,Brijesh Tomar B,NET1,1,376,4,0.22,Vandalism,Vandalism,JP Nagar,Bengaluru,1
+OFF0099,Chandan Kumar B,NET2,5,60,3,0.62,Auto Theft,Auto Theft,HSR Layout,Bengaluru,1
+OFF0100,Dilnawaz Memon B,NET2,11,17,8,1.18,Extortion,Kidnapping,Worli,Mumbai,1
+OFF0101,Ravi Kumar C,NET0,6,293,5,0.56,Kidnapping,Kidnapping,Whitefield,Bengaluru,1
+OFF0102,Salim Khan C,NET0,7,344,7,0.7,Cybercrime,,Anand Vihar,Delhi,0
+OFF0103,Arjun Singh C,NET4,5,718,6,0.54,Auto Theft,Auto Theft,Bandra,Mumbai,1
+OFF0104,Deepak Yadav C,NET2,5,718,4,0.46,Extortion,,Borivali,Mumbai,0
+OFF0105,Rahul Sharma C,NET3,8,142,4,0.64,Fraud,Fraud,Koramangala,Bengaluru,1
+OFF0106,Pradeep Mishra C,NET3,3,251,1,0.22,Fraud,Fraud,Karol Bagh,Delhi,1
+OFF0107,Suresh Nair C,NET4,6,399,1,0.4,Extortion,,Indiranagar,Bengaluru,0
+OFF0108,Vijay Dubey C,NET4,8,123,7,0.76,Assault,,Anna Nagar,Chennai,0
+OFF0109,Ankit Tiwari C,NET4,8,336,7,0.76,Drug Offense,,Andheri,Mumbai,0
+OFF0110,Mohit Gupta C,NET0,10,511,1,0.64,Theft,,Adyar,Chennai,0
+OFF0111,Sunil Patel C,NET0,12,148,4,0.88,Assault,Extortion,Lajpat Nagar,Delhi,1
+OFF0112,Rakesh Verma C,NET0,5,583,5,0.5,Eve Teasing,Eve Teasing,Bandra,Mumbai,1
+OFF0113,Nitin Chauhan C,NET0,2,674,3,0.24,Vandalism,,Lajpat Nagar,Delhi,0
+OFF0114,Aakash Mehta C,NET2,15,276,0,0.9,Extortion,Murder,Chandni Chowk,Delhi,1
+OFF0115,Sanjay Rawat C,NET3,8,525,6,0.72,Fraud,Fraud,Whitefield,Bengaluru,1
+OFF0116,Harish Bose C,NET0,8,122,6,0.72,Fraud,,Kurla,Mumbai,0
+OFF0117,Manish Joshi C,NET0,15,609,1,0.94,Vandalism,,Bandra,Mumbai,0
+OFF0118,Dinesh Reddy C,NET4,10,445,3,0.72,Cybercrime,Cybercrime,Dwarka,Delhi,1
+OFF0119,Gopal Rao C,NET2,8,41,1,0.72,Cybercrime,Cybercrime,Dadar,Mumbai,1
+OFF0120,Tarun Pillai C,NET3,7,517,1,0.46,Theft,Robbery,Velachery,Chennai,1
+OFF0121,Farrukh Ansari C,NET0,12,626,4,0.88,Theft,Chain Snatching,Borivali,Mumbai,1
+OFF0122,Imran Qureshi C,NET4,1,613,2,0.14,Vandalism,,Dwarka,Delhi,0
+OFF0123,Babu Lal C,NET1,16,563,0,0.96,Robbery,Extortion,Worli,Mumbai,1
+OFF0124,Chetan More C,NET0,12,29,5,1.12,Cybercrime,Cybercrime,Hebbal,Bengaluru,1
+OFF0125,Devraj Nair C,NET4,9,550,7,0.82,Robbery,,Koramangala,Bengaluru,0
+OFF0126,Elamaran V C,NET4,10,360,1,0.64,Theft,,Connaught Place,Delhi,0
+OFF0127,Fayaz Dar C,NET2,7,382,2,0.5,Theft,,Dharavi,Mumbai,0
+OFF0128,Ganesh Patil C,NET1,17,66,3,1.34,Chain Snatching,Assault,Worli,Mumbai,1
+OFF0129,Hemant Sahu C,NET3,7,332,4,0.58,Murder,Murder,Dharavi,Mumbai,1
+OFF0130,Irfan Sheikh C,NET3,13,691,3,0.9,Eve Teasing,Eve Teasing,Goregaon,Mumbai,1
+OFF0131,Jayesh Pandey C,NET3,2,642,8,0.44,Burglary,,Dwarka,Delhi,0
+OFF0132,Kiran Deshpande C,NET2,6,436,7,0.64,Murder,Murder,Whitefield,Bengaluru,1
+OFF0133,Lokesh Yadav C,NET4,5,638,2,0.38,Eve Teasing,,Banjara Hills,Hyderabad,0
+OFF0134,Mukesh Singh C,NET0,16,248,5,1.16,Extortion,Murder,Koramangala,Bengaluru,1
+OFF0135,Naresh Jha C,NET3,7,216,9,0.78,Fraud,Fraud,Dwarka,Delhi,1
+OFF0136,Omkar Desai C,NET2,13,72,0,0.98,Assault,Extortion,Indiranagar,Bengaluru,1
+OFF0137,Pravin Kadam C,NET3,9,177,2,0.62,Eve Teasing,Eve Teasing,Hebbal,Bengaluru,1
+OFF0138,Qadir Shaikh C,NET4,16,52,4,1.32,Chain Snatching,Assault,Karol Bagh,Delhi,1
+OFF0139,Ratan Das C,NET0,17,245,0,1.02,Burglary,,Dwarka,Delhi,0
+OFF0140,Sumit Bansal C,NET4,1,682,1,0.1,Chain Snatching,,T Nagar,Chennai,0
+OFF0141,Tushar Wagh C,NET4,9,301,6,0.78,Assault,,Banjara Hills,Hyderabad,0
+OFF0142,Uday Kiran C,NET3,1,696,6,0.3,Cybercrime,,Whitefield,Bengaluru,0
+OFF0143,Vishal Thakur C,NET2,12,411,6,0.96,Assault,,Koramangala,Bengaluru,0
+OFF0144,Wasim Akram C,NET0,16,653,4,1.12,Cybercrime,Cybercrime,Saket,Delhi,1
+OFF0145,Yashraj Bhatt C,NET3,8,285,2,0.56,Eve Teasing,Eve Teasing,Andheri,Mumbai,1
+OFF0146,Zahir Ahmad C,NET2,7,524,2,0.5,Fraud,Fraud,Lajpat Nagar,Delhi,1
+OFF0147,Ajay Lakhani C,NET0,8,218,1,0.52,Assault,,Dwarka,Delhi,0
+OFF0148,Brijesh Tomar C,NET1,11,73,2,0.94,Theft,Chain Snatching,T Nagar,Chennai,1
+OFF0149,Chandan Kumar C,NET2,17,81,3,1.34,Vandalism,Vandalism,Koramangala,Bengaluru,1
+OFF0150,Dilnawaz Memon C,NET2,7,224,4,0.58,Chain Snatching,Robbery,Madhapur,Hyderabad,1
+OFF0151,Ravi Kumar D,NET4,1,114,0,0.06,Auto Theft,,Koramangala,Bengaluru,0
+OFF0152,Salim Khan D,NET1,5,231,1,0.34,Drug Offense,,Velachery,Chennai,0
+OFF0153,Arjun Singh D,NET4,13,596,0,0.78,Drug Offense,Drug Offense,Dharavi,Mumbai,1
+OFF0154,Deepak Yadav D,NET1,11,416,3,0.78,Burglary,Robbery,Anna Nagar,Chennai,1
+OFF0155,Rahul Sharma D,NET4,2,730,0,0.12,Cybercrime,,Secunderabad,Hyderabad,0
+OFF0156,Pradeep Mishra D,NET1,5,192,2,0.38,Vandalism,,Hebbal,Bengaluru,0
+OFF0157,Suresh Nair D,NET2,18,82,4,1.44,Murder,Murder,Worli,Mumbai,1
+OFF0158,Vijay Dubey D,NET3,9,234,7,0.82,Theft,,Borivali,Mumbai,0
+OFF0159,Ankit Tiwari D,NET3,12,523,3,0.84,Eve Teasing,Eve Teasing,Kurla,Mumbai,1
+OFF0160,Mohit Gupta D,NET3,7,470,9,0.78,Assault,Murder,Dadar,Mumbai,1
+OFF0161,Sunil Patel D,NET1,18,38,5,1.48,Vandalism,Vandalism,JP Nagar,Bengaluru,1
+OFF0162,Rakesh Verma D,NET2,5,79,5,0.7,Cybercrime,Cybercrime,Secunderabad,Hyderabad,1
+OFF0163,Nitin Chauhan D,NET2,5,181,6,0.54,Robbery,Assault,Anand Vihar,Delhi,1
+OFF0164,Aakash Mehta D,NET0,14,124,1,0.88,Murder,,Chandni Chowk,Delhi,0
+OFF0165,Sanjay Rawat D,NET4,1,339,5,0.26,Fraud,,JP Nagar,Bengaluru,0
+OFF0166,Harish Bose D,NET2,17,422,5,1.22,Drug Offense,Drug Offense,Rohini,Delhi,1
+OFF0167,Manish Joshi D,NET1,2,136,2,0.2,Cybercrime,,Charminar,Hyderabad,0
+OFF0168,Dinesh Reddy D,NET3,14,616,0,0.84,Murder,Murder,Banjara Hills,Hyderabad,1
+OFF0169,Gopal Rao D,NET3,4,412,8,0.56,Assault,Extortion,Hebbal,Bengaluru,1
+OFF0170,Tarun Pillai D,NET3,11,72,9,1.22,Drug Offense,,Charminar,Hyderabad,0
+OFF0171,Farrukh Ansari D,NET0,12,6,8,1.24,Kidnapping,Kidnapping,Dadar,Mumbai,1
+OFF0172,Imran Qureshi D,NET3,3,695,6,0.42,Extortion,,Secunderabad,Hyderabad,0
+OFF0173,Babu Lal D,NET3,18,404,8,1.4,Auto Theft,Auto Theft,Anand Vihar,Delhi,1
+OFF0174,Chetan More D,NET4,13,324,7,1.06,Robbery,Assault,Dwarka,Delhi,1
+OFF0175,Devraj Nair D,NET3,7,385,6,0.66,Kidnapping,Kidnapping,Borivali,Mumbai,1
+OFF0176,Elamaran V D,NET4,10,252,0,0.6,Auto Theft,,Banjara Hills,Hyderabad,0
+OFF0177,Fayaz Dar D,NET0,15,664,5,1.1,Cybercrime,Cybercrime,HSR Layout,Bengaluru,1
+OFF0178,Ganesh Patil D,NET1,13,473,3,0.9,Chain Snatching,Assault,Anand Vihar,Delhi,1
+OFF0179,Hemant Sahu D,NET1,10,486,3,0.72,Kidnapping,Kidnapping,Whitefield,Bengaluru,1
+OFF0180,Irfan Sheikh D,NET4,12,388,2,0.8,Theft,,Koramangala,Bengaluru,0
+OFF0181,Jayesh Pandey D,NET2,18,507,2,1.16,Theft,Chain Snatching,Bandra,Mumbai,1
+OFF0182,Kiran Deshpande D,NET2,4,451,2,0.32,Drug Offense,,Dharavi,Mumbai,0
+OFF0183,Lokesh Yadav D,NET2,13,618,0,0.78,Burglary,Robbery,Bandra,Mumbai,1
+OFF0184,Mukesh Singh D,NET3,17,199,2,1.1,Murder,Murder,Borivali,Mumbai,1
+OFF0185,Naresh Jha D,NET0,18,271,3,1.2,Burglary,Robbery,Rohini,Delhi,1
+OFF0186,Omkar Desai D,NET1,7,295,3,0.54,Eve Teasing,,Goregaon,Mumbai,0
+OFF0187,Pravin Kadam D,NET1,17,662,5,1.22,Vandalism,Vandalism,Kurla,Mumbai,1
+OFF0188,Qadir Shaikh D,NET1,17,430,3,1.14,Auto Theft,Auto Theft,Indiranagar,Bengaluru,1
+OFF0189,Ratan Das D,NET2,17,623,5,1.22,Vandalism,Vandalism,Bandra,Mumbai,1
+OFF0190,Sumit Bansal D,NET0,1,200,1,0.1,Burglary,,Hebbal,Bengaluru,0
+OFF0191,Tushar Wagh D,NET3,10,174,4,0.76,Fraud,Fraud,Worli,Mumbai,1
+OFF0192,Uday Kiran D,NET0,5,480,1,0.34,Assault,Murder,Secunderabad,Hyderabad,1
+OFF0193,Vishal Thakur D,NET0,10,345,8,0.92,Fraud,,Whitefield,Bengaluru,0
+OFF0194,Wasim Akram D,NET1,5,347,3,0.42,Cybercrime,Cybercrime,HSR Layout,Bengaluru,1
+OFF0195,Yashraj Bhatt D,NET4,15,440,1,0.94,Eve Teasing,Eve Teasing,JP Nagar,Bengaluru,1
+OFF0196,Zahir Ahmad D,NET1,4,729,4,0.4,Eve Teasing,,Connaught Place,Delhi,0
+OFF0197,Ajay Lakhani D,NET2,7,535,7,0.7,Assault,,T Nagar,Chennai,0
+OFF0198,Brijesh Tomar D,NET3,11,575,1,0.7,Drug Offense,,Bandra,Mumbai,0
+OFF0199,Chandan Kumar D,NET3,2,344,7,0.4,Robbery,,Goregaon,Mumbai,0
+OFF0200,Dilnawaz Memon D,NET0,12,407,8,1.04,Murder,Murder,Secunderabad,Hyderabad,1
+OFF0201,Ravi Kumar E,NET1,12,348,5,0.92,Chain Snatching,Assault,Dwarka,Delhi,1
+OFF0202,Salim Khan E,NET0,17,411,4,1.18,Drug Offense,Drug Offense,Bandra,Mumbai,1
+OFF0203,Arjun Singh E,NET2,1,227,6,0.3,Fraud,,Borivali,Mumbai,0
+OFF0204,Deepak Yadav E,NET1,13,411,4,0.94,Assault,Extortion,Chandni Chowk,Delhi,1
+OFF0205,Rahul Sharma E,NET2,13,514,5,0.98,Robbery,Assault,Worli,Mumbai,1
+OFF0206,Pradeep Mishra E,NET0,7,235,2,0.5,Eve Teasing,,Anna Nagar,Chennai,0
+OFF0207,Suresh Nair E,NET0,15,184,8,1.22,Eve Teasing,Eve Teasing,Rohini,Delhi,1
+OFF0208,Vijay Dubey E,NET2,5,542,5,0.5,Fraud,Fraud,Anand Vihar,Delhi,1
+OFF0209,Ankit Tiwari E,NET3,4,50,6,0.68,Eve Teasing,Eve Teasing,Goregaon,Mumbai,1
+OFF0210,Mohit Gupta E,NET1,7,209,2,0.5,Robbery,Assault,Adyar,Chennai,1
+OFF0211,Sunil Patel E,NET1,18,249,5,1.28,Murder,Murder,Anna Nagar,Chennai,1
+OFF0212,Rakesh Verma E,NET2,16,95,0,0.96,Robbery,Extortion,Bandra,Mumbai,1
+OFF0213,Nitin Chauhan E,NET3,10,78,6,1.04,Fraud,Fraud,Lajpat Nagar,Delhi,1
+OFF0214,Aakash Mehta E,NET4,16,490,5,1.16,Theft,Chain Snatching,Anna Nagar,Chennai,1
+OFF0215,Sanjay Rawat E,NET0,17,67,1,1.26,Assault,Extortion,Kurla,Mumbai,1
+OFF0216,Harish Bose E,NET0,16,463,0,0.96,Drug Offense,Drug Offense,Dharavi,Mumbai,1
+OFF0217,Manish Joshi E,NET4,10,374,3,0.72,Robbery,,Dharavi,Mumbai,0
+OFF0218,Dinesh Reddy E,NET4,15,547,2,0.98,Murder,Murder,Indiranagar,Bengaluru,1
+OFF0219,Gopal Rao E,NET2,16,662,0,0.96,Robbery,Assault,Dadar,Mumbai,1
+OFF0220,Tarun Pillai E,NET4,2,235,8,0.44,Burglary,Assault,Anna Nagar,Chennai,1
+OFF0221,Farrukh Ansari E,NET0,14,441,4,1,Assault,Extortion,Kurla,Mumbai,1
+OFF0222,Imran Qureshi E,NET0,16,380,7,1.24,Chain Snatching,Assault,Charminar,Hyderabad,1
+OFF0223,Babu Lal E,NET2,7,40,2,0.7,Murder,Murder,Indiranagar,Bengaluru,1
+OFF0224,Chetan More E,NET3,9,603,2,0.62,Murder,Murder,Karol Bagh,Delhi,1
+OFF0225,Devraj Nair E,NET0,9,464,4,0.7,Assault,Extortion,Lajpat Nagar,Delhi,1
+OFF0226,Elamaran V E,NET3,1,36,3,0.38,Kidnapping,,Velachery,Chennai,0
+OFF0227,Fayaz Dar E,NET2,8,293,0,0.48,Kidnapping,,Bandra,Mumbai,0
+OFF0228,Ganesh Patil E,NET4,11,684,3,0.78,Chain Snatching,Robbery,Dwarka,Delhi,1
+OFF0229,Hemant Sahu E,NET3,3,377,8,0.5,Auto Theft,,Whitefield,Bengaluru,0
+OFF0230,Irfan Sheikh E,NET2,10,588,0,0.6,Eve Teasing,,Borivali,Mumbai,0
+OFF0231,Jayesh Pandey E,NET0,3,244,3,0.3,Eve Teasing,Eve Teasing,JP Nagar,Bengaluru,1
+OFF0232,Kiran Deshpande E,NET2,2,9,1,0.36,Cybercrime,Cybercrime,Charminar,Hyderabad,1
+OFF0233,Lokesh Yadav E,NET4,3,125,4,0.34,Assault,,Worli,Mumbai,0
+OFF0234,Mukesh Singh E,NET0,13,45,2,1.06,Extortion,Kidnapping,Koramangala,Bengaluru,1
+OFF0235,Naresh Jha E,NET3,5,26,0,0.5,Murder,,Whitefield,Bengaluru,0
+OFF0236,Omkar Desai E,NET1,9,558,5,0.74,Burglary,Robbery,Connaught Place,Delhi,1
+OFF0237,Pravin Kadam E,NET4,15,479,5,1.1,Extortion,Kidnapping,Lajpat Nagar,Delhi,1
+OFF0238,Qadir Shaikh E,NET4,6,371,4,0.52,Burglary,Robbery,Lajpat Nagar,Delhi,1
+OFF0239,Ratan Das E,NET0,17,637,3,1.14,Vandalism,Vandalism,Dharavi,Mumbai,1
+OFF0240,Sumit Bansal E,NET0,18,234,0,1.08,Assault,Extortion,Bandra,Mumbai,1
+OFF0241,Tushar Wagh E,NET2,12,12,2,1,Theft,Chain Snatching,Lajpat Nagar,Delhi,1
+OFF0242,Uday Kiran E,NET3,17,397,2,1.1,Robbery,Extortion,Banjara Hills,Hyderabad,1
+OFF0243,Vishal Thakur E,NET0,14,723,3,0.96,Robbery,Assault,Velachery,Chennai,1
+OFF0244,Wasim Akram E,NET2,14,622,0,0.84,Theft,Robbery,Banjara Hills,Hyderabad,1
+OFF0245,Yashraj Bhatt E,NET1,6,152,2,0.44,Vandalism,,Indiranagar,Bengaluru,0
+OFF0246,Zahir Ahmad E,NET1,9,566,1,0.58,Murder,Murder,Velachery,Chennai,1
+OFF0247,Ajay Lakhani E,NET3,4,584,0,0.24,Robbery,,Karol Bagh,Delhi,0
+OFF0248,Brijesh Tomar E,NET2,18,48,3,1.4,Kidnapping,Kidnapping,Karol Bagh,Delhi,1
+OFF0249,Chandan Kumar E,NET2,4,721,7,0.52,Assault,,Madhapur,Hyderabad,0
+OFF0250,Dilnawaz Memon E,NET2,15,148,5,1.1,Chain Snatching,Assault,Anna Nagar,Chennai,1
+OFF0251,Ravi Kumar F,NET1,1,108,2,0.14,Cybercrime,Cybercrime,Adyar,Chennai,1
+OFF0252,Salim Khan F,NET0,15,467,5,1.1,Fraud,Fraud,Anand Vihar,Delhi,1
+OFF0253,Arjun Singh F,NET3,8,143,2,0.56,Extortion,Kidnapping,Secunderabad,Hyderabad,1
+OFF0254,Deepak Yadav F,NET3,10,404,1,0.64,Auto Theft,,Charminar,Hyderabad,0
+OFF0255,Rahul Sharma F,NET0,15,730,1,0.94,Chain Snatching,Robbery,T Nagar,Chennai,1
+OFF0256,Pradeep Mishra F,NET4,15,408,7,1.18,Vandalism,Vandalism,Secunderabad,Hyderabad,1
+OFF0257,Suresh Nair F,NET2,8,645,7,0.76,Chain Snatching,Assault,Connaught Place,Delhi,1
+OFF0258,Vijay Dubey F,NET3,8,141,4,0.64,Extortion,Murder,Kurla,Mumbai,1
+OFF0259,Ankit Tiwari F,NET3,14,371,3,0.96,Robbery,Assault,Andheri,Mumbai,1
+OFF0260,Mohit Gupta F,NET1,18,281,1,1.12,Drug Offense,Drug Offense,Bandra,Mumbai,1
+OFF0261,Sunil Patel F,NET0,15,196,2,0.98,Robbery,Assault,HSR Layout,Bengaluru,1
+OFF0262,Rakesh Verma F,NET3,10,379,4,0.76,Theft,,Anna Nagar,Chennai,0
+OFF0263,Nitin Chauhan F,NET0,9,610,5,0.74,Extortion,Kidnapping,Borivali,Mumbai,1
+OFF0264,Aakash Mehta F,NET1,6,238,0,0.36,Kidnapping,,Hebbal,Bengaluru,0
+OFF0265,Sanjay Rawat F,NET2,10,377,1,0.64,Theft,Robbery,T Nagar,Chennai,1
+OFF0266,Harish Bose F,NET0,12,307,1,0.76,Burglary,Assault,Chandni Chowk,Delhi,1
+OFF0267,Manish Joshi F,NET0,9,557,3,0.66,Theft,,Anand Vihar,Delhi,0
+OFF0268,Dinesh Reddy F,NET3,7,532,8,0.74,Drug Offense,Drug Offense,Anna Nagar,Chennai,1
+OFF0269,Gopal Rao F,NET2,16,475,5,1.16,Eve Teasing,Eve Teasing,Connaught Place,Delhi,1
+OFF0270,Tarun Pillai F,NET1,12,271,1,0.76,Murder,,Dwarka,Delhi,0
+OFF0271,Farrukh Ansari F,NET2,3,48,3,0.5,Cybercrime,,Borivali,Mumbai,0
+OFF0272,Imran Qureshi F,NET1,2,90,3,0.24,Burglary,,Adyar,Chennai,0
+OFF0273,Babu Lal F,NET2,18,169,4,1.24,Cybercrime,Cybercrime,Karol Bagh,Delhi,1
+OFF0274,Chetan More F,NET3,17,485,2,1.1,Extortion,,Charminar,Hyderabad,0
+OFF0275,Devraj Nair F,NET3,1,470,3,0.18,Chain Snatching,,Anna Nagar,Chennai,0
+OFF0276,Elamaran V F,NET2,3,231,0,0.18,Kidnapping,,Charminar,Hyderabad,0
+OFF0277,Fayaz Dar F,NET4,11,317,3,0.78,Cybercrime,Cybercrime,Andheri,Mumbai,1
+OFF0278,Ganesh Patil F,NET0,2,70,8,0.64,Cybercrime,Cybercrime,Anna Nagar,Chennai,1
+OFF0279,Hemant Sahu F,NET3,12,428,3,0.84,Murder,Murder,Lajpat Nagar,Delhi,1
+OFF0280,Irfan Sheikh F,NET4,9,576,8,0.86,Eve Teasing,Eve Teasing,Banjara Hills,Hyderabad,1
+OFF0281,Jayesh Pandey F,NET3,4,414,2,0.32,Assault,,HSR Layout,Bengaluru,0
+OFF0282,Kiran Deshpande F,NET2,8,706,3,0.6,Auto Theft,,Borivali,Mumbai,0
+OFF0283,Lokesh Yadav F,NET2,3,188,6,0.42,Theft,Robbery,Anand Vihar,Delhi,1
+OFF0284,Mukesh Singh F,NET2,3,80,5,0.58,Murder,,Adyar,Chennai,0
+OFF0285,Naresh Jha F,NET0,12,141,2,0.8,Theft,,Connaught Place,Delhi,0
+OFF0286,Omkar Desai F,NET2,17,64,5,1.42,Vandalism,Vandalism,Worli,Mumbai,1
+OFF0287,Pravin Kadam F,NET3,17,148,3,1.14,Fraud,Fraud,Dharavi,Mumbai,1
+OFF0288,Qadir Shaikh F,NET3,13,575,4,0.94,Robbery,Extortion,Goregaon,Mumbai,1
+OFF0289,Ratan Das F,NET4,10,694,4,0.76,Murder,Murder,Koramangala,Bengaluru,1
+OFF0290,Sumit Bansal F,NET1,17,53,1,1.26,Kidnapping,Kidnapping,Adyar,Chennai,1
+OFF0291,Tushar Wagh F,NET2,14,22,6,1.28,Assault,Extortion,Madhapur,Hyderabad,1
+OFF0292,Uday Kiran F,NET1,8,254,0,0.48,Kidnapping,Kidnapping,JP Nagar,Bengaluru,1
+OFF0293,Vishal Thakur F,NET0,18,242,3,1.2,Kidnapping,Kidnapping,Madhapur,Hyderabad,1
+OFF0294,Wasim Akram F,NET3,18,556,2,1.16,Kidnapping,,Anand Vihar,Delhi,0
+OFF0295,Yashraj Bhatt F,NET2,1,133,7,0.34,Chain Snatching,Robbery,Velachery,Chennai,1
+OFF0296,Zahir Ahmad F,NET2,3,59,8,0.7,Vandalism,Vandalism,Anand Vihar,Delhi,1
+OFF0297,Ajay Lakhani F,NET2,8,530,0,0.48,Chain Snatching,,Indiranagar,Bengaluru,0
+OFF0298,Brijesh Tomar F,NET1,4,89,2,0.52,Auto Theft,Auto Theft,Velachery,Chennai,1
+OFF0299,Chandan Kumar F,NET2,17,95,8,1.34,Burglary,Robbery,Whitefield,Bengaluru,1
+OFF0300,Dilnawaz Memon F,NET2,6,434,3,0.48,Theft,Robbery,Bandra,Mumbai,1
+OFF0301,Ravi Kumar G,NET1,12,255,3,0.84,Robbery,Extortion,Dadar,Mumbai,1
+OFF0302,Salim Khan G,NET2,2,444,8,0.44,Extortion,Kidnapping,Anna Nagar,Chennai,1
+OFF0303,Arjun Singh G,NET2,18,715,2,1.16,Fraud,Fraud,Madhapur,Hyderabad,1
+OFF0304,Deepak Yadav G,NET2,5,465,1,0.34,Cybercrime,Cybercrime,Banjara Hills,Hyderabad,1
+OFF0305,Rahul Sharma G,NET3,1,635,0,0.06,Theft,,Adyar,Chennai,0
+OFF0306,Pradeep Mishra G,NET0,3,580,2,0.26,Vandalism,Vandalism,HSR Layout,Bengaluru,1
+OFF0307,Suresh Nair G,NET0,12,59,3,1.04,Assault,Extortion,Dwarka,Delhi,1
+OFF0308,Vijay Dubey G,NET3,5,691,5,0.5,Fraud,,Banjara Hills,Hyderabad,0
+OFF0309,Ankit Tiwari G,NET0,17,29,1,1.26,Theft,Robbery,Worli,Mumbai,1
+OFF0310,Mohit Gupta G,NET3,12,374,4,0.88,Eve Teasing,Eve Teasing,Worli,Mumbai,1
+OFF0311,Sunil Patel G,NET3,6,595,0,0.36,Fraud,,Whitefield,Bengaluru,0
+OFF0312,Rakesh Verma G,NET3,10,82,2,0.88,Chain Snatching,Assault,T Nagar,Chennai,1
+OFF0313,Nitin Chauhan G,NET0,13,511,4,0.94,Extortion,,Chandni Chowk,Delhi,0
+OFF0314,Aakash Mehta G,NET2,13,165,7,1.06,Robbery,Extortion,Anna Nagar,Chennai,1
+OFF0315,Sanjay Rawat G,NET4,15,279,2,0.98,Assault,Extortion,Dadar,Mumbai,1
+OFF0316,Harish Bose G,NET3,1,432,5,0.26,Assault,Murder,Dharavi,Mumbai,1
+OFF0317,Manish Joshi G,NET3,6,383,3,0.48,Robbery,,Anand Vihar,Delhi,0
+OFF0318,Dinesh Reddy G,NET2,11,672,2,0.74,Extortion,Murder,T Nagar,Chennai,1
+OFF0319,Gopal Rao G,NET0,9,523,5,0.74,Chain Snatching,Robbery,Borivali,Mumbai,1
+OFF0320,Tarun Pillai G,NET1,3,363,4,0.34,Robbery,,Madhapur,Hyderabad,0
+OFF0321,Farrukh Ansari G,NET0,4,191,7,0.52,Cybercrime,Cybercrime,Kurla,Mumbai,1
+OFF0322,Imran Qureshi G,NET3,2,574,4,0.28,Vandalism,,Indiranagar,Bengaluru,0
+OFF0323,Babu Lal G,NET4,5,655,4,0.46,Kidnapping,,Rohini,Delhi,0
+OFF0324,Chetan More G,NET0,16,261,0,0.96,Robbery,Extortion,Chandni Chowk,Delhi,1
+OFF0325,Devraj Nair G,NET4,13,186,6,1.02,Chain Snatching,Assault,Dwarka,Delhi,1
+OFF0326,Elamaran V G,NET4,15,14,4,1.26,Kidnapping,Kidnapping,Whitefield,Bengaluru,1
+OFF0327,Fayaz Dar G,NET4,8,318,5,0.68,Kidnapping,,HSR Layout,Bengaluru,0
+OFF0328,Ganesh Patil G,NET4,6,420,1,0.4,Murder,,Anand Vihar,Delhi,0
+OFF0329,Hemant Sahu G,NET1,15,114,2,0.98,Burglary,,Dharavi,Mumbai,0
+OFF0330,Irfan Sheikh G,NET4,10,144,1,0.64,Vandalism,,Dwarka,Delhi,0
+OFF0331,Jayesh Pandey G,NET0,1,109,5,0.26,Kidnapping,,HSR Layout,Bengaluru,0
+OFF0332,Kiran Deshpande G,NET2,17,84,3,1.34,Drug Offense,Drug Offense,Velachery,Chennai,1
+OFF0333,Lokesh Yadav G,NET2,10,244,1,0.64,Auto Theft,,Dadar,Mumbai,0
+OFF0334,Mukesh Singh G,NET1,12,696,3,0.84,Extortion,Murder,Saket,Delhi,1
+OFF0335,Naresh Jha G,NET3,9,288,9,0.9,Assault,Extortion,Hebbal,Bengaluru,1
+OFF0336,Omkar Desai G,NET0,2,673,6,0.36,Fraud,Fraud,Indiranagar,Bengaluru,1
+OFF0337,Pravin Kadam G,NET0,13,717,7,1.06,Fraud,Fraud,Indiranagar,Bengaluru,1
+OFF0338,Qadir Shaikh G,NET0,9,200,5,0.74,Cybercrime,Cybercrime,Connaught Place,Delhi,1
+OFF0339,Ratan Das G,NET1,16,436,1,1,Theft,Chain Snatching,Velachery,Chennai,1
+OFF0340,Sumit Bansal G,NET0,7,185,8,0.74,Fraud,Fraud,Indiranagar,Bengaluru,1
+OFF0341,Tushar Wagh G,NET1,2,299,5,0.32,Eve Teasing,Eve Teasing,Secunderabad,Hyderabad,1
+OFF0342,Uday Kiran G,NET0,4,118,1,0.28,Extortion,Kidnapping,Karol Bagh,Delhi,1
+OFF0343,Vishal Thakur G,NET4,18,183,4,1.24,Fraud,Fraud,Anand Vihar,Delhi,1
+OFF0344,Wasim Akram G,NET2,16,146,3,1.08,Kidnapping,Kidnapping,Andheri,Mumbai,1
+OFF0345,Yashraj Bhatt G,NET0,16,80,4,1.32,Fraud,Fraud,Indiranagar,Bengaluru,1
+OFF0346,Zahir Ahmad G,NET2,17,96,0,1.02,Cybercrime,Cybercrime,Charminar,Hyderabad,1
+OFF0347,Ajay Lakhani G,NET3,6,283,4,0.52,Murder,Murder,Andheri,Mumbai,1
+OFF0348,Brijesh Tomar G,NET0,15,204,0,0.9,Robbery,Assault,Velachery,Chennai,1
+OFF0349,Chandan Kumar G,NET1,8,703,4,0.64,Kidnapping,,Worli,Mumbai,0
+OFF0350,Dilnawaz Memon G,NET2,10,377,5,0.8,Theft,Chain Snatching,Indiranagar,Bengaluru,1
+OFF0351,Ravi Kumar H,NET3,2,724,3,0.24,Fraud,Fraud,T Nagar,Chennai,1
+OFF0352,Salim Khan H,NET1,17,544,2,1.1,Eve Teasing,Eve Teasing,Chandni Chowk,Delhi,1
+OFF0353,Arjun Singh H,NET1,10,233,2,0.68,Fraud,,Velachery,Chennai,0
+OFF0354,Deepak Yadav H,NET4,15,344,8,1.22,Auto Theft,Auto Theft,Saket,Delhi,1
+OFF0355,Rahul Sharma H,NET2,14,389,5,1.04,Auto Theft,Auto Theft,Adyar,Chennai,1
+OFF0356,Pradeep Mishra H,NET1,9,682,1,0.58,Theft,Chain Snatching,Andheri,Mumbai,1
+OFF0357,Suresh Nair H,NET2,8,38,5,0.88,Kidnapping,Kidnapping,Saket,Delhi,1
+OFF0358,Vijay Dubey H,NET0,8,534,0,0.48,Extortion,Murder,Anand Vihar,Delhi,1
+OFF0359,Ankit Tiwari H,NET4,12,90,1,0.76,Eve Teasing,Eve Teasing,Charminar,Hyderabad,1
+OFF0360,Mohit Gupta H,NET4,12,487,1,0.76,Chain Snatching,Assault,Lajpat Nagar,Delhi,1
+OFF0361,Sunil Patel H,NET1,18,610,3,1.2,Assault,Extortion,Andheri,Mumbai,1
+OFF0362,Rakesh Verma H,NET0,3,450,6,0.42,Assault,,T Nagar,Chennai,0
+OFF0363,Nitin Chauhan H,NET1,13,97,0,0.78,Extortion,Kidnapping,Charminar,Hyderabad,1
+OFF0364,Aakash Mehta H,NET0,11,8,2,0.94,Robbery,Extortion,Madhapur,Hyderabad,1
+OFF0365,Sanjay Rawat H,NET3,16,400,6,1.2,Burglary,Robbery,T Nagar,Chennai,1
+OFF0366,Harish Bose H,NET0,16,139,4,1.12,Murder,Murder,Dadar,Mumbai,1
+OFF0367,Manish Joshi H,NET1,3,230,1,0.22,Fraud,,Connaught Place,Delhi,0
+OFF0368,Dinesh Reddy H,NET1,7,542,1,0.46,Auto Theft,Auto Theft,HSR Layout,Bengaluru,1
+OFF0369,Gopal Rao H,NET0,9,237,0,0.54,Robbery,,Dharavi,Mumbai,0
+OFF0370,Tarun Pillai H,NET3,4,589,4,0.4,Chain Snatching,Robbery,Lajpat Nagar,Delhi,1
+OFF0371,Farrukh Ansari H,NET3,8,378,1,0.52,Robbery,,Lajpat Nagar,Delhi,0
+OFF0372,Imran Qureshi H,NET3,16,122,0,0.96,Robbery,Extortion,Dwarka,Delhi,1
+OFF0373,Babu Lal H,NET1,12,248,4,0.88,Murder,Murder,Borivali,Mumbai,1
+OFF0374,Chetan More H,NET4,2,232,3,0.24,Murder,,Dadar,Mumbai,0
+OFF0375,Devraj Nair H,NET4,3,333,1,0.22,Assault,,Connaught Place,Delhi,0
+OFF0376,Elamaran V H,NET2,11,366,2,0.74,Burglary,Assault,JP Nagar,Bengaluru,1
+OFF0377,Fayaz Dar H,NET1,16,630,5,1.16,Cybercrime,Cybercrime,Dwarka,Delhi,1
+OFF0378,Ganesh Patil H,NET2,11,21,1,0.9,Murder,Murder,Chandni Chowk,Delhi,1
+OFF0379,Hemant Sahu H,NET3,1,227,4,0.22,Extortion,Murder,Whitefield,Bengaluru,1
+OFF0380,Irfan Sheikh H,NET0,11,332,3,0.78,Kidnapping,,Secunderabad,Hyderabad,0
+OFF0381,Jayesh Pandey H,NET1,5,638,0,0.3,Vandalism,,Adyar,Chennai,0
+OFF0382,Kiran Deshpande H,NET2,18,684,5,1.28,Eve Teasing,Eve Teasing,Adyar,Chennai,1
+OFF0383,Lokesh Yadav H,NET0,6,139,7,0.64,Eve Teasing,,Dadar,Mumbai,0
+OFF0384,Mukesh Singh H,NET0,17,38,8,1.54,Drug Offense,Drug Offense,Dwarka,Delhi,1
+OFF0385,Naresh Jha H,NET4,4,713,6,0.48,Robbery,Extortion,Anand Vihar,Delhi,1
+OFF0386,Omkar Desai H,NET0,12,723,5,0.92,Fraud,,Andheri,Mumbai,0
+OFF0387,Pravin Kadam H,NET4,4,10,2,0.52,Extortion,,Dadar,Mumbai,0
+OFF0388,Qadir Shaikh H,NET1,18,515,5,1.28,Drug Offense,Drug Offense,HSR Layout,Bengaluru,1
+OFF0389,Ratan Das H,NET4,17,263,7,1.3,Robbery,Assault,Chandni Chowk,Delhi,1
+OFF0390,Sumit Bansal H,NET2,1,362,8,0.38,Assault,Murder,HSR Layout,Bengaluru,1
+OFF0391,Tushar Wagh H,NET1,18,200,3,1.2,Assault,Murder,Charminar,Hyderabad,1
+OFF0392,Uday Kiran H,NET2,9,500,2,0.62,Cybercrime,Cybercrime,Lajpat Nagar,Delhi,1
+OFF0393,Vishal Thakur H,NET0,12,457,8,1.04,Burglary,Assault,JP Nagar,Bengaluru,1
+OFF0394,Wasim Akram H,NET4,17,329,6,1.26,Chain Snatching,Robbery,Banjara Hills,Hyderabad,1
+OFF0395,Yashraj Bhatt H,NET0,10,38,5,1,Kidnapping,Kidnapping,Andheri,Mumbai,1
+OFF0396,Zahir Ahmad H,NET4,3,81,4,0.54,Kidnapping,,Secunderabad,Hyderabad,0
+OFF0397,Ajay Lakhani H,NET4,18,639,3,1.2,Eve Teasing,Eve Teasing,Velachery,Chennai,1
+OFF0398,Brijesh Tomar H,NET2,9,687,2,0.62,Eve Teasing,,Chandni Chowk,Delhi,0
+OFF0399,Chandan Kumar H,NET1,17,361,5,1.22,Theft,Robbery,Borivali,Mumbai,1
+OFF0400,Dilnawaz Memon H,NET1,4,132,4,0.4,Burglary,Assault,Banjara Hills,Hyderabad,1
+OFF0401,Ravi Kumar I,NET1,14,271,2,0.92,Kidnapping,Kidnapping,Indiranagar,Bengaluru,1
+OFF0402,Salim Khan I,NET1,4,583,0,0.24,Murder,Murder,Chandni Chowk,Delhi,1
+OFF0403,Arjun Singh I,NET3,17,492,2,1.1,Theft,Robbery,Anand Vihar,Delhi,1
+OFF0404,Deepak Yadav I,NET3,9,609,4,0.7,Extortion,,Whitefield,Bengaluru,0
+OFF0405,Rahul Sharma I,NET0,13,506,8,1.1,Extortion,Murder,Kurla,Mumbai,1
+OFF0406,Pradeep Mishra I,NET3,4,265,3,0.36,Burglary,,Dwarka,Delhi,0
+OFF0407,Suresh Nair I,NET1,1,524,0,0.06,Cybercrime,,Andheri,Mumbai,0
+OFF0408,Vijay Dubey I,NET0,8,438,5,0.68,Assault,Murder,Madhapur,Hyderabad,1
+OFF0409,Ankit Tiwari I,NET3,9,435,7,0.82,Assault,,Connaught Place,Delhi,0
+OFF0410,Mohit Gupta I,NET1,15,375,5,1.1,Kidnapping,Kidnapping,Koramangala,Bengaluru,1
+OFF0411,Sunil Patel I,NET3,5,684,5,0.5,Auto Theft,,Saket,Delhi,0
+OFF0412,Rakesh Verma I,NET4,18,499,4,1.24,Cybercrime,Cybercrime,Anand Vihar,Delhi,1
+OFF0413,Nitin Chauhan I,NET1,12,195,0,0.72,Theft,Robbery,Kurla,Mumbai,1
+OFF0414,Aakash Mehta I,NET1,17,262,0,1.02,Fraud,Fraud,Dharavi,Mumbai,1
+OFF0415,Sanjay Rawat I,NET1,7,488,5,0.62,Theft,Robbery,Madhapur,Hyderabad,1
+OFF0416,Harish Bose I,NET3,16,249,1,1,Murder,Murder,T Nagar,Chennai,1
+OFF0417,Manish Joshi I,NET3,6,389,1,0.4,Vandalism,,Hebbal,Bengaluru,0
+OFF0418,Dinesh Reddy I,NET1,5,633,1,0.34,Robbery,,Dwarka,Delhi,0
+OFF0419,Gopal Rao I,NET2,17,613,4,1.18,Theft,Chain Snatching,JP Nagar,Bengaluru,1
+OFF0420,Tarun Pillai I,NET4,16,594,3,1.08,Murder,Murder,Dadar,Mumbai,1
+OFF0421,Farrukh Ansari I,NET1,11,60,2,0.94,Robbery,Assault,Dharavi,Mumbai,1
+OFF0422,Imran Qureshi I,NET1,1,578,2,0.14,Vandalism,,Hebbal,Bengaluru,0
+OFF0423,Babu Lal I,NET1,10,595,3,0.72,Fraud,,Borivali,Mumbai,0
+OFF0424,Chetan More I,NET4,1,75,5,0.46,Chain Snatching,Assault,Connaught Place,Delhi,1
+OFF0425,Devraj Nair I,NET2,12,309,4,0.88,Robbery,Extortion,Goregaon,Mumbai,1
+OFF0426,Elamaran V I,NET3,8,418,6,0.72,Murder,,Kurla,Mumbai,0
+OFF0427,Fayaz Dar I,NET0,8,159,8,0.8,Theft,Robbery,Hebbal,Bengaluru,1
+OFF0428,Ganesh Patil I,NET1,2,552,0,0.12,Drug Offense,,Chandni Chowk,Delhi,0
+OFF0429,Hemant Sahu I,NET1,12,710,0,0.72,Robbery,Assault,Dadar,Mumbai,1
+OFF0430,Irfan Sheikh I,NET0,18,32,2,1.36,Extortion,Murder,Velachery,Chennai,1
+OFF0431,Jayesh Pandey I,NET4,4,509,1,0.28,Eve Teasing,,Borivali,Mumbai,0
+OFF0432,Kiran Deshpande I,NET1,6,192,5,0.56,Extortion,Kidnapping,Dharavi,Mumbai,1
+OFF0433,Lokesh Yadav I,NET2,2,284,5,0.32,Burglary,,Worli,Mumbai,0
+OFF0434,Mukesh Singh I,NET0,18,403,5,1.28,Auto Theft,Auto Theft,Adyar,Chennai,1
+OFF0435,Naresh Jha I,NET0,5,325,0,0.3,Burglary,,Dadar,Mumbai,0
+OFF0436,Omkar Desai I,NET3,5,101,0,0.3,Burglary,Robbery,Hebbal,Bengaluru,1
+OFF0437,Pravin Kadam I,NET3,18,446,3,1.2,Robbery,Assault,Saket,Delhi,1
+OFF0438,Qadir Shaikh I,NET2,15,703,5,1.1,Burglary,Assault,Rohini,Delhi,1
+OFF0439,Ratan Das I,NET0,2,437,0,0.12,Murder,,Dwarka,Delhi,0
+OFF0440,Sumit Bansal I,NET1,15,296,0,0.9,Cybercrime,Cybercrime,Chandni Chowk,Delhi,1
+OFF0441,Tushar Wagh I,NET4,9,509,2,0.62,Burglary,,Dwarka,Delhi,0
+OFF0442,Uday Kiran I,NET1,13,119,1,0.82,Burglary,Assault,Borivali,Mumbai,1
+OFF0443,Vishal Thakur I,NET2,15,9,5,1.3,Chain Snatching,Robbery,Velachery,Chennai,1
+OFF0444,Wasim Akram I,NET0,6,555,2,0.44,Cybercrime,,HSR Layout,Bengaluru,0
+OFF0445,Yashraj Bhatt I,NET1,17,690,3,1.14,Burglary,,Dwarka,Delhi,0
+OFF0446,Zahir Ahmad I,NET4,7,689,6,0.66,Chain Snatching,Robbery,HSR Layout,Bengaluru,1
+OFF0447,Ajay Lakhani I,NET4,8,276,5,0.68,Burglary,Robbery,Hebbal,Bengaluru,1
+OFF0448,Brijesh Tomar I,NET1,8,498,3,0.6,Murder,,Worli,Mumbai,0
+OFF0449,Chandan Kumar I,NET1,11,533,5,0.86,Murder,,Lajpat Nagar,Delhi,0
+OFF0450,Dilnawaz Memon I,NET4,18,445,1,1.12,Theft,Chain Snatching,Chandni Chowk,Delhi,1
+OFF0451,Ravi Kumar J,NET0,14,174,1,0.88,Eve Teasing,Eve Teasing,JP Nagar,Bengaluru,1
+OFF0452,Salim Khan J,NET4,7,615,8,0.74,Vandalism,,Saket,Delhi,0
+OFF0453,Arjun Singh J,NET1,3,507,4,0.34,Robbery,Extortion,Secunderabad,Hyderabad,1
+OFF0454,Deepak Yadav J,NET0,6,727,3,0.48,Cybercrime,,Charminar,Hyderabad,0
+OFF0455,Rahul Sharma J,NET0,6,159,6,0.6,Robbery,,Goregaon,Mumbai,0
+OFF0456,Pradeep Mishra J,NET3,2,354,0,0.12,Kidnapping,,HSR Layout,Bengaluru,0
+OFF0457,Suresh Nair J,NET4,7,575,2,0.5,Chain Snatching,,Anna Nagar,Chennai,0
+OFF0458,Vijay Dubey J,NET0,2,208,4,0.28,Cybercrime,,T Nagar,Chennai,0
+OFF0459,Ankit Tiwari J,NET4,12,181,1,0.76,Robbery,Assault,Dharavi,Mumbai,1
+OFF0460,Mohit Gupta J,NET0,16,703,3,1.08,Chain Snatching,Assault,Lajpat Nagar,Delhi,1
+OFF0461,Sunil Patel J,NET0,14,259,2,0.92,Vandalism,Vandalism,HSR Layout,Bengaluru,1
+OFF0462,Rakesh Verma J,NET2,18,253,4,1.24,Extortion,Kidnapping,Koramangala,Bengaluru,1
+OFF0463,Nitin Chauhan J,NET0,15,197,6,1.14,Robbery,Assault,Indiranagar,Bengaluru,1
+OFF0464,Aakash Mehta J,NET1,14,398,0,0.84,Eve Teasing,,Indiranagar,Bengaluru,0
+OFF0465,Sanjay Rawat J,NET3,17,89,9,1.58,Vandalism,Vandalism,Whitefield,Bengaluru,1
+OFF0466,Harish Bose J,NET4,18,720,4,1.24,Murder,Murder,Rohini,Delhi,1
+OFF0467,Manish Joshi J,NET2,3,615,2,0.26,Robbery,,Dwarka,Delhi,0
+OFF0468,Dinesh Reddy J,NET3,3,34,4,0.54,Robbery,Assault,Indiranagar,Bengaluru,1
+OFF0469,Gopal Rao J,NET3,3,162,2,0.26,Eve Teasing,,Secunderabad,Hyderabad,0
+OFF0470,Tarun Pillai J,NET4,11,516,2,0.74,Assault,Extortion,Velachery,Chennai,1
+OFF0471,Farrukh Ansari J,NET3,14,48,3,1.16,Vandalism,Vandalism,HSR Layout,Bengaluru,1
+OFF0472,Imran Qureshi J,NET2,10,90,0,0.6,Fraud,Fraud,Secunderabad,Hyderabad,1
+OFF0473,Babu Lal J,NET0,9,174,7,0.82,Kidnapping,Kidnapping,Connaught Place,Delhi,1
+OFF0474,Chetan More J,NET3,12,420,2,0.8,Kidnapping,Kidnapping,Chandni Chowk,Delhi,1
+OFF0475,Devraj Nair J,NET0,4,505,7,0.52,Robbery,Extortion,Worli,Mumbai,1
+OFF0476,Elamaran V J,NET1,7,26,1,0.66,Chain Snatching,,Karol Bagh,Delhi,0
+OFF0477,Fayaz Dar J,NET1,18,464,5,1.28,Extortion,Murder,Andheri,Mumbai,1
+OFF0478,Ganesh Patil J,NET0,3,559,7,0.46,Vandalism,,Andheri,Mumbai,0
+OFF0479,Hemant Sahu J,NET0,7,268,0,0.42,Extortion,,Secunderabad,Hyderabad,0
+OFF0480,Irfan Sheikh J,NET2,11,175,0,0.66,Drug Offense,Drug Offense,Charminar,Hyderabad,1
+OFF0481,Jayesh Pandey J,NET2,15,554,4,1.06,Chain Snatching,Robbery,Kurla,Mumbai,1
+OFF0482,Kiran Deshpande J,NET4,15,426,8,1.22,Assault,Extortion,Whitefield,Bengaluru,1
+OFF0483,Lokesh Yadav J,NET2,2,212,7,0.4,Burglary,Robbery,Borivali,Mumbai,1
+OFF0484,Mukesh Singh J,NET3,18,658,5,1.28,Cybercrime,Cybercrime,Lajpat Nagar,Delhi,1
+OFF0485,Naresh Jha J,NET1,16,323,4,1.12,Eve Teasing,Eve Teasing,Koramangala,Bengaluru,1
+OFF0486,Omkar Desai J,NET4,7,725,1,0.46,Fraud,,Goregaon,Mumbai,0
+OFF0487,Pravin Kadam J,NET3,9,472,8,0.86,Chain Snatching,Assault,Lajpat Nagar,Delhi,1
+OFF0488,Qadir Shaikh J,NET1,4,327,3,0.36,Burglary,,Saket,Delhi,0
+OFF0489,Ratan Das J,NET3,4,230,7,0.52,Burglary,,Dharavi,Mumbai,0
+OFF0490,Sumit Bansal J,NET3,9,492,6,0.78,Extortion,,Chandni Chowk,Delhi,0
+OFF0491,Tushar Wagh J,NET3,2,485,9,0.48,Assault,Extortion,Karol Bagh,Delhi,1
+OFF0492,Uday Kiran J,NET2,5,12,8,0.82,Drug Offense,Drug Offense,Secunderabad,Hyderabad,1
+OFF0493,Vishal Thakur J,NET2,3,116,8,0.5,Extortion,Murder,Karol Bagh,Delhi,1
+OFF0494,Wasim Akram J,NET0,15,274,3,1.02,Burglary,Robbery,Adyar,Chennai,1
+OFF0495,Yashraj Bhatt J,NET1,8,477,3,0.6,Kidnapping,Kidnapping,T Nagar,Chennai,1
+OFF0496,Zahir Ahmad J,NET1,5,164,5,0.5,Vandalism,,Charminar,Hyderabad,0
+OFF0497,Ajay Lakhani J,NET2,4,620,4,0.4,Burglary,Assault,T Nagar,Chennai,1
+OFF0498,Brijesh Tomar J,NET2,8,346,5,0.68,Murder,Murder,Dwarka,Delhi,1
+OFF0499,Chandan Kumar J,NET2,16,648,0,0.96,Assault,Extortion,Banjara Hills,Hyderabad,1
+OFF0500,Dilnawaz Memon J,NET1,5,666,1,0.34,Eve Teasing,,Adyar,Chennai,0

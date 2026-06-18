@@ -186,13 +186,13 @@
         
         .sidebar-title {
             margin: 0 0 4px 0;
-            font-size: 1.25rem;
+            font-size: 2.5rem;
         }
         
         .sidebar-subtitle {
             margin: 0;
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 1.7rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
@@ -237,13 +237,13 @@
         
         .prop-label {
             color: var(--text-muted);
-            font-size: var(--label-size, 0.75rem);
+            font-size: var(--label-size, 1.5rem);
             text-transform: uppercase;
             margin-bottom: 4px;
         }
         
         .prop-value {
-            font-size: var(--value-size, 0.95rem);
+            font-size: var(--value-size, 1.9rem);
             word-break: break-word;
             background: rgba(0,0,0,0.2);
             padding: 8px 12px;
@@ -581,11 +581,15 @@
             });
 
             // Inspector Panel Controls
-            let textZoom = 1.0;
+            let textZoom = 2.0;
             const root = document.documentElement;
             
+            // Set initial CSS variables to match textZoom=2.0
+            root.style.setProperty('--label-size', `${0.75 * textZoom}rem`);
+            root.style.setProperty('--value-size', `${0.95 * textZoom}rem`);
+
             document.getElementById('btn-text-plus').addEventListener('click', () => {
-                textZoom = Math.min(textZoom + 0.2, 2.0);
+                textZoom = Math.min(textZoom + 0.2, 3.0); // allow even bigger if they want
                 root.style.setProperty('--label-size', `${0.75 * textZoom}rem`);
                 root.style.setProperty('--value-size', `${0.95 * textZoom}rem`);
             });

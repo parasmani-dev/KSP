@@ -441,10 +441,10 @@
                 wheelSensitivity: 0.2
             });
 
-            // On initial render, zoom into the high-degree center rather than fitting 5000 nodes into view
+            // On initial render, zoom out to show the concentric rings rather than zooming into the mega-hub
             cy.ready(function() {
                 setTimeout(() => {
-                    cy.zoom(0.8);
+                    cy.zoom(0.15);
                     cy.center();
                 }, 100);
             });

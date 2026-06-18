@@ -87,5 +87,7 @@ Feature 4 endpoints (added only once Feature 3 has shipped):
 
 ## Roadmap
 
-- **Phase 1 (Feature 3):** graph builder, case linking, gang detection, Cytoscape visualization — fully complete and demoable before moving on.
-- **Phase 2 (Feature 4):** classical link-prediction baseline first (fast, low risk), then GraphSAGE/PyTorch Geometric within a human-set time-box. Fallback to the baseline if the GNN isn't ready by checkpoint — the demo must never depend on the GNN succeeding.
+- **Phase 1 (Feature 3):** graph builder, case linking, gang detection, Cytoscape visualization — fully complete and demoable before### 4. Neural Intelligence Layer (Feature 4) - DONE
+- **Baseline Module**: `link_prediction_baseline.py` completed using Jaccard/Adamic-Adar on NetworkX. Explains predictions by outputting mutual connections.
+- **GNN Module (PyG)**: `gnn_model.py` completed. Validation revealed schema leakage (one-hot type bias) driving false 0.99 AUC. GNN parked as "Future Work".
+- **API**: Endpoints (`/predict/links`, `/predict/clusters`) implemented, firmly routed to classical baseline for hackathon demo.

@@ -24,7 +24,7 @@ def prep_graph_data(nx_graph: nx.Graph):
         node_type = nx_graph.nodes[node].get('type', 'Unknown')
         deg = degrees[node]
         
-        feat = [math.log(deg + 1.0)]
+        feat = [0.0] # math.log(deg + 1.0)
         one_hot = [0.0] * len(unique_types)
         one_hot[type_to_idx[node_type]] = 1.0
         feat.extend(one_hot)

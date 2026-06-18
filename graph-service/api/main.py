@@ -27,7 +27,7 @@ app.add_middleware(
 @app.get("/graph/network")
 def get_network():
     """Get full graph network in node-link JSON format."""
-    data = nx.node_link_data(GRAPH)
+    data = nx.node_link_data(GRAPH, edges="links")
     return {"network": data}
 
 @app.get("/graph/case/{case_id}")
@@ -39,7 +39,7 @@ def get_case_subgraph(case_id: str):
     neighbors = list(GRAPH.neighbors(case_id))
     nodes = [case_id] + neighbors
     subgraph = GRAPH.subgraph(nodes)
-    return {"network": nx.node_link_data(subgraph)}
+    return {"network": nx.node_link_data(subgraph, edges="links")}
 
 @app.get("/graph/centrality")
 def get_centrality():
@@ -63,7 +63,7 @@ def search_node(name: str):
         neighborhood.update(GRAPH.neighbors(match))
         
     subgraph = GRAPH.subgraph(neighborhood)
-    return {"network": nx.node_link_data(subgraph)}
+    return {"network": nx.node_link_data(subgraph, edges="links")}
 
 @app.get("/graph/hotspots")
 def get_hotspots_api():

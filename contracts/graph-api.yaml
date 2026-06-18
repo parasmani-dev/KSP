@@ -9,6 +9,22 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  network:
+                    type: object
+                    properties:
+                      nodes:
+                        type: array
+                        items:
+                          type: object
+                      links:
+                        type: array
+                        items:
+                          type: object
   /graph/centrality:
     get:
       summary: Get graph centrality
@@ -27,6 +43,22 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  network:
+                    type: object
+                    properties:
+                      nodes:
+                        type: array
+                        items:
+                          type: object
+                      links:
+                        type: array
+                        items:
+                          type: object
   /graph/hotspots:
     get:
       summary: Get crime hotspots

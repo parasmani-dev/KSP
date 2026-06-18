@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIOS Criminal Network Visualizer</title>
+    <!-- Cytoscape.js via CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+    
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --panel-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --accent: #3b82f6;
+            --danger: #ef4444;
+            --success: #10b981;
+            
+            /* Node Type Colors */
+            --c-citizen: #ef4444;
+            --c-case: #f59e0b;
+            --c-vehicle: #8b5cf6;
+            --c-location: #10b981;
+            --c-org: #3b82f6;
+            --c-default: #64748b;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow: hidden;
+            display: flex;
+            height: 100vh;
+        }
+
+        #cy {
+            flex-grow: 1;
+            height: 100%;
+            position: relative;
+        }
+
+        /* Top Bar & Search */
+        .top-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 340px; /* leaves room for sidebar */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .title {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+            background: var(--panel-bg);
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            pointer-events: auto;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 8px;
+            pointer-events: auto;
+            position: relative;
+        }
+
+        .search-input {
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: white;
+            width: 250px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent);
+        }
+
+        .search-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0 16px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .search-btn:hover {
+            background: #2563eb;
+        }
+        
+        .toast {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: var(--danger);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px;
+            background-color: var(--panel-bg);
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+            box-shadow: -4px 0 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .sidebar-title {
+            margin: 0 0 4px 0;
+            font-size: 1.25rem;
+        }
+        
+        .sidebar-subtitle {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sidebar-content {
+            padding: 20px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        
+        .prop-group {
+            margin-bottom: 16px;
+        }
+        
+        .prop-label {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        
+        .prop-value {
+            font-size: 0.95rem;
+            word-break: break-word;
+            background: rgba(0,0,0,0.2);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .empty-state {
+            color: var(--text-muted);
+            text-align: center;
+            padding-top: 40px;
+            font-style: italic;
+        }
+
+        /* Legend */
+        .legend {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: var(--panel-bg);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            pointer-events: auto;
+            z-index: 10;
+        }
+        
+        .legend h4 {
+            margin: 0 0 10px 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+        }
+        
+        .legend-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        /* Loading Overlay */
+        .loading-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+            transition: opacity 0.5s;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            border-top-color: var(--accent);
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 16px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loading-overlay" id="loading">
+        <div class="spinner"></div>
+        <div id="loading-text">Connecting to Graph Database...</div>
+    </div>
+
+    <!-- Graph Canvas -->
+    <div id="cy"></div>
+
+    <!-- UI Overlay -->
+    <div class="top-bar">
+        <h1 class="title">CIOS Graph Intelligence</h1>
+        <div class="search-container">
+            <input type="text" id="search-input" class="search-input" placeholder="Search entity (e.g. Omkar Desai)..." />
+            <button id="search-btn" class="search-btn">Search</button>
+            <div id="toast" class="toast">Node not found</div>
+        </div>
+    </div>
+
+    <div class="legend">
+        <h4>Entity Types</h4>
+        <div class="legend-item"><div class="legend-color" style="background: var(--c-citizen)"></div> Citizen</div>
+        <div class="legend-item"><div class="legend-color" style="background: var(--c-case)"></div> Case (FIR)</div>
+        <div class="legend-item"><div class="legend-color" style="background: var(--c-vehicle)"></div> Vehicle</div>
+        <div class="legend-item"><div class="legend-color" style="background: var(--c-location)"></div> Location</div>
+        <div class="legend-item"><div class="legend-color" style="background: var(--c-org)"></div> Organization</div>
+    </div>
+
+    <!-- Side Panel -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2 class="sidebar-title" id="panel-title">Inspector Panel</h2>
+            <p class="sidebar-subtitle" id="panel-subtitle">Select a node to view details</p>
+        </div>
+        <div class="sidebar-content" id="panel-content">
+            <div class="empty-state">No entity selected.</div>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURATION
+        const API_BASE = "http://localhost:8000";
+
+        // CYTOSCAPE STYLESHEET
+        const style = [
+            {
+                selector: 'node',
+                style: {
+                    'label': 'data.id',
+                    'color': '#fff',
+                    'text-valign': 'bottom',
+                    'text-margin-y': 5,
+                    'font-size': '10px',
+                    'text-outline-width': 2,
+                    'text-outline-color': '#0f172a',
+                    'background-color': '#64748b',
+                    'width': 20,
+                    'height': 20,
+                    'transition-property': 'background-color, line-color, target-arrow-color, opacity',
+                    'transition-duration': '0.3s'
+                }
+            },
+            {
+                selector: 'node[type = "Citizen"]',
+                style: { 'background-color': '#ef4444', 'width': 25, 'height': 25 }
+            },
+            {
+                selector: 'node[type = "Case"]',
+                style: { 'background-color': '#f59e0b', 'shape': 'square', 'width': 22, 'height': 22 }
+            },
+            {
+                selector: 'node[type = "Vehicle"]',
+                style: { 'background-color': '#8b5cf6', 'shape': 'triangle' }
+            },
+            {
+                selector: 'node[type = "Location"]',
+                style: { 'background-color': '#10b981', 'shape': 'diamond' }
+            },
+            {
+                selector: 'node[type = "Organization"]',
+                style: { 'background-color': '#3b82f6', 'shape': 'hexagon', 'width': 30, 'height': 30 }
+            },
+            {
+                selector: 'edge',
+                style: {
+                    'width': 1.5,
+                    'line-color': '#334155',
+                    'curve-style': 'bezier',
+                    'opacity': 0.6,
+                    'transition-property': 'opacity, line-color, width',
+                    'transition-duration': '0.3s'
+                }
+            },
+            // Interactive States
+            {
+                selector: 'node.highlighted',
+                style: {
+                    'border-width': 4,
+                    'border-color': '#fff',
+                    'opacity': 1,
+                    'z-index': 100
+                }
+            },
+            {
+                selector: 'node.dimmed',
+                style: {
+                    'opacity': 0.15
+                }
+            },
+            {
+                selector: 'edge.highlighted',
+                style: {
+                    'line-color': '#94a3b8',
+                    'width': 3,
+                    'opacity': 1,
+                    'z-index': 99
+                }
+            },
+            {
+                selector: 'edge.dimmed',
+                style: {
+                    'opacity': 0.05
+                }
+            }
+        ];
+
+        let cy;
+
+        // FETCH DATA & INITIALIZE
+        async function loadGraph() {
+            try {
+                const res = await fetch(`${API_BASE}/graph/network`);
+                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                const data = await res.json();
+                
+                const elements = [];
+                
+                // Process Nodes
+                if (data.network && data.network.nodes) {
+                    data.network.nodes.forEach(n => {
+                        elements.push({
+                            data: { ...n }
+                        });
+                    });
+                }
+                
+                // Process Edges
+                if (data.network && data.network.links) {
+                    data.network.links.forEach((l, i) => {
+                        elements.push({
+                            data: {
+                                id: `e${i}`,
+                                source: l.source,
+                                target: l.target,
+                                ...l
+                            }
+                        });
+                    });
+                }
+
+                initCytoscape(elements);
+                hideLoader();
+                
+            } catch (err) {
+                console.error("Failed to load graph:", err);
+                const loaderText = document.getElementById('loading-text');
+                loaderText.innerText = "Error: Could not connect to API server. Ensure FastAPI is running on localhost:8000.";
+                loaderText.style.color = "var(--danger)";
+                document.querySelector('.spinner').style.display = 'none';
+            }
+        }
+
+        function initCytoscape(elements) {
+            cy = cytoscape({
+                container: document.getElementById('cy'),
+                elements: elements,
+                style: style,
+                layout: {
+                    name: 'cose',
+                    idealEdgeLength: 100,
+                    nodeOverlap: 20,
+                    refresh: 20,
+                    fit: true,
+                    padding: 30,
+                    randomize: true,
+                    componentSpacing: 100,
+                    nodeRepulsion: 400000,
+                    edgeElasticity: 100,
+                    nestingFactor: 5,
+                },
+                wheelSensitivity: 0.2
+            });
+
+            bindEvents();
+        }
+
+        function hideLoader() {
+            const loader = document.getElementById('loading');
+            loader.style.opacity = '0';
+            setTimeout(() => loader.style.display = 'none', 500);
+        }
+
+        // INTERACTIVITY
+        function bindEvents() {
+            // Tap Node -> Highlight & Sidebar
+            cy.on('tap', 'node', function(e) {
+                const node = e.target;
+                
+                // Highlight logic
+                cy.elements().removeClass('highlighted dimmed');
+                
+                const neighborhood = node.closedNeighborhood();
+                cy.elements().difference(neighborhood).addClass('dimmed');
+                neighborhood.addClass('highlighted');
+                
+                // Populate Sidebar
+                populateSidebar(node.data());
+            });
+
+            // Tap Background -> Reset
+            cy.on('tap', function(e) {
+                if(e.target === cy) {
+                    cy.elements().removeClass('highlighted dimmed');
+                    resetSidebar();
+                }
+            });
+            
+            // Search handlers
+            document.getElementById('search-btn').addEventListener('click', performSearch);
+            document.getElementById('search-input').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') performSearch();
+            });
+        }
+
+        function populateSidebar(data) {
+            document.getElementById('panel-title').innerText = data.id || 'Unknown';
+            document.getElementById('panel-subtitle').innerText = data.type || 'Entity';
+            
+            const content = document.getElementById('panel-content');
+            content.innerHTML = ''; // Clear
+            
+            // Render all properties dynamically
+            const skipKeys = ['id', 'type', 'name'];
+            
+            for (const [key, value] of Object.entries(data)) {
+                if (skipKeys.includes(key) || value === null || value === undefined) continue;
+                
+                const div = document.createElement('div');
+                div.className = 'prop-group';
+                
+                const label = document.createElement('div');
+                label.className = 'prop-label';
+                label.innerText = key.replace(/_/g, ' ');
+                
+                const val = document.createElement('div');
+                val.className = 'prop-value';
+                
+                if (typeof value === 'object') {
+                    val.innerText = JSON.stringify(value);
+                } else {
+                    val.innerText = value;
+                }
+                
+                div.appendChild(label);
+                div.appendChild(val);
+                content.appendChild(div);
+            }
+            
+            if (content.children.length === 0) {
+                content.innerHTML = '<div class="empty-state">No additional attributes</div>';
+            }
+        }
+
+        function resetSidebar() {
+            document.getElementById('panel-title').innerText = 'Inspector Panel';
+            document.getElementById('panel-subtitle').innerText = 'Select a node to view details';
+            document.getElementById('panel-content').innerHTML = '<div class="empty-state">No entity selected.</div>';
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.style.opacity = '1';
+            setTimeout(() => { toast.style.opacity = '0'; }, 3000);
+        }
+
+        async function performSearch() {
+            const query = document.getElementById('search-input').value.trim();
+            if (!query) return;
+            
+            try {
+                // Technically we could just search local cytoscape elements via cy.nodes(`[id @= "${query}"]`) 
+                // But following spec to hit /graph/search?name=
+                const res = await fetch(`${API_BASE}/graph/search?name=${encodeURIComponent(query)}`);
+                if (!res.ok) throw new Error("Search API failed");
+                const data = await res.json();
+                
+                if (data.network && data.network.nodes && data.network.nodes.length > 0) {
+                    // Match found
+                    const matchId = data.network.nodes[0].id;
+                    const targetNode = cy.getElementById(matchId);
+                    
+                    if (targetNode.length > 0) {
+                        // Reset graph
+                        cy.elements().removeClass('highlighted dimmed');
+                        
+                        // Select, Highlight, Center
+                        targetNode.trigger('tap'); 
+                        
+                        // Animate zoom
+                        cy.animate({
+                            center: { eles: targetNode },
+                            zoom: 1.5,
+                            duration: 500
+                        });
+                    } else {
+                        showToast("Node found in API but missing from UI.");
+                    }
+                } else {
+                    showToast("No matches found.");
+                }
+            } catch(e) {
+                console.error(e);
+                showToast("Search failed (Network Error)");
+            }
+        }
+
+        // START
+        document.addEventListener('DOMContentLoaded', loadGraph);
+
+    </script>
+</body>
+</html>

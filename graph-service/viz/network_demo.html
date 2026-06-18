@@ -561,6 +561,8 @@
             // Sidebar Drag Resizer
             const resizer = document.getElementById('resizer');
             const sidebar = document.querySelector('.sidebar');
+            const controls = document.querySelector('.controls');
+            const topBar = document.querySelector('.top-bar');
             let isResizing = false;
 
             resizer.addEventListener('mousedown', (e) => {
@@ -576,8 +578,10 @@
                 const newWidth = window.innerWidth - e.clientX;
                 if (newWidth > 250 && newWidth < 800) {
                     sidebar.style.width = newWidth + 'px';
+                    if (controls) controls.style.right = newWidth + 'px';
+                    if (topBar) topBar.style.right = (newWidth + 20) + 'px';
                 }
-            });
+            }, true);
 
             document.addEventListener('mouseup', () => {
                 if (isResizing) {
@@ -585,7 +589,7 @@
                     resizer.classList.remove('dragging');
                     document.body.style.cursor = '';
                 }
-            });
+            }, true);
         }
 
         function populateSidebar(data) {

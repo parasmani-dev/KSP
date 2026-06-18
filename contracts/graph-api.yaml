@@ -39,12 +39,64 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  predictions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        source:
+                          type: string
+                        target:
+                          type: string
+                        confidence_score:
+                          type: number
+                        method:
+                          type: string
+                        explanation:
+                          type: object
+                          properties:
+                            shared_connections:
+                              type: array
+                              items:
+                                type: string
+                            reason:
+                              type: string
   /predict/accomplices/{citizen_id}:
     get:
       summary: Predict hidden accomplices for a given citizen
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  predictions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        accomplice:
+                          type: string
+                        confidence_score:
+                          type: number
+                        method:
+                          type: string
+                        explanation:
+                          type: object
+                          properties:
+                            shared_connections:
+                              type: array
+                              items:
+                                type: string
+                            reason:
+                              type: string
   /predict/clusters:
     get:
       summary: Crime cluster groupings

@@ -70,19 +70,34 @@ def get_hotspots_api():
     """Area-wise crime counts."""
     return {"hotspots": get_hotspots()}
 
+from prediction.gnn_inference import predict_links_gnn, predict_clusters_gnn
+
 @app.get("/predict/links")
 def predict_links_api():
     """Predict hidden connections."""
-    return {"predictions": predict_hidden_links(GRAPH)}
+    weights_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "prediction", "model_weights.pt")
+    
+    gnn_preds = predict_links_gnn(GRAPH, weights_path=weights_path)
+    if gnn_preds is not None:
+        return {"predictions": gnn_preds, "status": "gnn_active"}
+        
+    return {"predictions": predict_hidden_links(GRAPH), "status": "baseline_fallback"}
 
 @app.get("/predict/accomplices/{citizen_id}")
 def predict_accomplices_api(citizen_id: str):
     """Predict hidden accomplices for a given citizen."""
-    return {"predictions": predict_accomplices(GRAPH, citizen_id)}
+    # (Kept purely classical for now as MVP scope focused on links and clusters)
+    return {"predictions": predict_accomplices(GRAPH, citizen_id), "status": "baseline"}
 
 @app.get("/predict/clusters")
 def predict_clusters_api():
-    """Crime cluster groupings (falling back to communities output for now)."""
+    """Crime cluster groupings."""
+    weights_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "prediction", "model_weights.pt")
+    
+    gnn_clusters = predict_clusters_gnn(GRAPH, weights_path=weights_path)
+    if gnn_clusters is not None:
+        return {"clusters": gnn_clusters, "status": "gnn_active"}
+        
     return {"clusters": detect_communities(GRAPH), "status": "baseline_fallback"}
 
 if __name__ == "__main__":

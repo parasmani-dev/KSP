@@ -5,3 +5,6 @@ pandas
 python-louvain
 pydantic
 neo4j
+torch
+torch_geometric
+scikit-learn

@@ -425,18 +425,16 @@
                 elements: elements,
                 style: style,
                 layout: {
-                    name: 'cose',
-                    animate: false, // Calculate layout instantly in background to prevent UI lag
-                    idealEdgeLength: 100,
-                    nodeOverlap: 20,
-                    refresh: 20,
-                    fit: true,
+                    name: 'concentric',
+                    concentric: function(node) {
+                        return node.degree(); // Put high-degree nodes in center
+                    },
+                    levelWidth: function(nodes) {
+                        return 2; // Granularity of rings
+                    },
                     padding: 30,
-                    randomize: true,
-                    componentSpacing: 100,
-                    nodeRepulsion: 400000,
-                    edgeElasticity: 100,
-                    nestingFactor: 5,
+                    minNodeSpacing: 30, // Prevent overlapping
+                    animate: false
                 },
                 wheelSensitivity: 0.2
             });

@@ -30,34 +30,38 @@ def predict_links_gnn(nx_graph: nx.Graph, top_n: int = 20, weights_path="model_w
     citizen_nodes = [n for n, attr in nx_graph.nodes(data=True) if attr.get('type') == 'Citizen']
     citizen_indices = [node_mapping[n] for n in citizen_nodes]
     
-    z_norm = torch.nn.functional.normalize(z, p=2, dim=-1)
-    citizen_z = z_norm[citizen_indices]
-    
-    sim_matrix = torch.matmul(citizen_z, citizen_z.t())
-    sim_flat = sim_matrix.flatten()
-    sorted_indices = torch.argsort(sim_flat, descending=True)
-    
-    num_citizens = len(citizen_nodes)
-    results = []
-    
-    for idx in sorted_indices:
-        idx = idx.item()
-        i = idx // num_citizens
-        j = idx % num_citizens
+    import itertools
+    pairs = list(itertools.combinations(citizen_indices, 2))
+    if not pairs:
+        return []
         
-        if i >= j:  # undirected, skip redundant and self-loops
-            continue
-            
-        u = reverse_mapping[citizen_indices[i]]
-        v = reverse_mapping[citizen_indices[j]]
-        score = sim_flat[idx].item()
+    edge_label_index = torch.tensor(pairs, dtype=torch.long).t().contiguous()
+    
+    data, _, _ = prep_graph_data(nx_graph)
+    model = GraphSAGE(in_channels=data.x.size(1), hidden_channels=32, out_channels=16)
+    model.load_state_dict(torch.load(weights_path, weights_only=True))
+    model.eval()
+    
+    with torch.no_grad():
+        scores = model.decode(z, edge_label_index).sigmoid().numpy()
+        
+    sorted_indices = scores.argsort()[::-1]
+    
+    results = []
+    for idx in sorted_indices:
+        u_idx = pairs[idx][0]
+        v_idx = pairs[idx][1]
+        
+        u = reverse_mapping[u_idx]
+        v = reverse_mapping[v_idx]
+        score = float(scores[idx])
         
         if not nx_graph.has_edge(u, v):
             results.append({
                 "source": u,
                 "target": v,
                 "confidence_score": score,
-                "method": "graphsage_gnn"
+                "method": "graphsage_gnn_mlp"
             })
             if len(results) >= top_n:
                 break

@@ -38,14 +38,16 @@ def train_gnn(nx_graph, epochs=100, save_path="model_weights.pt"):
         preds = out.sigmoid().cpu().numpy()
         labels = val_data.edge_label.cpu().numpy()
         
-        return roc_auc_score(labels, preds)
+        auc = roc_auc_score(labels, preds)
+        auc_flipped = roc_auc_score(labels, 1 - preds)
+        return auc, auc_flipped
 
     print("Starting training...")
     for epoch in range(1, epochs + 1):
         loss = train()
         if epoch % 20 == 0 or epoch == epochs:
-            val_auc = test()
-            print(f"Epoch {epoch:03d}, Loss: {loss:.4f}, Val AUC: {val_auc:.4f}")
+            val_auc, val_auc_flipped = test()
+            print(f"Epoch {epoch:03d}, Loss: {loss:.4f}, Val AUC: {val_auc:.4f}, Flipped AUC: {val_auc_flipped:.4f}")
 
     torch.save(model.state_dict(), save_path)
     print(f"Model saved to {save_path}")

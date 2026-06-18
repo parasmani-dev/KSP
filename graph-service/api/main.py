@@ -89,6 +89,15 @@ def predict_clusters_api():
     # GNN disabled due to schema leakage in validation; classical baseline ships for demo
     return {"clusters": detect_communities(GRAPH), "status": "baseline"}
 
+from analysis.explainer import explain_node
+
+@app.get("/graph/explain/{node_id}")
+def explain_node_api(node_id: str):
+    """Generate XAI explanation for a specific node."""
+    if not GRAPH.has_node(node_id):
+        raise HTTPException(status_code=404, detail="Node not found")
+    return explain_node(GRAPH, node_id)
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)

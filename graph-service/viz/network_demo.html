@@ -371,6 +371,7 @@
                 <button id="btn-panel-expand" title="Expand Panel">↔</button>
             </div>
         </div>
+        <div id="ai-explanation" style="padding: 20px 20px 0 20px; font-size: calc(var(--value-size, 1.9rem) * 0.85); display: none;"></div>
         <div class="sidebar-content" id="panel-content">
             <div class="empty-state">No entity selected.</div>
         </div>
@@ -548,12 +549,11 @@
         // INTERACTIVITY
         function bindEvents() {
             // Tap Node -> Highlight & Sidebar
-            cy.on('tap', 'node', function(e) {
+            cy.on('tap', 'node', async function(e) {
                 const node = e.target;
-                
-                // Batch visual updates to prevent freezing
                 cy.batch(() => {
                     cy.elements().removeClass('highlighted dimmed');
+                    node.addClass('highlighted');
                     
                     const neighborhood = node.closedNeighborhood();
                     cy.elements().difference(neighborhood).addClass('dimmed');
@@ -562,6 +562,21 @@
                 
                 // Populate Sidebar
                 populateSidebar(node.data());
+
+                // Fetch XAI Explanation
+                const aiBox = document.getElementById('ai-explanation');
+                if (aiBox) {
+                    aiBox.style.display = 'block';
+                    aiBox.innerHTML = '<div style="color: var(--accent);">Generating Explainable AI Narrative...</div>';
+                    try {
+                        const res = await fetch(`${API_BASE}/graph/explain/${encodeURIComponent(node.id())}`);
+                        if (!res.ok) throw new Error('API Error');
+                        const data = await res.json();
+                        aiBox.innerHTML = `<div style="border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 15px; font-style: italic; color: #cbd5e1;">${data.explanation}</div>`;
+                    } catch (err) {
+                        aiBox.innerHTML = `<div style="border-left: 3px solid var(--danger); padding-left: 10px; margin-bottom: 15px; color: #f87171;">⚠️ AI Explanation unavailable. Server unreachable or data format error.</div>`;
+                    }
+                }
             });
 
             // Tap Background -> Reset
@@ -571,6 +586,8 @@
                         cy.elements().removeClass('highlighted dimmed');
                     });
                     resetSidebar();
+                    const aiBox = document.getElementById('ai-explanation');
+                    if (aiBox) aiBox.style.display = 'none';
                 }
             });
             

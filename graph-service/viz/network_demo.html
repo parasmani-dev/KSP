@@ -308,9 +308,7 @@
                     'text-outline-color': '#0f172a',
                     'background-color': '#64748b',
                     'width': 20,
-                    'height': 20,
-                    'transition-property': 'background-color, line-color, target-arrow-color, opacity',
-                    'transition-duration': '0.3s'
+                    'height': 20
                 }
             },
             {
@@ -339,9 +337,7 @@
                     'width': 1.5,
                     'line-color': '#334155',
                     'curve-style': 'bezier',
-                    'opacity': 0.6,
-                    'transition-property': 'opacity, line-color, width',
-                    'transition-duration': '0.3s'
+                    'opacity': 0.6
                 }
             },
             // Interactive States
@@ -430,6 +426,7 @@
                 style: style,
                 layout: {
                     name: 'cose',
+                    animate: false, // Calculate layout instantly in background to prevent UI lag
                     idealEdgeLength: 100,
                     nodeOverlap: 20,
                     refresh: 20,
@@ -459,12 +456,14 @@
             cy.on('tap', 'node', function(e) {
                 const node = e.target;
                 
-                // Highlight logic
-                cy.elements().removeClass('highlighted dimmed');
-                
-                const neighborhood = node.closedNeighborhood();
-                cy.elements().difference(neighborhood).addClass('dimmed');
-                neighborhood.addClass('highlighted');
+                // Batch visual updates to prevent freezing
+                cy.batch(() => {
+                    cy.elements().removeClass('highlighted dimmed');
+                    
+                    const neighborhood = node.closedNeighborhood();
+                    cy.elements().difference(neighborhood).addClass('dimmed');
+                    neighborhood.addClass('highlighted');
+                });
                 
                 // Populate Sidebar
                 populateSidebar(node.data());
@@ -473,7 +472,9 @@
             // Tap Background -> Reset
             cy.on('tap', function(e) {
                 if(e.target === cy) {
-                    cy.elements().removeClass('highlighted dimmed');
+                    cy.batch(() => {
+                        cy.elements().removeClass('highlighted dimmed');
+                    });
                     resetSidebar();
                 }
             });

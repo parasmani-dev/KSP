@@ -21,3 +21,33 @@ paths:
       responses:
         '200':
           description: OK
+  /graph/search:
+    get:
+      summary: Search node by name
+      responses:
+        '200':
+          description: OK
+  /graph/hotspots:
+    get:
+      summary: Get crime hotspots
+      responses:
+        '200':
+          description: OK
+  /predict/links:
+    get:
+      summary: Predict hidden connections
+      responses:
+        '200':
+          description: OK
+  /predict/accomplices/{citizen_id}:
+    get:
+      summary: Predict hidden accomplices for a given citizen
+      responses:
+        '200':
+          description: OK
+  /predict/clusters:
+    get:
+      summary: Crime cluster groupings
+      responses:
+        '200':
+          description: OK

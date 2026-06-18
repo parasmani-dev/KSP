@@ -2,6 +2,8 @@ import pandas as pd
 import networkx as nx
 import os
 
+from analysis.case_linking import link_case_entities
+
 DATASET_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'Dataset')
 
 def build_graph():
@@ -19,63 +21,22 @@ def build_graph():
         print(f"Dataset not found: {e}")
         return G
         
-    # Process Crime Records -> Adds Crime Nodes and Location associations
+    # Process Crime Records -> Adds Case Nodes and Location associations
     for _, row in crime_df.iterrows():
         fir_id = row.get('fir_id')
         crime_type = row.get('crime_type')
         area = row.get('area')
         
         if pd.notna(fir_id):
-            G.add_node(fir_id, type='Crime', crime_type=crime_type, area=area)
+            G.add_node(fir_id, type='Case', crime_type=crime_type, area=area)
             if pd.notna(area):
                 # Ensure Area node exists
                 if not G.has_node(area):
                     G.add_node(area, type='Location')
                 G.add_edge(fir_id, area, relationship='OCCURRED_AT')
 
-    # Process Mock Graph -> Adds Suspect Nodes, Networks, and Relationships
-    for _, row in mock_df.iterrows():
-        case_id = row.get('case_id')
-        primary_suspect = row.get('primary_suspect')
-        suspects_str = row.get('suspects')
-        network_id = row.get('network_id')
-        network_members_str = row.get('network_members')
-        
-        # Link case to suspects
-        suspects = []
-        if pd.notna(suspects_str):
-            suspects = [s.strip() for s in suspects_str.split(';')]
-            
-        for suspect in suspects:
-            if not G.has_node(suspect):
-                G.add_node(suspect, type='Citizen')
-            if pd.notna(case_id):
-                G.add_edge(suspect, case_id, relationship='INVOLVED_IN')
-                
-        # Link network members
-        members = []
-        if pd.notna(network_members_str):
-            members = [m.strip() for m in network_members_str.split(';')]
-            
-        for member in members:
-            if not G.has_node(member):
-                G.add_node(member, type='Citizen')
-            if pd.notna(network_id):
-                if not G.has_node(network_id):
-                    G.add_node(network_id, type='Organization')
-                G.add_edge(member, network_id, relationship='PART_OF')
-                
-        # Add primary suspect relationships
-        if pd.notna(primary_suspect):
-            if not G.has_node(primary_suspect):
-                G.add_node(primary_suspect, type='Citizen')
-            for suspect in suspects:
-                if suspect != primary_suspect:
-                    G.add_edge(primary_suspect, suspect, relationship='ASSOCIATED_WITH')
-                    
-            for member in members:
-                if member != primary_suspect:
-                    G.add_edge(primary_suspect, member, relationship='ASSOCIATED_WITH')
+    # Process Mock Graph -> Delegates case-linking logic
+    G = link_case_entities(G, mock_df)
 
     return G
 

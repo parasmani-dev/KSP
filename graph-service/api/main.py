@@ -12,8 +12,10 @@ from graph.graph_builder import GRAPH
 from analysis.centrality import get_top_centrality
 from analysis.communities import detect_communities
 from analysis.hotspots import get_hotspots
+from prediction.link_prediction_baseline import predict_hidden_links, predict_accomplices
 
 app = FastAPI(title="Graph API", version="1.0.0")
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -67,6 +69,21 @@ def search_node(name: str):
 def get_hotspots_api():
     """Area-wise crime counts."""
     return {"hotspots": get_hotspots()}
+
+@app.get("/predict/links")
+def predict_links_api():
+    """Predict hidden connections."""
+    return {"predictions": predict_hidden_links(GRAPH)}
+
+@app.get("/predict/accomplices/{citizen_id}")
+def predict_accomplices_api(citizen_id: str):
+    """Predict hidden accomplices for a given citizen."""
+    return {"predictions": predict_accomplices(GRAPH, citizen_id)}
+
+@app.get("/predict/clusters")
+def predict_clusters_api():
+    """Crime cluster groupings (falling back to communities output for now)."""
+    return {"clusters": detect_communities(GRAPH), "status": "baseline_fallback"}
 
 if __name__ == "__main__":
     import uvicorn

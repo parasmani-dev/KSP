@@ -60,9 +60,9 @@ def get_patrol_recommendations():
                 "action": "Increase visible night patrols",
                 "priority": priority,
                 "reasons": [
-                    f"{suspects_count} known suspects reside in this area",
-                    f"Forecasted {forecasted} daily incidents over 7-day window",
-                    f"Risk level: {priority} based on Prophet forecast"
+                    {"code": "SUSPECT_COUNT", "value": int(suspects_count), "area": area_name},
+                    {"code": "FORECAST_INCIDENTS", "value": round(float(forecasted), 2), "window_days": 7},
+                    {"code": "RISK_LEVEL", "value": priority}
                 ]
             })
     return {"recommendations": recommendations}
@@ -70,7 +70,7 @@ def get_patrol_recommendations():
 @router.get("/investigation")
 def get_investigation_recommendations(case_id: str = None):
     if df_open_cases.empty or df_mock_graph.empty:
-        return {"recommendations": [], "reasons": ["Data missing"]}
+        return {"recommendations": [], "reasons": [{"code": "MISSING_DATA", "value": "Data missing"}]}
 
     df_join = pd.merge(df_open_cases, df_mock_graph, on="case_id", how="inner")
     recommendations = []
@@ -92,9 +92,10 @@ def get_investigation_recommendations(case_id: str = None):
             "action": action,
             "priority": "High" if score > 0.7 else "Medium" if score > 0.4 else "Low",
             "reasons": [
-                f"Connected to {suspect_count_val} suspects (source: case records)",
-                f"{missing_evidence_count} evidence items still unprocessed",
-                f"Confidence score: {confidence}"
+                {"code": "SUSPECT_COUNT", "value": suspect_count_val},
+                {"code": "MISSING_EVIDENCE_COUNT", "value": missing_evidence_count},
+                {"code": "CONFIDENCE_SCORE", "value": round(float(confidence), 2)},
+                {"code": "COMPOSITE_SCORE", "value": round(float(score), 2)}
             ]
         })
         
@@ -110,11 +111,11 @@ def get_cctv_recommendations(area: str, crime_type: str = ""):
         raise HTTPException(status_code=404, detail="Area not in camera database")
         
     if df_cctv.empty:
-        return {"recommended_cameras": [], "reasons": ["No active cameras in this area"]}
+        return {"recommended_cameras": [], "reasons": [{"code": "NO_CAMERAS", "value": "No active cameras in this area"}]}
         
     df_filtered = df_cctv[(df_cctv['status'].astype(str).str.lower() == 'active') & (df_cctv['area'] == area)]
     if df_filtered.empty:
-        return {"recommended_cameras": [], "reasons": ["No active cameras in this area"]}
+        return {"recommended_cameras": [], "reasons": [{"code": "NO_CAMERAS", "value": "No active cameras in this area"}]}
         
     lat_col = 'latitude' if 'latitude' in df_filtered.columns else 'lat'
     lon_col = 'longitude' if 'longitude' in df_filtered.columns else 'lng'
@@ -139,7 +140,7 @@ def get_cctv_recommendations(area: str, crime_type: str = ""):
     top_cams = cameras[:5]
     
     if not top_cams:
-        return {"recommended_cameras": [], "reasons": ["No active cameras in this area"]}
+        return {"recommended_cameras": [], "reasons": [{"code": "NO_CAMERAS", "value": "No active cameras in this area"}]}
         
     nearest_dist = top_cams[0]['distance_from_centroid_m']
     nearest_id = top_cams[0]['camera_id']
@@ -150,9 +151,9 @@ def get_cctv_recommendations(area: str, crime_type: str = ""):
         "total_active_cameras": total_active,
         "recommended_cameras": top_cams,
         "reasons": [
-            f"{total_active} active cameras found in {area}",
-            "Sorted by proximity to area centroid",
-            f"{nearest_id} is nearest at {nearest_dist}m from area center",
-            f"Top {len(top_cams)} returned from {total_active} active cameras"
+            {"code": "ACTIVE_CAMERA_COUNT", "value": total_active, "area": area},
+            {"code": "SORT_METHOD", "value": "haversine_distance"},
+            {"code": "NEAREST_CAMERA_DISTANCE_M", "value": round(float(nearest_dist), 1), "camera_id": nearest_id},
+            {"code": "CAMERAS_RETURNED", "value": len(top_cams)}
         ]
     }

@@ -10,8 +10,9 @@ def build_graph():
     """Builds and returns a NetworkX graph from the dataset files."""
     G = nx.Graph()
     
-    mock_graph_path = os.path.join(DATASET_DIR, 'mock_graph.csv')
-    crime_records_path = os.path.join(DATASET_DIR, 'crime_records.csv')
+    # Update paths to use _sample.csv versions
+    mock_graph_path = os.path.join(DATASET_DIR, 'mock_graph_sample.csv')
+    crime_records_path = os.path.join(DATASET_DIR, 'crime_records_sample.csv')
     
     # Load data
     try:
@@ -42,16 +43,17 @@ def build_graph():
     # Process Mock Graph -> Delegates case-linking logic
     G = link_case_entities(G, mock_df)
     
-    # Load Real Entity Attributes from entities.csv
+    # Load Real Entity Attributes from entities_sample.csv
     try:
-        entities_path = os.path.join(DATASET_DIR, 'entities.csv')
-        entities_df = pd.read_csv(entities_path)
-        for _, row in entities_df.iterrows():
-            e_id = row['entity_id']
-            if G.has_node(e_id):
-                for col in entities_df.columns:
-                    if col not in ['entity_id', 'entity_type'] and pd.notna(row[col]):
-                        G.nodes[e_id][col] = row[col]
+        entities_path = os.path.join(DATASET_DIR, 'entities_sample.csv')
+        if os.path.exists(entities_path):
+            entities_df = pd.read_csv(entities_path)
+            for _, row in entities_df.iterrows():
+                e_id = row['entity_id']
+                if G.has_node(e_id):
+                    for col in entities_df.columns:
+                        if col not in ['entity_id', 'entity_type'] and pd.notna(row[col]):
+                            G.nodes[e_id][col] = row[col]
     except FileNotFoundError:
         print("entities.csv not found. Entity attributes will be barebones.")
         pass

@@ -1,51 +1,51 @@
 config_id,crime_type,area,city,risk_threshold,cooldown_minutes,alert_type,notify_channels,escalation_crime_type,active
-CFG001,Robbery,BTM,Bengaluru,0.45,14,CRITICAL,Dashboard,Extortion,1
-CFG002,Assault,Koramangala,Bengaluru,0.559,12,CRITICAL,"Email,Dashboard,SMS",Murder,1
-CFG003,Chain Snatching,Whitefield,Bengaluru,0.551,119,HIGH,Dashboard,Assault,1
-CFG004,Burglary,KR Puram,Bengaluru,0.796,86,MEDIUM,"SMS,Dashboard",Assault,1
-CFG005,Drug Offense,BTM,Bengaluru,0.732,39,HIGH,"SMS,Email",,1
-CFG006,Cybercrime,Koramangala,Bengaluru,0.606,66,MEDIUM,"SMS,Dashboard",,1
-CFG007,Drug Offense,KR Puram,Bengaluru,0.728,99,MEDIUM,"Email,Dashboard,SMS",,1
-CFG008,Murder,BTM,Bengaluru,0.515,19,CRITICAL,"SMS,Dashboard",,1
-CFG009,Auto Theft,Koramangala,Bengaluru,0.744,63,HIGH,"SMS,Dashboard",,1
-CFG010,Burglary,Whitefield,Bengaluru,0.691,102,HIGH,"Email,Dashboard,SMS",Assault,1
-CFG011,Chain Snatching,Koramangala,Bengaluru,0.757,115,MEDIUM,"SMS,Email",Robbery,1
-CFG012,Kidnapping,Whitefield,Bengaluru,0.528,30,CRITICAL,"SMS,Dashboard",,1
-CFG013,Murder,Koramangala,Bengaluru,0.484,25,CRITICAL,"Email,Dashboard,SMS",,1
-CFG014,Chain Snatching,KR Puram,Bengaluru,0.704,102,HIGH,"SMS,Email",Assault,1
-CFG015,Drug Offense,Whitefield,Bengaluru,0.684,78,HIGH,"SMS,Email",,1
-CFG016,Kidnapping,KR Puram,Bengaluru,0.482,19,CRITICAL,"SMS,Dashboard",,1
-CFG017,Burglary,BTM,Bengaluru,0.79,34,MEDIUM,Dashboard,Robbery,1
-CFG018,Chain Snatching,BTM,Bengaluru,0.791,37,MEDIUM,"SMS,Dashboard",Assault,1
-CFG019,Fraud,KR Puram,Bengaluru,0.744,113,MEDIUM,Dashboard,,1
-CFG020,Eve Teasing,Whitefield,Bengaluru,0.773,75,HIGH,Dashboard,,1
-CFG021,Vandalism,KR Puram,Bengaluru,0.754,110,MEDIUM,"Email,Dashboard,SMS",,1
-CFG022,Burglary,Koramangala,Bengaluru,0.753,100,MEDIUM,"SMS,Email",Assault,1
-CFG023,Theft,BTM,Bengaluru,0.757,115,MEDIUM,"SMS,Email",Robbery,1
-CFG024,Eve Teasing,BTM,Bengaluru,0.78,54,HIGH,Dashboard,,1
-CFG025,Murder,KR Puram,Bengaluru,0.515,14,CRITICAL,"SMS,Dashboard",,1
-CFG026,Auto Theft,Whitefield,Bengaluru,0.597,93,MEDIUM,Dashboard,,1
-CFG027,Robbery,Whitefield,Bengaluru,0.497,19,CRITICAL,Dashboard,Extortion,1
-CFG028,Theft,Koramangala,Bengaluru,0.786,48,MEDIUM,"Email,Dashboard,SMS",Robbery,1
-CFG029,Kidnapping,BTM,Bengaluru,0.583,21,CRITICAL,Dashboard,,1
-CFG030,Eve Teasing,KR Puram,Bengaluru,0.747,56,HIGH,"Email,Dashboard,SMS",,1
-CFG031,Robbery,Koramangala,Bengaluru,0.484,10,CRITICAL,"SMS,Dashboard",Assault,1
-CFG032,Extortion,KR Puram,Bengaluru,0.593,83,HIGH,"SMS,Dashboard",Kidnapping,1
-CFG033,Fraud,Koramangala,Bengaluru,0.728,49,HIGH,Dashboard,,1
-CFG034,Extortion,Whitefield,Bengaluru,0.72,73,MEDIUM,Dashboard,Kidnapping,1
-CFG035,Cybercrime,Whitefield,Bengaluru,0.795,110,MEDIUM,"SMS,Email",,1
-CFG036,Auto Theft,KR Puram,Bengaluru,0.679,106,HIGH,"Email,Dashboard,SMS",,1
-CFG037,Vandalism,Whitefield,Bengaluru,0.71,100,MEDIUM,"SMS,Email",,1
-CFG038,Assault,BTM,Bengaluru,0.52,30,CRITICAL,"Email,Dashboard,SMS",Extortion,1
-CFG039,Auto Theft,BTM,Bengaluru,0.591,97,HIGH,"SMS,Dashboard",,1
-CFG040,Cybercrime,KR Puram,Bengaluru,0.658,52,HIGH,"SMS,Dashboard",,1
-CFG041,Assault,Whitefield,Bengaluru,0.641,14,CRITICAL,"SMS,Dashboard",Murder,1
-CFG042,Fraud,Whitefield,Bengaluru,0.612,48,MEDIUM,"SMS,Dashboard",,1
-CFG043,Theft,KR Puram,Bengaluru,0.553,41,HIGH,"SMS,Dashboard",Robbery,1
-CFG044,Robbery,KR Puram,Bengaluru,0.474,14,CRITICAL,"Email,Dashboard,SMS",Extortion,1
-CFG045,Murder,Whitefield,Bengaluru,0.495,23,CRITICAL,"Email,Dashboard,SMS",,1
-CFG046,Eve Teasing,Koramangala,Bengaluru,0.778,82,HIGH,"SMS,Email",,1
-CFG047,Fraud,BTM,Bengaluru,0.665,63,MEDIUM,"SMS,Dashboard",,1
-CFG048,Drug Offense,Koramangala,Bengaluru,0.743,78,MEDIUM,"Email,Dashboard,SMS",,1
-CFG049,Extortion,Koramangala,Bengaluru,0.685,32,MEDIUM,"SMS,Email",Kidnapping,1
-CFG050,Assault,KR Puram,Bengaluru,0.457,15,CRITICAL,"SMS,Email",Murder,1
+CFG001,Robbery,Rohini,Delhi,0.45,14,CRITICAL,Dashboard,Extortion,1
+CFG002,Assault,Saket,Delhi,0.559,12,CRITICAL,"Email,Dashboard,SMS",Murder,1
+CFG003,Chain Snatching,Connaught Place,Delhi,0.551,119,HIGH,Dashboard,Assault,1
+CFG004,Burglary,Lajpat Nagar,Delhi,0.796,86,MEDIUM,"SMS,Dashboard",Assault,1
+CFG005,Drug Offense,Rohini,Delhi,0.732,39,HIGH,"SMS,Email",,1
+CFG006,Cybercrime,Saket,Delhi,0.606,66,MEDIUM,"SMS,Dashboard",,1
+CFG007,Drug Offense,Lajpat Nagar,Delhi,0.728,99,MEDIUM,"Email,Dashboard,SMS",,1
+CFG008,Murder,Rohini,Delhi,0.515,19,CRITICAL,"SMS,Dashboard",,1
+CFG009,Auto Theft,Saket,Delhi,0.744,63,HIGH,"SMS,Dashboard",,1
+CFG010,Burglary,Connaught Place,Delhi,0.691,102,HIGH,"Email,Dashboard,SMS",Assault,1
+CFG011,Chain Snatching,Saket,Delhi,0.757,115,MEDIUM,"SMS,Email",Robbery,1
+CFG012,Kidnapping,Connaught Place,Delhi,0.528,30,CRITICAL,"SMS,Dashboard",,1
+CFG013,Murder,Saket,Delhi,0.484,25,CRITICAL,"Email,Dashboard,SMS",,1
+CFG014,Chain Snatching,Lajpat Nagar,Delhi,0.704,102,HIGH,"SMS,Email",Assault,1
+CFG015,Drug Offense,Connaught Place,Delhi,0.684,78,HIGH,"SMS,Email",,1
+CFG016,Kidnapping,Lajpat Nagar,Delhi,0.482,19,CRITICAL,"SMS,Dashboard",,1
+CFG017,Burglary,Rohini,Delhi,0.79,34,MEDIUM,Dashboard,Robbery,1
+CFG018,Chain Snatching,Rohini,Delhi,0.791,37,MEDIUM,"SMS,Dashboard",Assault,1
+CFG019,Fraud,Lajpat Nagar,Delhi,0.744,113,MEDIUM,Dashboard,,1
+CFG020,Eve Teasing,Connaught Place,Delhi,0.773,75,HIGH,Dashboard,,1
+CFG021,Vandalism,Lajpat Nagar,Delhi,0.754,110,MEDIUM,"Email,Dashboard,SMS",,1
+CFG022,Burglary,Saket,Delhi,0.753,100,MEDIUM,"SMS,Email",Assault,1
+CFG023,Theft,Rohini,Delhi,0.757,115,MEDIUM,"SMS,Email",Robbery,1
+CFG024,Eve Teasing,Rohini,Delhi,0.78,54,HIGH,Dashboard,,1
+CFG025,Murder,Lajpat Nagar,Delhi,0.515,14,CRITICAL,"SMS,Dashboard",,1
+CFG026,Auto Theft,Connaught Place,Delhi,0.597,93,MEDIUM,Dashboard,,1
+CFG027,Robbery,Connaught Place,Delhi,0.497,19,CRITICAL,Dashboard,Extortion,1
+CFG028,Theft,Saket,Delhi,0.786,48,MEDIUM,"Email,Dashboard,SMS",Robbery,1
+CFG029,Kidnapping,Rohini,Delhi,0.583,21,CRITICAL,Dashboard,,1
+CFG030,Eve Teasing,Lajpat Nagar,Delhi,0.747,56,HIGH,"Email,Dashboard,SMS",,1
+CFG031,Robbery,Saket,Delhi,0.484,10,CRITICAL,"SMS,Dashboard",Assault,1
+CFG032,Extortion,Lajpat Nagar,Delhi,0.593,83,HIGH,"SMS,Dashboard",Kidnapping,1
+CFG033,Fraud,Saket,Delhi,0.728,49,HIGH,Dashboard,,1
+CFG034,Extortion,Connaught Place,Delhi,0.72,73,MEDIUM,Dashboard,Kidnapping,1
+CFG035,Cybercrime,Connaught Place,Delhi,0.795,110,MEDIUM,"SMS,Email",,1
+CFG036,Auto Theft,Lajpat Nagar,Delhi,0.679,106,HIGH,"Email,Dashboard,SMS",,1
+CFG037,Vandalism,Connaught Place,Delhi,0.71,100,MEDIUM,"SMS,Email",,1
+CFG038,Assault,Rohini,Delhi,0.52,30,CRITICAL,"Email,Dashboard,SMS",Extortion,1
+CFG039,Auto Theft,Rohini,Delhi,0.591,97,HIGH,"SMS,Dashboard",,1
+CFG040,Cybercrime,Lajpat Nagar,Delhi,0.658,52,HIGH,"SMS,Dashboard",,1
+CFG041,Assault,Connaught Place,Delhi,0.641,14,CRITICAL,"SMS,Dashboard",Murder,1
+CFG042,Fraud,Connaught Place,Delhi,0.612,48,MEDIUM,"SMS,Dashboard",,1
+CFG043,Theft,Lajpat Nagar,Delhi,0.553,41,HIGH,"SMS,Dashboard",Robbery,1
+CFG044,Robbery,Lajpat Nagar,Delhi,0.474,14,CRITICAL,"Email,Dashboard,SMS",Extortion,1
+CFG045,Murder,Connaught Place,Delhi,0.495,23,CRITICAL,"Email,Dashboard,SMS",,1
+CFG046,Eve Teasing,Saket,Delhi,0.778,82,HIGH,"SMS,Email",,1
+CFG047,Fraud,Rohini,Delhi,0.665,63,MEDIUM,"SMS,Dashboard",,1
+CFG048,Drug Offense,Saket,Delhi,0.743,78,MEDIUM,"Email,Dashboard,SMS",,1
+CFG049,Extortion,Saket,Delhi,0.685,32,MEDIUM,"SMS,Email",Kidnapping,1
+CFG050,Assault,Lajpat Nagar,Delhi,0.457,15,CRITICAL,"SMS,Email",Murder,1

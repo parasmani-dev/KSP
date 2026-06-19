@@ -27,15 +27,7 @@ except:
     df_open_cases = pd.DataFrame()
     df_mock_graph = pd.DataFrame()
 
-AREA_CENTROIDS = {
-    "Whitefield": (12.9698, 77.7500),
-    "KR Puram": (13.0035, 77.6934),
-    "Koramangala": (12.9352, 77.6245),
-    "BTM": (12.9166, 77.6101),
-    "Jayanagar": (12.9250, 77.5938),
-    "Electronic City": (12.8399, 77.6770),
-    "Marathahalli": (12.9591, 77.7014)
-}
+
 
 def haversine(lat1, lon1, lat2, lon2):
     R = 6371000
@@ -115,7 +107,7 @@ def get_investigation_recommendations(case_id: str = None):
 
 @router.get("/cctv")
 def get_cctv_recommendations(area: str, crime_type: str = ""):
-    if area not in AREA_CENTROIDS:
+    if df_cctv.empty or area not in df_cctv['area'].unique():
         raise HTTPException(status_code=404, detail="Area not in camera database")
         
     if df_cctv.empty:
@@ -125,7 +117,10 @@ def get_cctv_recommendations(area: str, crime_type: str = ""):
     if df_filtered.empty:
         return {"recommended_cameras": [], "reasons": ["No active cameras in this area"]}
         
-    c_lat, c_lon = AREA_CENTROIDS[area]
+    lat_col = 'latitude' if 'latitude' in df_filtered.columns else 'lat'
+    lon_col = 'longitude' if 'longitude' in df_filtered.columns else 'lng'
+    c_lat = df_filtered[lat_col].mean()
+    c_lon = df_filtered[lon_col].mean()
     cameras = []
     for _, row in df_filtered.iterrows():
         lat = row.get('lat', row.get('latitude', 0.0))

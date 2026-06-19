@@ -1,23 +1,25 @@
-import pandas as pd
+from collections import defaultdict
 import os
+import sys
 
-DATASET_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'Dataset')
+# Add parent directory to path to import graph_builder
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from graph.graph_builder import GRAPH
 
 def get_hotspots():
-    crime_records_path = os.path.join(DATASET_DIR, 'crime_records.csv')
-    try:
-        df = pd.read_csv(crime_records_path)
-    except FileNotFoundError:
-        return []
-        
-    if 'area' not in df.columns:
-        return []
-        
-    hotspots = df.groupby('area').size().reset_index(name='crime_count')
-    hotspots = hotspots.sort_values(by='crime_count', ascending=False)
+    area_counts = defaultdict(int)
     
-    if 'lat' in df.columns and 'long' in df.columns:
-        coords = df.groupby('area')[['lat', 'long']].mean().reset_index()
-        hotspots = pd.merge(hotspots, coords, on='area')
+    # Iterate through all nodes to find Cases and their areas
+    for node, data in GRAPH.nodes(data=True):
+        if data.get('type') == 'Case':
+            area = data.get('area')
+            if area:
+                area_counts[area] += 1
+                
+    if not area_counts:
+        return []
         
-    return hotspots.to_dict(orient='records')
+    hotspots = [{"area": area, "crime_count": count} for area, count in area_counts.items()]
+    hotspots = sorted(hotspots, key=lambda x: x['crime_count'], reverse=True)
+    
+    return hotspots

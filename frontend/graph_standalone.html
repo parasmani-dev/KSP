@@ -12,7 +12,9 @@
     <!-- Fonts: Inter for UI, JetBrains Mono for data values -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.26.0/cytoscape.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         /* ───────────────────────────────────────────
@@ -26,8 +28,8 @@
             --danger:     #f85149;
             --success:    #3fb950;
             --text:       #e6edf3;
-            --text-sec:   #8b949e;
-            --text-muted: #484f58;
+            --text-sec:   #a0aab4;
+            --text-muted: #6e7681;
 
             /* Node type colors */
             --c-citizen:  #58a6ff;
@@ -37,9 +39,12 @@
             --c-org:      #bc8cff;
             --c-default:  #484f58;
 
-            /* Dynamic text scale (set via JS) */
-            --label-size: 0.72rem;
-            --value-size: 0.9rem;
+            /* Panel width — 1/4 of screen */
+            --panel-w: 25vw;
+
+            /* Text — large and clear */
+            --label-size: 0.85rem;
+            --value-size: 1.05rem;
         }
 
         /* ───────────────────────────────────────────
@@ -111,6 +116,18 @@
             position: relative;
         }
 
+        /* Subtle dot-grid texture over the canvas */
+        #cy::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, #30363d 1px, transparent 1px);
+            background-size: 32px 32px;
+            opacity: 0.18;
+            pointer-events: none;
+            z-index: 0;
+        }
+
         /* ───────────────────────────────────────────
            TOP BAR
         ─────────────────────────────────────────── */
@@ -118,14 +135,14 @@
             position: absolute;
             top: 0;
             left: 0;
-            right: 320px;
-            padding: 14px 20px;
+            right: var(--panel-w);
+            padding: 16px 24px;
             display: flex;
             align-items: center;
             gap: 16px;
             z-index: 10;
             pointer-events: none;
-            background: linear-gradient(to bottom, rgba(13,17,23,0.95) 60%, transparent);
+            background: linear-gradient(to bottom, rgba(13,17,23,0.98) 65%, transparent);
         }
 
         .brand-mark {
@@ -173,51 +190,51 @@
             align-items: center;
             gap: 0;
             width: 100%;
-            max-width: 520px;
+            max-width: 720px;
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 6px;
+            border-radius: 8px;
             overflow: hidden;
             transition: border-color 0.2s;
         }
 
         .search-inner:focus-within {
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.12), 0 0 16px rgba(88, 166, 255, 0.08);
         }
 
         .search-icon {
-            padding: 0 12px;
+            padding: 0 16px;
             color: var(--text-muted);
-            font-size: 14px;
+            font-size: 18px;
             line-height: 1;
             flex-shrink: 0;
         }
 
         .search-input {
             flex: 1;
-            padding: 10px 0;
+            padding: 14px 0;
             border: none;
             background: transparent;
             color: var(--text);
             font-family: 'Inter', system-ui, sans-serif;
-            font-size: 0.875rem;
+            font-size: 1.1rem;
             outline: none;
         }
 
         .search-input::placeholder { color: var(--text-muted); }
 
         .search-btn {
-            padding: 0 16px;
-            height: 38px;
+            padding: 0 24px;
+            height: 48px;
             background: var(--accent);
             color: #0d1117;
             border: none;
             font-family: 'Inter', system-ui, sans-serif;
-            font-size: 0.8rem;
-            font-weight: 600;
+            font-size: 0.95rem;
+            font-weight: 700;
             cursor: pointer;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.06em;
             transition: background 0.15s;
             flex-shrink: 0;
         }
@@ -253,10 +270,12 @@
         .controls {
             position: absolute;
             bottom: 80px;
-            right: 340px;
+            right: 460px;
             display: flex;
             flex-direction: column;
-            background: var(--surface);
+            background: rgba(22, 27, 34, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--border);
             border-radius: 6px;
             overflow: hidden;
@@ -291,7 +310,9 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            background: var(--surface);
+            background: rgba(22, 27, 34, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--border);
             border-radius: 6px;
             padding: 8px 14px;
@@ -331,16 +352,17 @@
            INSPECTOR PANEL (right rail)
         ─────────────────────────────────────────── */
         .sidebar {
-            width: 320px;
+            width: var(--panel-w);
             flex-shrink: 0;
-            background: var(--surface);
+            background: linear-gradient(180deg, #1a2030 0%, #161b22 60%);
             border-left: 1px solid var(--border);
             display: flex;
             flex-direction: column;
             z-index: 10;
             position: relative;
             transform: translateX(100%);
-            transition: transform 0.25s ease;
+            transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: -8px 0 40px rgba(0, 0, 0, 0.5);
         }
 
         .sidebar.open {
@@ -350,49 +372,66 @@
         /* When sidebar is closed, the canvas takes full width */
         body.panel-closed .top-bar { right: 0; }
         body.panel-closed .controls { right: 20px; }
+        body:not(.panel-closed) .top-bar { right: var(--panel-w); }
+        body:not(.panel-closed) .controls { right: calc(var(--panel-w) + 20px); }
 
         /* Panel header */
         .sidebar-header {
-            padding: 16px 18px 14px;
+            padding: 22px 24px 18px;
             border-bottom: 1px solid var(--border);
             position: relative;
+            background: linear-gradient(135deg, rgba(88,166,255,0.06) 0%, transparent 60%);
+        }
+
+        /* Accent top-edge glow on header */
+        .sidebar-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.5;
         }
 
         .panel-meta {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         /* Colored type badge */
         .type-badge {
             display: inline-block;
-            padding: 2px 8px;
+            padding: 3px 10px;
             border-radius: 20px;
-            font-size: 0.65rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
+            font-family: 'Inter', system-ui, sans-serif;
         }
 
         .sidebar-title {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1rem;
+            font-size: 1.4rem;
             font-weight: 500;
             color: var(--text);
             word-break: break-all;
-            line-height: 1.3;
+            line-height: 1.4;
             margin: 0;
+            text-shadow: 0 0 20px rgba(88,166,255,0.2);
         }
 
         /* Panel header controls */
         .panel-controls {
             position: absolute;
-            top: 14px;
-            right: 14px;
+            top: 18px;
+            right: 18px;
             display: flex;
-            gap: 4px;
+            gap: 6px;
         }
 
         .panel-controls button {
@@ -400,9 +439,9 @@
             border: 1px solid var(--border);
             color: var(--text-muted);
             border-radius: 4px;
-            width: 26px;
-            height: 26px;
-            font-size: 11px;
+            width: 42px;
+            height: 42px;
+            font-size: 18px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
@@ -418,37 +457,105 @@
 
         /* AI Explanation block */
         .ai-block {
-            margin: 14px 18px 0;
-            padding: 12px 14px;
+            margin: 16px 24px 0;
+            padding: 18px 20px;
             border-left: 3px solid var(--accent);
-            background: rgba(88, 166, 255, 0.05);
-            border-radius: 0 4px 4px 0;
-            font-size: var(--label-size, 0.72rem);
-            line-height: 1.6;
+            background: linear-gradient(135deg, rgba(88, 166, 255, 0.07), rgba(88, 166, 255, 0.03));
+            border-radius: 0 6px 6px 0;
+            font-size: var(--value-size, 1.05rem);
+            line-height: 1.8;
             color: var(--text-sec);
             display: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle shimmer sweep */
+        .ai-block::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(105deg, transparent 40%, rgba(88,166,255,0.04) 50%, transparent 60%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(200%); }
         }
 
         .ai-block .ai-label {
-            font-size: 0.6rem;
-            font-weight: 600;
-            letter-spacing: 0.12em;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
             color: var(--accent);
-            margin-bottom: 6px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ai-block .ai-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border), transparent);
         }
 
         .ai-block.error {
             border-left-color: var(--danger);
-            background: rgba(248, 81, 73, 0.05);
+            background: linear-gradient(135deg, rgba(248, 81, 73, 0.07), rgba(248, 81, 73, 0.03));
             color: var(--danger);
         }
 
+        .ai-block.error::after { display: none; }
+
         /* Properties table */
         .sidebar-content {
-            padding: 14px 18px 18px;
+            padding: 18px 24px 24px;
             overflow-y: auto;
             flex-grow: 1;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border) transparent;
+        }
+
+        .sidebar-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar-content::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        .sidebar-content::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        /* Section label above table */
+        .props-section-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .props-section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
         }
 
         .props-table {
@@ -456,37 +563,58 @@
             border-collapse: collapse;
         }
 
+        .props-table tr {
+            transition: background 0.1s;
+        }
+
+        .props-table tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+
         .props-table tr + tr td {
-            border-top: 1px solid var(--border);
+            border-top: 1px solid rgba(48, 54, 61, 0.6);
         }
 
         .props-table td {
-            padding: 8px 0;
-            vertical-align: top;
-            font-size: var(--value-size, 0.9rem);
+            padding: 13px 6px;
+            vertical-align: middle;
+            font-size: var(--value-size, 1.05rem);
         }
 
         .props-table td.key {
-            color: var(--text-muted);
-            font-size: var(--label-size, 0.72rem);
+            color: var(--text-sec);
+            font-size: var(--label-size, 0.85rem);
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            width: 40%;
-            padding-right: 12px;
+            letter-spacing: 0.06em;
+            width: 35%;
+            padding-right: 16px;
+            padding-left: 0;
+            font-weight: 600;
         }
 
         .props-table td.val {
             font-family: 'JetBrains Mono', monospace;
             color: var(--text);
             word-break: break-word;
+            font-size: var(--value-size, 1.05rem);
         }
 
         .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 60px 20px;
             color: var(--text-muted);
             font-size: 0.8rem;
             text-align: center;
-            padding: 40px 0;
-            font-style: italic;
+        }
+
+        .empty-state::before {
+            content: '○';
+            font-size: 2rem;
+            opacity: 0.2;
         }
 
         /* ───────────────────────────────────────────
@@ -528,6 +656,33 @@
                 <button id="search-btn" class="search-btn">SEARCH</button>
             </div>
             <div id="toast" class="search-toast">No matches found</div>
+        </div>
+    </div>
+
+    <!-- Dashboard Left Panels -->
+    <div class="dashboard-left">
+        <!-- Centrality Panel -->
+        <div class="dash-panel" id="panel-centrality">
+            <h3>★ Top Suspects</h3>
+            <ul class="dash-list" id="list-centrality">
+                <li style="color:var(--text-muted); font-size:0.8rem; background:none;">Loading leaderboard...</li>
+            </ul>
+        </div>
+        
+        <!-- Communities Panel -->
+        <div class="dash-panel" id="panel-communities">
+            <h3>⬡ Detected Networks</h3>
+            <ul class="dash-list" id="list-communities">
+                <li style="color:var(--text-muted); font-size:0.8rem; background:none;">Loading communities...</li>
+            </ul>
+        </div>
+        
+        <!-- Hotspots Panel -->
+        <div class="dash-panel" id="panel-hotspots">
+            <h3>📍 Crime Hotspots</h3>
+            <div class="chart-container">
+                <canvas id="hotspotsChart"></canvas>
+            </div>
         </div>
     </div>
 
@@ -603,36 +758,37 @@
                     'label': 'data(id)',
                     'color': '#e6edf3',
                     'text-valign': 'bottom',
-                    'text-margin-y': 6,
-                    'font-size': '11px',
-                    'font-family': 'JetBrains Mono, monospace',
-                    'min-zoomed-font-size': 8,
-                    'text-outline-width': 2,
+                    'text-margin-y': 8,
+                    'font-size': '16px',
+                    'font-family': 'Inter, system-ui, sans-serif',
+                    'font-weight': '500',
+                    'min-zoomed-font-size': 10,
+                    'text-outline-width': 3,
                     'text-outline-color': '#0d1117',
                     'background-color': '#484f58',
-                    'width': 30,
-                    'height': 30
+                    'width': 46,
+                    'height': 46
                 }
             },
             {
                 selector: 'node[type = "Citizen"]',
-                style: { 'background-color': '#58a6ff', 'width': 34, 'height': 34 }
+                style: { 'background-color': '#58a6ff', 'width': 50, 'height': 50 }
             },
             {
                 selector: 'node[type = "Case"]',
-                style: { 'background-color': '#e3b341', 'shape': 'rectangle', 'width': 30, 'height': 30 }
+                style: { 'background-color': '#e3b341', 'shape': 'rectangle', 'width': 46, 'height': 46 }
             },
             {
                 selector: 'node[type = "Vehicle"]',
-                style: { 'background-color': '#8b949e', 'shape': 'triangle', 'width': 30, 'height': 30 }
+                style: { 'background-color': '#8b949e', 'shape': 'triangle', 'width': 46, 'height': 46 }
             },
             {
                 selector: 'node[type = "Location"]',
-                style: { 'background-color': '#3fb950', 'shape': 'diamond', 'width': 30, 'height': 30 }
+                style: { 'background-color': '#3fb950', 'shape': 'diamond', 'width': 50, 'height': 50 }
             },
             {
                 selector: 'node[type = "Organization"]',
-                style: { 'background-color': '#bc8cff', 'shape': 'hexagon', 'width': 38, 'height': 38 }
+                style: { 'background-color': '#bc8cff', 'shape': 'hexagon', 'width': 56, 'height': 56 }
             },
             // Edges — dark at rest
             {
@@ -648,10 +804,12 @@
             {
                 selector: 'node.highlighted',
                 style: {
-                    'border-width': 2,
+                    'border-width': 3,
                     'border-color': '#58a6ff',
+                    'border-opacity': 1,
                     'opacity': 1,
                     'z-index': 100,
+                    'box-shadow': '0 0 20px #58a6ff'
                 }
             },
             // Highlighted edge
@@ -659,7 +817,7 @@
                 selector: 'edge.highlighted',
                 style: {
                     'line-color': '#58a6ff',
-                    'width': 2,
+                    'width': 2.5,
                     'opacity': 1,
                     'z-index': 99
                 }
@@ -811,14 +969,14 @@
 
             document.getElementById('btn-text-plus').addEventListener('click', () => {
                 textZoom = Math.min(textZoom + 0.15, 2.5);
-                root.style.setProperty('--label-size', `${0.72 * textZoom}rem`);
-                root.style.setProperty('--value-size', `${0.9 * textZoom}rem`);
+                root.style.setProperty('--label-size', `${0.85 * textZoom}rem`);
+                root.style.setProperty('--value-size', `${1.05 * textZoom}rem`);
             });
 
             document.getElementById('btn-text-minus').addEventListener('click', () => {
                 textZoom = Math.max(textZoom - 0.15, 0.6);
-                root.style.setProperty('--label-size', `${0.72 * textZoom}rem`);
-                root.style.setProperty('--value-size', `${0.9 * textZoom}rem`);
+                root.style.setProperty('--label-size', `${0.85 * textZoom}rem`);
+                root.style.setProperty('--value-size', `${1.05 * textZoom}rem`);
             });
 
             // ── Close panel ───────────────────────────────
@@ -832,60 +990,73 @@
         // SIDEBAR HELPERS
         // ─────────────────────────────────────────────────────
         function openSidebar(data) {
-            const sidebar = document.getElementById('sidebar');
-            const nodeType = data.type || 'Unknown';
-            const color = typeColor(nodeType);
+            try {
+                const sidebar = document.getElementById('sidebar');
+                const nodeType = data.type || 'Unknown';
+                const color = typeColor(nodeType);
 
-            // Badge
-            const badge = document.getElementById('panel-badge');
-            badge.innerText = nodeType;
-            badge.style.background = color + '22'; // 13% opacity fill
-            badge.style.color = color;
-            badge.style.border = `1px solid ${color}55`;
+                // Badge
+                const badge = document.getElementById('panel-badge');
+                badge.innerText = nodeType;
+                badge.style.background = color + '22'; // 13% opacity fill
+                badge.style.color = color;
+                badge.style.border = `1px solid ${color}55`;
 
-            // Title (node ID)
-            document.getElementById('panel-title').innerText = data.id || 'Unknown';
+                // Title (node ID)
+                document.getElementById('panel-title').innerText = data.id || 'Unknown';
 
-            // Properties table
-            const content = document.getElementById('panel-content');
-            const skipKeys = ['id', 'type', 'name'];
-            const entries = Object.entries(data).filter(([k, v]) =>
-                !skipKeys.includes(k) && v !== null && v !== undefined
-            );
+                // Properties table
+                const content = document.getElementById('panel-content');
+                const skipKeys = ['id', 'type', 'name'];
+                const entries = Object.entries(data).filter(([k, v]) =>
+                    !skipKeys.includes(k) && v !== null && v !== undefined
+                );
 
-            if (entries.length === 0) {
-                content.innerHTML = '<div class="empty-state">No additional attributes.</div>';
-            } else {
-                const table = document.createElement('table');
-                table.className = 'props-table';
-                entries.forEach(([k, v]) => {
-                    const tr = document.createElement('tr');
-                    const tdKey = document.createElement('td');
-                    tdKey.className = 'key';
-                    tdKey.innerText = k.replace(/_/g, ' ');
-                    const tdVal = document.createElement('td');
-                    tdVal.className = 'val';
-                    tdVal.innerText = typeof v === 'object' ? JSON.stringify(v) : v;
-                    tr.appendChild(tdKey);
-                    tr.appendChild(tdVal);
-                    table.appendChild(tr);
-                });
-                content.innerHTML = '';
-                content.appendChild(table);
+                if (entries.length === 0) {
+                    content.innerHTML = '<div class="empty-state">No additional attributes.</div>';
+                } else {
+                    const label = document.createElement('div');
+                    label.className = 'props-section-label';
+                    label.innerText = 'Attributes';
+                    const table = document.createElement('table');
+                    table.className = 'props-table';
+                    entries.forEach(([k, v]) => {
+                        const tr = document.createElement('tr');
+                        const tdKey = document.createElement('td');
+                        tdKey.className = 'key';
+                        tdKey.innerText = String(k).replace(/_/g, ' ');
+                        const tdVal = document.createElement('td');
+                        tdVal.className = 'val';
+                        tdVal.innerText = typeof v === 'object' ? JSON.stringify(v) : String(v);
+                        tr.appendChild(tdKey);
+                        tr.appendChild(tdVal);
+                        table.appendChild(tr);
+                    });
+                    content.innerHTML = '';
+                    content.appendChild(label);
+                    content.appendChild(table);
+                }
+
+                // Show AI block in loading state
+                const aiBlock = document.getElementById('ai-explanation');
+                aiBlock.style.display = 'block';
+                aiBlock.className = 'ai-block';
+                document.getElementById('ai-text').innerText = 'Generating narrative...';
+
+                // Open panel
+                sidebar.classList.add('open');
+                document.body.classList.remove('panel-closed');
+
+                // Nudge zoom controls to clear the panel
+                document.getElementById('zoom-controls').style.right = `calc(25vw + 20px)`;
+            } catch (err) {
+                console.error("Sidebar Error:", err);
+                const sidebar = document.getElementById('sidebar');
+                document.getElementById('panel-title').innerText = 'Error Rendering Panel';
+                document.getElementById('panel-content').innerHTML = `<div class="empty-state" style="color: red;">${err.message}</div>`;
+                sidebar.classList.add('open');
+                document.body.classList.remove('panel-closed');
             }
-
-            // Show AI block in loading state
-            const aiBlock = document.getElementById('ai-explanation');
-            aiBlock.style.display = 'block';
-            aiBlock.className = 'ai-block';
-            document.getElementById('ai-text').innerText = 'Generating narrative...';
-
-            // Open panel
-            sidebar.classList.add('open');
-            document.body.classList.remove('panel-closed');
-
-            // Nudge zoom controls
-            document.getElementById('zoom-controls').style.right = '340px';
         }
 
         function closeSidebar() {
@@ -958,9 +1129,94 @@
         }
 
         // ─────────────────────────────────────────────────────
+        // DASHBOARD FETCHING (Centrality, Communities, Hotspots)
+        // ─────────────────────────────────────────────────────
+        async function loadDashboard() {
+            // 1. Centrality
+            try {
+                const res = await fetch(`${API_BASE}/graph/centrality`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const list = document.getElementById('list-centrality');
+                    list.innerHTML = '';
+                    const top5 = data.top_centrality.slice(0, 5);
+                    top5.forEach(item => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<span>${item.id}</span> <span class="dash-score">${item.score.toFixed(3)}</span>`;
+                        list.appendChild(li);
+                    });
+                }
+            } catch (e) { console.error("Centrality fetch failed:", e); }
+
+            // 2. Communities
+            try {
+                const res = await fetch(`${API_BASE}/graph/communities`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const list = document.getElementById('list-communities');
+                    list.innerHTML = '';
+                    const groups = Object.keys(data.communities).slice(0, 4); // Show top 4
+                    groups.forEach(groupName => {
+                        const li = document.createElement('li');
+                        const count = data.communities[groupName].length;
+                        li.innerHTML = `<span>Group: ${groupName}</span> <span class="dash-score">${count} nodes</span>`;
+                        list.appendChild(li);
+                    });
+                }
+            } catch (e) { console.error("Communities fetch failed:", e); }
+
+            // 3. Hotspots
+            try {
+                const res = await fetch(`${API_BASE}/graph/hotspots`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const topSpots = data.hotspots.slice(0, 5);
+                    
+                    const labels = topSpots.map(h => h.area);
+                    const counts = topSpots.map(h => h.crime_count);
+                    
+                    const ctx = document.getElementById('hotspotsChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Crime Count',
+                                data: counts,
+                                backgroundColor: '#f85149',
+                                borderRadius: 4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { display: false }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    grid: { color: '#30363d' },
+                                    ticks: { color: '#6e7681', stepSize: 1 }
+                                },
+                                x: {
+                                    grid: { display: false },
+                                    ticks: { color: '#a0aab4', font: { size: 10 } }
+                                }
+                            }
+                        }
+                    });
+                }
+            } catch (e) { console.error("Hotspots fetch failed:", e); }
+        }
+
+        // ─────────────────────────────────────────────────────
         // START
         // ─────────────────────────────────────────────────────
-        document.addEventListener('DOMContentLoaded', loadGraph);
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGraph();
+            loadDashboard();
+        });
     </script>
 </body>
 </html>

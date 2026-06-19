@@ -41,7 +41,7 @@ class AlertManager:
             # Fallback default if not found
             threshold = 0.85
             cooldown = 30
-            severity = "HIGH"
+            severity = "High"
         else:
             row = match.iloc[0]
             threshold = float(row['risk_threshold'])

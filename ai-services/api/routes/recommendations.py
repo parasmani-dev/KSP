@@ -70,7 +70,7 @@ def get_patrol_recommendations():
 @router.get("/investigation")
 def get_investigation_recommendations(case_id: str = None):
     if df_open_cases.empty or df_mock_graph.empty:
-        return {"recommendations": [], "reasons": ["Data missing"]}
+        return {"recommendations": [], "reasons": [{"code": "MISSING_DATA", "value": "Data missing"}]}
 
     df_join = pd.merge(df_open_cases, df_mock_graph, on="case_id", how="inner")
     recommendations = []
@@ -111,11 +111,11 @@ def get_cctv_recommendations(area: str, crime_type: str = ""):
         raise HTTPException(status_code=404, detail="Area not in camera database")
         
     if df_cctv.empty:
-        return {"recommended_cameras": [], "reasons": ["No active cameras in this area"]}
+        return {"recommended_cameras": [], "reasons": [{"code": "NO_CAMERAS", "value": "No active cameras in this area"}]}
         
     df_filtered = df_cctv[(df_cctv['status'].astype(str).str.lower() == 'active') & (df_cctv['area'] == area)]
     if df_filtered.empty:
-        return {"recommended_cameras": [], "reasons": ["No active cameras in this area"]}
+        return {"recommended_cameras": [], "reasons": [{"code": "NO_CAMERAS", "value": "No active cameras in this area"}]}
         
     lat_col = 'latitude' if 'latitude' in df_filtered.columns else 'lat'
     lon_col = 'longitude' if 'longitude' in df_filtered.columns else 'lng'
@@ -140,7 +140,7 @@ def get_cctv_recommendations(area: str, crime_type: str = ""):
     top_cams = cameras[:5]
     
     if not top_cams:
-        return {"recommended_cameras": [], "reasons": ["No active cameras in this area"]}
+        return {"recommended_cameras": [], "reasons": [{"code": "NO_CAMERAS", "value": "No active cameras in this area"}]}
         
     nearest_dist = top_cams[0]['distance_from_centroid_m']
     nearest_id = top_cams[0]['camera_id']

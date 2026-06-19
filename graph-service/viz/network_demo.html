@@ -437,9 +437,9 @@
             border: 1px solid var(--border);
             color: var(--text-muted);
             border-radius: 4px;
-            width: 30px;
-            height: 30px;
-            font-size: 13px;
+            width: 42px;
+            height: 42px;
+            font-size: 18px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
@@ -460,7 +460,7 @@
             border-left: 3px solid var(--accent);
             background: linear-gradient(135deg, rgba(88, 166, 255, 0.07), rgba(88, 166, 255, 0.03));
             border-radius: 0 6px 6px 0;
-            font-size: 1rem;
+            font-size: var(--value-size, 1.05rem);
             line-height: 1.8;
             color: var(--text-sec);
             display: none;
@@ -940,14 +940,14 @@
 
             document.getElementById('btn-text-plus').addEventListener('click', () => {
                 textZoom = Math.min(textZoom + 0.15, 2.5);
-                root.style.setProperty('--label-size', `${0.72 * textZoom}rem`);
-                root.style.setProperty('--value-size', `${0.9 * textZoom}rem`);
+                root.style.setProperty('--label-size', `${0.85 * textZoom}rem`);
+                root.style.setProperty('--value-size', `${1.05 * textZoom}rem`);
             });
 
             document.getElementById('btn-text-minus').addEventListener('click', () => {
                 textZoom = Math.max(textZoom - 0.15, 0.6);
-                root.style.setProperty('--label-size', `${0.72 * textZoom}rem`);
-                root.style.setProperty('--value-size', `${0.9 * textZoom}rem`);
+                root.style.setProperty('--label-size', `${0.85 * textZoom}rem`);
+                root.style.setProperty('--value-size', `${1.05 * textZoom}rem`);
             });
 
             // ── Close panel ───────────────────────────────

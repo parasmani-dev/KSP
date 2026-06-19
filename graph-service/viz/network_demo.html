@@ -26,7 +26,7 @@
             --danger:     #f85149;
             --success:    #3fb950;
             --text:       #e6edf3;
-            --text-sec:   #8b949e;
+            --text-sec:   #a0aab4;
             --text-muted: #6e7681;
 
             /* Node type colors */
@@ -37,9 +37,12 @@
             --c-org:      #bc8cff;
             --c-default:  #484f58;
 
-            /* Text scale — readable defaults */
-            --label-size: 0.78rem;
-            --value-size: 1rem;
+            /* Panel width — 1/4 of screen */
+            --panel-w: 25vw;
+
+            /* Text — large and clear */
+            --label-size: 0.85rem;
+            --value-size: 1.05rem;
         }
 
         /* ───────────────────────────────────────────
@@ -130,7 +133,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            right: 520px;
+            right: var(--panel-w);
             padding: 16px 24px;
             display: flex;
             align-items: center;
@@ -347,7 +350,7 @@
            INSPECTOR PANEL (right rail)
         ─────────────────────────────────────────── */
         .sidebar {
-            width: 520px;
+            width: var(--panel-w);
             flex-shrink: 0;
             background: linear-gradient(180deg, #1a2030 0%, #161b22 60%);
             border-left: 1px solid var(--border);
@@ -367,8 +370,8 @@
         /* When sidebar is closed, the canvas takes full width */
         body.panel-closed .top-bar { right: 0; }
         body.panel-closed .controls { right: 20px; }
-        body:not(.panel-closed) .top-bar { right: 520px; }
-        body:not(.panel-closed) .controls { right: 540px; }
+        body:not(.panel-closed) .top-bar { right: var(--panel-w); }
+        body:not(.panel-closed) .controls { right: calc(var(--panel-w) + 20px); }
 
         /* Panel header */
         .sidebar-header {
@@ -411,7 +414,7 @@
 
         .sidebar-title {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1.25rem;
+            font-size: 1.4rem;
             font-weight: 500;
             color: var(--text);
             word-break: break-all;
@@ -453,12 +456,12 @@
         /* AI Explanation block */
         .ai-block {
             margin: 16px 24px 0;
-            padding: 16px 18px;
+            padding: 18px 20px;
             border-left: 3px solid var(--accent);
             background: linear-gradient(135deg, rgba(88, 166, 255, 0.07), rgba(88, 166, 255, 0.03));
             border-radius: 0 6px 6px 0;
-            font-size: 0.92rem;
-            line-height: 1.75;
+            font-size: 1rem;
+            line-height: 1.8;
             color: var(--text-sec);
             display: none;
             position: relative;
@@ -480,12 +483,12 @@
         }
 
         .ai-block .ai-label {
-            font-size: 0.65rem;
+            font-size: 0.72rem;
             font-weight: 700;
             letter-spacing: 0.14em;
             text-transform: uppercase;
             color: var(--accent);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -534,9 +537,9 @@
 
         /* Section label above table */
         .props-section-label {
-            font-size: 0.65rem;
+            font-size: 0.72rem;
             font-weight: 700;
-            letter-spacing: 0.14em;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
             color: var(--text-muted);
             margin-bottom: 10px;
@@ -571,27 +574,27 @@
         }
 
         .props-table td {
-            padding: 11px 6px;
+            padding: 13px 6px;
             vertical-align: middle;
-            font-size: var(--value-size, 1rem);
+            font-size: var(--value-size, 1.05rem);
         }
 
         .props-table td.key {
             color: var(--text-sec);
-            font-size: var(--label-size, 0.78rem);
+            font-size: var(--label-size, 0.85rem);
             text-transform: uppercase;
             letter-spacing: 0.06em;
             width: 35%;
             padding-right: 16px;
             padding-left: 0;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .props-table td.val {
             font-family: 'JetBrains Mono', monospace;
             color: var(--text);
             word-break: break-word;
-            font-size: var(--value-size, 1rem);
+            font-size: var(--value-size, 1.05rem);
         }
 
         .empty-state {
@@ -1014,8 +1017,8 @@
             sidebar.classList.add('open');
             document.body.classList.remove('panel-closed');
 
-            // Nudge zoom controls
-            document.getElementById('zoom-controls').style.right = '540px';
+            // Nudge zoom controls to clear the panel
+            document.getElementById('zoom-controls').style.right = `calc(25vw + 20px)`;
         }
 
         function closeSidebar() {

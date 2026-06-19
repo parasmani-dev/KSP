@@ -1092,31 +1092,22 @@
         // SEARCH
         // ─────────────────────────────────────────────────────
         async function performSearch() {
-            const query = document.getElementById('search-input').value.trim();
+            const query = document.getElementById('search-input').value.trim().toLowerCase();
             if (!query) return;
 
-            try {
-                const res = await fetch(`${API_BASE}/graph/search?name=${encodeURIComponent(query)}`);
-                if (!res.ok) throw new Error("Search API failed");
-                const data = await res.json();
+            // Search natively inside Cytoscape's loaded nodes
+            const targetNodes = cy.nodes().filter(node => 
+                String(node.id()).toLowerCase().includes(query) || 
+                (node.data('name') && String(node.data('name')).toLowerCase().includes(query))
+            );
 
-                if (data.network && data.network.nodes && data.network.nodes.length > 0) {
-                    const matchId = data.network.nodes[0].id;
-                    const targetNode = cy.getElementById(matchId);
-
-                    if (targetNode.length > 0) {
-                        cy.elements().removeClass('highlighted dimmed pulse');
-                        targetNode.trigger('tap');
-                        cy.animate({ center: { eles: targetNode }, zoom: 1.5 }, { duration: 500 });
-                    } else {
-                        showToast("Node found in API but missing from canvas.", false);
-                    }
-                } else {
-                    showToast("No matches found.", false);
-                }
-            } catch (e) {
-                console.error(e);
-                showToast("⚠ Search failed — network error.", true);
+            if (targetNodes.length > 0) {
+                const targetNode = targetNodes[0];
+                cy.elements().removeClass('highlighted dimmed pulse');
+                targetNode.trigger('tap'); // Triggers openSidebar and highlighting
+                cy.animate({ center: { eles: targetNode }, zoom: 0.8 }, { duration: 500 });
+            } else {
+                showToast("No matches found.", false);
             }
         }
 

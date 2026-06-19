@@ -115,7 +115,7 @@ def get_investigation_recommendations(case_id: str = None):
 @router.get("/cctv")
 def get_cctv_recommendations(area: str, crime_type: str = ""):
     if area not in AREA_CENTROIDS:
-        return HTTPException(status_code=404, detail="Area not in camera database")
+        raise HTTPException(status_code=404, detail="Area not in camera database")
         
     if df_cctv.empty:
         return {"recommended_cameras": [], "reasons": ["No active cameras in this area"]}

@@ -68,6 +68,9 @@ def listen_to_stream():
     except Exception as e:
         print(f"Stream error: {e}")
 
+# Test 4 requires live server: 
+# run `uvicorn api.main:app --port 8000` 
+# in a separate terminal before executing
 print("Test 4 - SSE stream end-to-end:")
 # Start listener in background thread
 t = threading.Thread(target=listen_to_stream)

@@ -16,7 +16,7 @@ SAVED_DIR = os.path.join(BASE_DIR, "models", "saved")
 models = {}
 
 def get_risk_bucket(score: float) -> str:
-    """Unified risk bucket math mapping 0-100 score to Ideation spec labels."""
+    """Unified risk bucket math mapping 0.0-1.0 probability score to Ideation spec labels."""
     if score >= 0.86:
         return "Critical"
     elif score >= 0.61:

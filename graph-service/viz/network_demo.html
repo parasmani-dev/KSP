@@ -961,64 +961,73 @@
         // SIDEBAR HELPERS
         // ─────────────────────────────────────────────────────
         function openSidebar(data) {
-            const sidebar = document.getElementById('sidebar');
-            const nodeType = data.type || 'Unknown';
-            const color = typeColor(nodeType);
+            try {
+                const sidebar = document.getElementById('sidebar');
+                const nodeType = data.type || 'Unknown';
+                const color = typeColor(nodeType);
 
-            // Badge
-            const badge = document.getElementById('panel-badge');
-            badge.innerText = nodeType;
-            badge.style.background = color + '22'; // 13% opacity fill
-            badge.style.color = color;
-            badge.style.border = `1px solid ${color}55`;
+                // Badge
+                const badge = document.getElementById('panel-badge');
+                badge.innerText = nodeType;
+                badge.style.background = color + '22'; // 13% opacity fill
+                badge.style.color = color;
+                badge.style.border = `1px solid ${color}55`;
 
-            // Title (node ID)
-            document.getElementById('panel-title').innerText = data.id || 'Unknown';
+                // Title (node ID)
+                document.getElementById('panel-title').innerText = data.id || 'Unknown';
 
-            // Properties table
-            const content = document.getElementById('panel-content');
-            const skipKeys = ['id', 'type', 'name'];
-            const entries = Object.entries(data).filter(([k, v]) =>
-                !skipKeys.includes(k) && v !== null && v !== undefined
-            );
+                // Properties table
+                const content = document.getElementById('panel-content');
+                const skipKeys = ['id', 'type', 'name'];
+                const entries = Object.entries(data).filter(([k, v]) =>
+                    !skipKeys.includes(k) && v !== null && v !== undefined
+                );
 
-            if (entries.length === 0) {
-                content.innerHTML = '<div class="empty-state">No additional attributes.</div>';
-            } else {
-                const label = document.createElement('div');
-                label.className = 'props-section-label';
-                label.innerText = 'Attributes';
-                const table = document.createElement('table');
-                table.className = 'props-table';
-                entries.forEach(([k, v]) => {
-                    const tr = document.createElement('tr');
-                    const tdKey = document.createElement('td');
-                    tdKey.className = 'key';
-                    tdKey.innerText = k.replace(/_/g, ' ');
-                    const tdVal = document.createElement('td');
-                    tdVal.className = 'val';
-                    tdVal.innerText = typeof v === 'object' ? JSON.stringify(v) : v;
-                    tr.appendChild(tdKey);
-                    tr.appendChild(tdVal);
-                    table.appendChild(tr);
-                });
-                content.innerHTML = '';
-                content.appendChild(label);
-                content.appendChild(table);
+                if (entries.length === 0) {
+                    content.innerHTML = '<div class="empty-state">No additional attributes.</div>';
+                } else {
+                    const label = document.createElement('div');
+                    label.className = 'props-section-label';
+                    label.innerText = 'Attributes';
+                    const table = document.createElement('table');
+                    table.className = 'props-table';
+                    entries.forEach(([k, v]) => {
+                        const tr = document.createElement('tr');
+                        const tdKey = document.createElement('td');
+                        tdKey.className = 'key';
+                        tdKey.innerText = String(k).replace(/_/g, ' ');
+                        const tdVal = document.createElement('td');
+                        tdVal.className = 'val';
+                        tdVal.innerText = typeof v === 'object' ? JSON.stringify(v) : String(v);
+                        tr.appendChild(tdKey);
+                        tr.appendChild(tdVal);
+                        table.appendChild(tr);
+                    });
+                    content.innerHTML = '';
+                    content.appendChild(label);
+                    content.appendChild(table);
+                }
+
+                // Show AI block in loading state
+                const aiBlock = document.getElementById('ai-explanation');
+                aiBlock.style.display = 'block';
+                aiBlock.className = 'ai-block';
+                document.getElementById('ai-text').innerText = 'Generating narrative...';
+
+                // Open panel
+                sidebar.classList.add('open');
+                document.body.classList.remove('panel-closed');
+
+                // Nudge zoom controls to clear the panel
+                document.getElementById('zoom-controls').style.right = `calc(25vw + 20px)`;
+            } catch (err) {
+                console.error("Sidebar Error:", err);
+                const sidebar = document.getElementById('sidebar');
+                document.getElementById('panel-title').innerText = 'Error Rendering Panel';
+                document.getElementById('panel-content').innerHTML = `<div class="empty-state" style="color: red;">${err.message}</div>`;
+                sidebar.classList.add('open');
+                document.body.classList.remove('panel-closed');
             }
-
-            // Show AI block in loading state
-            const aiBlock = document.getElementById('ai-explanation');
-            aiBlock.style.display = 'block';
-            aiBlock.className = 'ai-block';
-            document.getElementById('ai-text').innerText = 'Generating narrative...';
-
-            // Open panel
-            sidebar.classList.add('open');
-            document.body.classList.remove('panel-closed');
-
-            // Nudge zoom controls to clear the panel
-            document.getElementById('zoom-controls').style.right = `calc(25vw + 20px)`;
         }
 
         function closeSidebar() {

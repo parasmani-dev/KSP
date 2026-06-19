@@ -1,0 +1,141 @@
+openapi: 3.0.0
+info:
+  title: AI Services API (KSP CIOS)
+  version: 1.0.0
+  description: OpenAPI specifications for Predictive Crime Intelligence (M4) and Decision Support (M6).
+paths:
+  /predictions:
+    get:
+      summary: Get all current predictions (Hotspots, etc.)
+      responses:
+        '200':
+          description: List of predictions
+  /predictions/run:
+    post:
+      summary: Manually trigger the prediction engine to re-run
+      responses:
+        '200':
+          description: Prediction engine started successfully
+  /predictions/hotspots:
+    get:
+      summary: (Feature 4.1) Predicts geographic areas likely to experience elevated crime.
+      parameters:
+        - name: days
+          in: query
+          required: false
+          schema:
+            type: integer
+            enum: [7, 14, 30]
+            default: 7
+      responses:
+        '200':
+          description: Heatmap data with Low/Medium/High/Critical risk levels
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hotspots:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        area: { type: string }
+                        forecast_days: { type: integer }
+                        avg_predicted_incidents: { type: number }
+                        risk_level: { type: string }
+  /predictions/escalation:
+    get:
+      summary: (Feature 4.2) Identifies areas where crime rate is growing rapidly.
+      responses:
+        '200':
+          description: List of escalating areas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  escalating_areas:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        area: { type: string }
+                        growth_rate_percentage: { type: number }
+                        status: { type: string }
+  /predictions/offender/{citizen_id}:
+    get:
+      summary: Get the re-offend risk score for a specific citizen
+      parameters:
+        - name: citizen_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Citizen risk score object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  citizen_id: { type: string }
+                  reoffend_probability: { type: number }
+                  risk_level: { type: string }
+  /predictions/emerging_threats:
+    get:
+      summary: (Feature 4.4) Flags unusual spikes or novel crime patterns.
+      responses:
+        '200':
+          description: List of anomaly strings (e.g. "New cybercrime pattern...")
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  area: { type: string }
+                  is_anomaly: { type: boolean }
+                  alerts:
+                    type: array
+                    items: { type: string }
+  /recommendations/patrol:
+    get:
+      summary: Get actionable patrol recommendations
+      responses:
+        '200':
+          description: List of prioritized patrol recommendations
+  /recommendations/investigation:
+    get:
+      summary: Get actionable investigation recommendations
+      responses:
+        '200':
+          description: List of prioritized investigation recommendations
+  /recommendations/cctv:
+    get:
+      summary: Get actionable CCTV search suggestions for an area and time window
+      parameters:
+        - name: area
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: time_window
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: case_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of CCTV cameras to review
+  /recommendations/generate:
+    post:
+      summary: Generate recommendations based on the latest intelligence
+      responses:
+        '200':
+          description: Recommendations successfully generated

@@ -1,121 +1,121 @@
 camera_id,area,city,lat,lng,location_desc,camera_type,resolution,status,night_vision,coverage_radius_m,installed_date,last_maintained,vendor,is_hotspot_area,linked_fir_ids
-CAM0001,Connaught Place,Delhi,28.631022,77.221271,"Flyover Base, Connaught Place",PTZ,1080p,Active,1,98,2021-10-03,2024-02-03,CP Plus,1,FIR04372
-CAM0002,Connaught Place,Delhi,28.632993,77.213922,"Residential Gate, Connaught Place",Dome,1080p,Active,0,28,2020-04-03,2021-08-05,Hikvision,1,FIR04372
-CAM0003,Connaught Place,Delhi,28.631026,77.216014,"Market Entrance, Connaught Place",Dome,4K,Active,1,36,2022-07-03,2022-09-21,Hikvision,1,FIR04372; FIR01710
-CAM0004,Connaught Place,Delhi,28.626923,77.216528,"Night Bazaar, Connaught Place",Dome,4K,Active,0,24,2022-06-21,2022-08-17,Hikvision,1,FIR04372; FIR01710; FIR01667
-CAM0005,Lajpat Nagar,Delhi,28.570936,77.247244,"Main Road Junction, Lajpat Nagar",Dome,1080p,Maintenance,0,77,2021-02-22,2024-09-30,Honeywell,1,FIR03821; FIR00927
-CAM0006,Lajpat Nagar,Delhi,28.563028,77.240464,"Police Post, Lajpat Nagar",Dome,1080p,Active,1,33,2020-09-21,2021-02-02,Bosch,1,FIR03821
-CAM0007,Lajpat Nagar,Delhi,28.565915,77.24479,"Hospital Gate, Lajpat Nagar",Dome,1080p,Active,1,41,2020-12-25,2024-02-05,CP Plus,1,FIR03821
-CAM0008,Lajpat Nagar,Delhi,28.566473,77.244442,"Residential Gate, Lajpat Nagar",PTZ,1080p,Active,1,190,2021-07-05,2022-10-11,Axis,1,FIR03821; FIR00927; FIR01998
-CAM0009,Saket,Delhi,28.524885,77.209478,"Railway Gate, Saket",Dome,1080p,Maintenance,0,72,2021-04-29,2023-08-07,Dahua,0,FIR04414
-CAM0010,Saket,Delhi,28.520967,77.203163,"Hospital Gate, Saket",Bullet,720p,Maintenance,0,41,2021-10-06,2024-11-10,Honeywell,0,FIR04414; FIR00522; FIR01496
-CAM0011,Saket,Delhi,28.521295,77.201787,"Shopping Complex, Saket",PTZ,1080p,Active,1,125,2019-02-03,2021-03-10,Axis,0,FIR04414; FIR00522
-CAM0012,Saket,Delhi,28.527683,77.203453,"School Crossing, Saket",Fixed,1080p,Active,1,38,2022-06-19,2024-11-19,Hikvision,0,FIR04414; FIR00522
-CAM0013,Rohini,Delhi,28.704385,77.105348,"Hospital Gate, Rohini",Dome,1080p,Active,1,33,2019-09-20,2019-12-31,Hikvision,1,FIR03273
-CAM0014,Rohini,Delhi,28.703906,77.103275,"Metro Station Exit, Rohini",Dome,4K,Maintenance,0,54,2019-10-23,2024-03-10,Hikvision,1,FIR03273
-CAM0015,Rohini,Delhi,28.699657,77.106204,"School Crossing, Rohini",PTZ,4K,Active,1,131,2022-12-24,2023-07-25,Bosch,1,FIR03273
-CAM0016,Rohini,Delhi,28.708066,77.099325,"Temple/Mosque Gate, Rohini",Dome,1080p,Active,1,21,2023-04-07,2023-08-29,Honeywell,1,FIR03273
-CAM0017,Rohini,Delhi,28.702266,77.105746,"Flyover Base, Rohini",PTZ,1080p,Active,1,92,2020-04-07,2024-06-08,CP Plus,1,FIR03273
-CAM0018,Dwarka,Delhi,28.594906,77.046853,"Flyover Base, Dwarka",Dome,1080p,Active,1,71,2021-01-26,2023-05-13,Hikvision,0,FIR04482
-CAM0019,Dwarka,Delhi,28.594345,77.043618,"Temple/Mosque Gate, Dwarka",PTZ,1080p,Active,1,141,2021-03-17,2024-02-05,Axis,0,FIR04482; FIR01867; FIR01588
-CAM0020,Dwarka,Delhi,28.589236,77.041204,"ATM Cluster, Dwarka",PTZ,720p,Active,1,135,2021-03-16,2022-06-29,Bosch,0,FIR04482
-CAM0021,Karol Bagh,Delhi,28.652987,77.194166,"Park Entrance, Karol Bagh",Dome,4K,Active,1,54,2021-10-15,2022-08-12,Axis,1,FIR03995
-CAM0022,Karol Bagh,Delhi,28.654074,77.191219,"Residential Gate, Karol Bagh",Dome,1080p,Active,1,54,2019-03-22,2024-10-22,Axis,1,FIR03995; FIR04417
-CAM0023,Karol Bagh,Delhi,28.647701,77.187887,"Main Road Junction, Karol Bagh",Dome,1080p,Active,1,39,2021-07-25,2022-09-06,Axis,1,FIR03995; FIR04417
-CAM0024,Karol Bagh,Delhi,28.653533,77.18864,"School Crossing, Karol Bagh",Dome,1080p,Active,1,64,2019-06-04,2021-04-24,Bosch,1,FIR03995; FIR04417
-CAM0025,Karol Bagh,Delhi,28.651871,77.192183,"Market Entrance, Karol Bagh",Dome,1080p,Maintenance,0,49,2019-07-25,2022-05-20,Bosch,1,FIR03995; FIR04417; FIR01833
-CAM0026,Chandni Chowk,Delhi,28.654725,77.227582,"ATM Cluster, Chandni Chowk",Dome,4K,Active,0,20,2019-03-20,2021-06-18,CP Plus,1,FIR00142; FIR02963; FIR00307
-CAM0027,Chandni Chowk,Delhi,28.64653,77.23138,"Park Entrance, Chandni Chowk",Dome,1080p,Maintenance,0,77,2021-06-25,2023-08-03,Axis,1,FIR00142; FIR02963; FIR00307
-CAM0028,Chandni Chowk,Delhi,28.64983,77.22854,"Bus Stand, Chandni Chowk",PTZ,1080p,Active,1,114,2019-06-29,2023-03-07,Bosch,1,FIR00142; FIR02963; FIR00307
-CAM0029,Chandni Chowk,Delhi,28.650485,77.229793,"Temple/Mosque Gate, Chandni Chowk",Dome,1080p,Active,1,44,2019-03-20,2022-12-20,Honeywell,1,FIR00142; FIR02963; FIR00307
-CAM0030,Chandni Chowk,Delhi,28.654501,77.234115,"Metro Station Exit, Chandni Chowk",Dome,4K,Active,1,72,2020-06-08,2020-12-28,CP Plus,1,FIR00142; FIR02963
-CAM0031,Anand Vihar,Delhi,28.649165,77.313821,"Shopping Complex, Anand Vihar",Bullet,720p,Maintenance,0,26,2021-10-20,2023-06-01,Bosch,0,FIR02993; FIR03033; FIR03867
-CAM0032,Anand Vihar,Delhi,28.644793,77.313945,"School Crossing, Anand Vihar",Bullet,720p,Inactive,0,80,2019-10-12,2024-02-13,Bosch,0,FIR02993; FIR03033; FIR03867
-CAM0033,Anand Vihar,Delhi,28.646678,77.316479,"Park Entrance, Anand Vihar",Dome,1080p,Maintenance,0,73,2021-10-24,2024-04-05,CP Plus,0,FIR02993; FIR03033; FIR03867
-CAM0034,Anand Vihar,Delhi,28.648398,77.319966,"Metro Station Exit, Anand Vihar",Fixed,4K,Inactive,0,67,2021-05-20,2024-07-22,Dahua,0,FIR02993
-CAM0035,Dharavi,Mumbai,19.0361,72.859666,"Bus Stand, Dharavi",PTZ,4K,Active,1,178,2020-01-05,2021-05-07,Hikvision,1,FIR00776
-CAM0036,Dharavi,Mumbai,19.038708,72.858728,"Temple/Mosque Gate, Dharavi",Dome,1080p,Active,1,59,2019-11-02,2020-07-10,Bosch,1,FIR00776; FIR02841; FIR03202
-CAM0037,Dharavi,Mumbai,19.035647,72.856495,"Park Entrance, Dharavi",Dome,1080p,Maintenance,0,47,2022-03-29,2023-11-16,Hikvision,1,FIR00776; FIR02841; FIR03202
-CAM0038,Dharavi,Mumbai,19.035483,72.859512,"Metro Station Exit, Dharavi",Dome,1080p,Active,1,35,2020-05-16,2023-06-02,Honeywell,1,FIR00776
-CAM0039,Andheri,Mumbai,19.115208,72.868395,"Main Road Junction, Andheri",Dome,1080p,Maintenance,0,31,2023-04-19,2024-02-14,Honeywell,1,FIR01427; FIR04100
-CAM0040,Andheri,Mumbai,19.112445,72.873992,"Bus Stand, Andheri",Dome,4K,Active,0,40,2020-12-09,2020-12-15,Honeywell,1,FIR01427
-CAM0041,Andheri,Mumbai,19.117599,72.866374,"Night Bazaar, Andheri",Dome,1080p,Active,1,75,2022-09-24,2023-05-09,CP Plus,1,FIR01427
-CAM0042,Andheri,Mumbai,19.117747,72.874656,"Temple/Mosque Gate, Andheri",PTZ,1080p,Active,1,161,2020-09-03,2023-10-27,Bosch,1,FIR01427; FIR04100; FIR03096
-CAM0043,Bandra,Mumbai,19.05462,72.82897,"School Crossing, Bandra",PTZ,1080p,Active,1,88,2022-09-22,2024-03-03,Axis,0,FIR03285
-CAM0044,Bandra,Mumbai,19.063091,72.832139,"Hospital Gate, Bandra",PTZ,4K,Maintenance,0,124,2020-11-10,2020-12-19,Axis,0,FIR03285
-CAM0045,Bandra,Mumbai,19.064115,72.825914,"Railway Gate, Bandra",Dome,4K,Active,1,60,2023-05-22,2023-06-06,Dahua,0,FIR03285; FIR04036
-CAM0046,Kurla,Mumbai,19.075403,72.885657,"Market Entrance, Kurla",PTZ,1080p,Active,1,149,2021-05-29,2023-01-06,Hikvision,1,FIR01716
-CAM0047,Kurla,Mumbai,19.077201,72.888444,"Shopping Complex, Kurla",PTZ,1080p,Active,1,129,2022-03-17,2022-12-17,Bosch,1,FIR01716
-CAM0048,Kurla,Mumbai,19.076502,72.883818,"Bus Stand, Kurla",PTZ,4K,Maintenance,0,139,2022-01-26,2023-04-26,Honeywell,1,FIR01716; FIR01103; FIR01317
-CAM0049,Kurla,Mumbai,19.074653,72.88069,"ATM Cluster, Kurla",Dome,1080p,Active,1,46,2021-06-13,2022-03-01,Axis,1,FIR01716
-CAM0050,Kurla,Mumbai,19.069718,72.889024,"Hospital Gate, Kurla",Dome,1080p,Active,1,29,2021-12-01,2022-02-24,Axis,1,FIR01716; FIR01103; FIR01317
-CAM0051,Worli,Mumbai,19.020334,72.814796,"Main Road Junction, Worli",Fixed,720p,Maintenance,0,30,2021-09-20,2024-06-25,CP Plus,0,FIR01227
-CAM0052,Worli,Mumbai,19.015458,72.81348,"Bus Stand, Worli",Bullet,4K,Active,1,58,2022-04-27,2022-11-08,CP Plus,0,FIR01227; FIR01762; FIR01566
-CAM0053,Worli,Mumbai,19.013237,72.818558,"ATM Cluster, Worli",Fixed,1080p,Maintenance,0,24,2020-09-07,2023-02-24,Axis,0,FIR01227; FIR01762; FIR01566
-CAM0054,Worli,Mumbai,19.016251,72.812644,"Night Bazaar, Worli",Bullet,1080p,Active,0,46,2020-08-14,2020-10-01,CP Plus,0,FIR01227
-CAM0055,Dadar,Mumbai,19.019195,72.847544,"Railway Gate, Dadar",Dome,1080p,Active,1,33,2020-10-30,2021-11-08,CP Plus,1,FIR02550
-CAM0056,Dadar,Mumbai,19.020897,72.850067,"Bus Stand, Dadar",PTZ,4K,Active,1,112,2019-02-07,2022-07-12,CP Plus,1,FIR02550; FIR03292; FIR00488
-CAM0057,Dadar,Mumbai,19.012909,72.845637,"Hospital Gate, Dadar",Dome,1080p,Active,0,30,2020-01-09,2020-01-11,Bosch,1,FIR02550; FIR03292; FIR00488
-CAM0058,Dadar,Mumbai,19.014674,72.850209,"ATM Cluster, Dadar",Dome,1080p,Active,1,45,2022-08-23,2023-07-31,Hikvision,1,FIR02550; FIR03292; FIR00488
-CAM0059,Goregaon,Mumbai,19.164965,72.855079,"Main Road Junction, Goregaon",Dome,720p,Active,1,68,2021-05-02,2024-09-02,Honeywell,0,FIR01901; FIR00187
-CAM0060,Goregaon,Mumbai,19.168967,72.849768,"ATM Cluster, Goregaon",PTZ,1080p,Active,1,118,2022-05-10,2024-01-08,Dahua,0,FIR01901; FIR00187
-CAM0061,Goregaon,Mumbai,19.162467,72.854212,"Railway Gate, Goregaon",PTZ,4K,Maintenance,0,143,2020-04-06,2020-09-11,Axis,0,FIR01901; FIR00187
-CAM0062,Borivali,Mumbai,19.229418,72.852301,"Bus Stand, Borivali",Fixed,720p,Active,0,79,2021-09-10,2024-01-15,CP Plus,0,FIR00003
-CAM0063,Borivali,Mumbai,19.224451,72.859291,"Park Entrance, Borivali",Bullet,1080p,Maintenance,0,56,2020-09-30,2023-04-18,CP Plus,0,FIR00003; FIR01629; FIR03462
-CAM0064,Borivali,Mumbai,19.233267,72.853603,"Hospital Gate, Borivali",Dome,1080p,Inactive,0,43,2019-01-28,2021-05-14,CP Plus,0,FIR00003; FIR01629
-CAM0065,Borivali,Mumbai,19.225884,72.853563,"Flyover Base, Borivali",Bullet,720p,Maintenance,0,25,2021-10-19,2023-06-21,Dahua,0,FIR00003
+CAM0001,Whitefield,Bengaluru,28.631022,77.221271,"Flyover Base, Connaught Place",PTZ,1080p,Active,1,98,2021-10-03,2024-02-03,CP Plus,1,FIR04372
+CAM0002,Whitefield,Bengaluru,28.632993,77.213922,"Residential Gate, Connaught Place",Dome,1080p,Active,0,28,2020-04-03,2021-08-05,Hikvision,1,FIR04372
+CAM0003,Whitefield,Bengaluru,28.631026,77.216014,"Market Entrance, Connaught Place",Dome,4K,Active,1,36,2022-07-03,2022-09-21,Hikvision,1,FIR04372; FIR01710
+CAM0004,Whitefield,Bengaluru,28.626923,77.216528,"Night Bazaar, Connaught Place",Dome,4K,Active,0,24,2022-06-21,2022-08-17,Hikvision,1,FIR04372; FIR01710; FIR01667
+CAM0005,KR Puram,Bengaluru,28.570936,77.247244,"Main Road Junction, Lajpat Nagar",Dome,1080p,Maintenance,0,77,2021-02-22,2024-09-30,Honeywell,1,FIR03821; FIR00927
+CAM0006,KR Puram,Bengaluru,28.563028,77.240464,"Police Post, Lajpat Nagar",Dome,1080p,Active,1,33,2020-09-21,2021-02-02,Bosch,1,FIR03821
+CAM0007,KR Puram,Bengaluru,28.565915,77.24479,"Hospital Gate, Lajpat Nagar",Dome,1080p,Active,1,41,2020-12-25,2024-02-05,CP Plus,1,FIR03821
+CAM0008,KR Puram,Bengaluru,28.566473,77.244442,"Residential Gate, Lajpat Nagar",PTZ,1080p,Active,1,190,2021-07-05,2022-10-11,Axis,1,FIR03821; FIR00927; FIR01998
+CAM0009,Koramangala,Bengaluru,28.524885,77.209478,"Railway Gate, Saket",Dome,1080p,Maintenance,0,72,2021-04-29,2023-08-07,Dahua,0,FIR04414
+CAM0010,Koramangala,Bengaluru,28.520967,77.203163,"Hospital Gate, Saket",Bullet,720p,Maintenance,0,41,2021-10-06,2024-11-10,Honeywell,0,FIR04414; FIR00522; FIR01496
+CAM0011,Koramangala,Bengaluru,28.521295,77.201787,"Shopping Complex, Saket",PTZ,1080p,Active,1,125,2019-02-03,2021-03-10,Axis,0,FIR04414; FIR00522
+CAM0012,Koramangala,Bengaluru,28.527683,77.203453,"School Crossing, Saket",Fixed,1080p,Active,1,38,2022-06-19,2024-11-19,Hikvision,0,FIR04414; FIR00522
+CAM0013,BTM,Bengaluru,28.704385,77.105348,"Hospital Gate, Rohini",Dome,1080p,Active,1,33,2019-09-20,2019-12-31,Hikvision,1,FIR03273
+CAM0014,BTM,Bengaluru,28.703906,77.103275,"Metro Station Exit, Rohini",Dome,4K,Maintenance,0,54,2019-10-23,2024-03-10,Hikvision,1,FIR03273
+CAM0015,BTM,Bengaluru,28.699657,77.106204,"School Crossing, Rohini",PTZ,4K,Active,1,131,2022-12-24,2023-07-25,Bosch,1,FIR03273
+CAM0016,BTM,Bengaluru,28.708066,77.099325,"Temple/Mosque Gate, Rohini",Dome,1080p,Active,1,21,2023-04-07,2023-08-29,Honeywell,1,FIR03273
+CAM0017,BTM,Bengaluru,28.702266,77.105746,"Flyover Base, Rohini",PTZ,1080p,Active,1,92,2020-04-07,2024-06-08,CP Plus,1,FIR03273
+CAM0018,Jayanagar,Bengaluru,28.594906,77.046853,"Flyover Base, Dwarka",Dome,1080p,Active,1,71,2021-01-26,2023-05-13,Hikvision,0,FIR04482
+CAM0019,Jayanagar,Bengaluru,28.594345,77.043618,"Temple/Mosque Gate, Dwarka",PTZ,1080p,Active,1,141,2021-03-17,2024-02-05,Axis,0,FIR04482; FIR01867; FIR01588
+CAM0020,Jayanagar,Bengaluru,28.589236,77.041204,"ATM Cluster, Dwarka",PTZ,720p,Active,1,135,2021-03-16,2022-06-29,Bosch,0,FIR04482
+CAM0021,Electronic City,Bengaluru,28.652987,77.194166,"Park Entrance, Karol Bagh",Dome,4K,Active,1,54,2021-10-15,2022-08-12,Axis,1,FIR03995
+CAM0022,Electronic City,Bengaluru,28.654074,77.191219,"Residential Gate, Karol Bagh",Dome,1080p,Active,1,54,2019-03-22,2024-10-22,Axis,1,FIR03995; FIR04417
+CAM0023,Electronic City,Bengaluru,28.647701,77.187887,"Main Road Junction, Karol Bagh",Dome,1080p,Active,1,39,2021-07-25,2022-09-06,Axis,1,FIR03995; FIR04417
+CAM0024,Electronic City,Bengaluru,28.653533,77.18864,"School Crossing, Karol Bagh",Dome,1080p,Active,1,64,2019-06-04,2021-04-24,Bosch,1,FIR03995; FIR04417
+CAM0025,Electronic City,Bengaluru,28.651871,77.192183,"Market Entrance, Karol Bagh",Dome,1080p,Maintenance,0,49,2019-07-25,2022-05-20,Bosch,1,FIR03995; FIR04417; FIR01833
+CAM0026,Marathahalli,Bengaluru,28.654725,77.227582,"ATM Cluster, Chandni Chowk",Dome,4K,Active,0,20,2019-03-20,2021-06-18,CP Plus,1,FIR00142; FIR02963; FIR00307
+CAM0027,Marathahalli,Bengaluru,28.64653,77.23138,"Park Entrance, Chandni Chowk",Dome,1080p,Maintenance,0,77,2021-06-25,2023-08-03,Axis,1,FIR00142; FIR02963; FIR00307
+CAM0028,Marathahalli,Bengaluru,28.64983,77.22854,"Bus Stand, Chandni Chowk",PTZ,1080p,Active,1,114,2019-06-29,2023-03-07,Bosch,1,FIR00142; FIR02963; FIR00307
+CAM0029,Marathahalli,Bengaluru,28.650485,77.229793,"Temple/Mosque Gate, Chandni Chowk",Dome,1080p,Active,1,44,2019-03-20,2022-12-20,Honeywell,1,FIR00142; FIR02963; FIR00307
+CAM0030,Marathahalli,Bengaluru,28.654501,77.234115,"Metro Station Exit, Chandni Chowk",Dome,4K,Active,1,72,2020-06-08,2020-12-28,CP Plus,1,FIR00142; FIR02963
+CAM0031,Whitefield,Bengaluru,28.649165,77.313821,"Shopping Complex, Anand Vihar",Bullet,720p,Maintenance,0,26,2021-10-20,2023-06-01,Bosch,0,FIR02993; FIR03033; FIR03867
+CAM0032,Whitefield,Bengaluru,28.644793,77.313945,"School Crossing, Anand Vihar",Bullet,720p,Inactive,0,80,2019-10-12,2024-02-13,Bosch,0,FIR02993; FIR03033; FIR03867
+CAM0033,Whitefield,Bengaluru,28.646678,77.316479,"Park Entrance, Anand Vihar",Dome,1080p,Maintenance,0,73,2021-10-24,2024-04-05,CP Plus,0,FIR02993; FIR03033; FIR03867
+CAM0034,Whitefield,Bengaluru,28.648398,77.319966,"Metro Station Exit, Anand Vihar",Fixed,4K,Inactive,0,67,2021-05-20,2024-07-22,Dahua,0,FIR02993
+CAM0035,KR Puram,Bengaluru,19.0361,72.859666,"Bus Stand, Dharavi",PTZ,4K,Active,1,178,2020-01-05,2021-05-07,Hikvision,1,FIR00776
+CAM0036,KR Puram,Bengaluru,19.038708,72.858728,"Temple/Mosque Gate, Dharavi",Dome,1080p,Active,1,59,2019-11-02,2020-07-10,Bosch,1,FIR00776; FIR02841; FIR03202
+CAM0037,KR Puram,Bengaluru,19.035647,72.856495,"Park Entrance, Dharavi",Dome,1080p,Maintenance,0,47,2022-03-29,2023-11-16,Hikvision,1,FIR00776; FIR02841; FIR03202
+CAM0038,KR Puram,Bengaluru,19.035483,72.859512,"Metro Station Exit, Dharavi",Dome,1080p,Active,1,35,2020-05-16,2023-06-02,Honeywell,1,FIR00776
+CAM0039,Koramangala,Bengaluru,19.115208,72.868395,"Main Road Junction, Andheri",Dome,1080p,Maintenance,0,31,2023-04-19,2024-02-14,Honeywell,1,FIR01427; FIR04100
+CAM0040,Koramangala,Bengaluru,19.112445,72.873992,"Bus Stand, Andheri",Dome,4K,Active,0,40,2020-12-09,2020-12-15,Honeywell,1,FIR01427
+CAM0041,Koramangala,Bengaluru,19.117599,72.866374,"Night Bazaar, Andheri",Dome,1080p,Active,1,75,2022-09-24,2023-05-09,CP Plus,1,FIR01427
+CAM0042,Koramangala,Bengaluru,19.117747,72.874656,"Temple/Mosque Gate, Andheri",PTZ,1080p,Active,1,161,2020-09-03,2023-10-27,Bosch,1,FIR01427; FIR04100; FIR03096
+CAM0043,BTM,Bengaluru,19.05462,72.82897,"School Crossing, Bandra",PTZ,1080p,Active,1,88,2022-09-22,2024-03-03,Axis,0,FIR03285
+CAM0044,BTM,Bengaluru,19.063091,72.832139,"Hospital Gate, Bandra",PTZ,4K,Maintenance,0,124,2020-11-10,2020-12-19,Axis,0,FIR03285
+CAM0045,BTM,Bengaluru,19.064115,72.825914,"Railway Gate, Bandra",Dome,4K,Active,1,60,2023-05-22,2023-06-06,Dahua,0,FIR03285; FIR04036
+CAM0046,Jayanagar,Bengaluru,19.075403,72.885657,"Market Entrance, Kurla",PTZ,1080p,Active,1,149,2021-05-29,2023-01-06,Hikvision,1,FIR01716
+CAM0047,Jayanagar,Bengaluru,19.077201,72.888444,"Shopping Complex, Kurla",PTZ,1080p,Active,1,129,2022-03-17,2022-12-17,Bosch,1,FIR01716
+CAM0048,Jayanagar,Bengaluru,19.076502,72.883818,"Bus Stand, Kurla",PTZ,4K,Maintenance,0,139,2022-01-26,2023-04-26,Honeywell,1,FIR01716; FIR01103; FIR01317
+CAM0049,Jayanagar,Bengaluru,19.074653,72.88069,"ATM Cluster, Kurla",Dome,1080p,Active,1,46,2021-06-13,2022-03-01,Axis,1,FIR01716
+CAM0050,Jayanagar,Bengaluru,19.069718,72.889024,"Hospital Gate, Kurla",Dome,1080p,Active,1,29,2021-12-01,2022-02-24,Axis,1,FIR01716; FIR01103; FIR01317
+CAM0051,Electronic City,Bengaluru,19.020334,72.814796,"Main Road Junction, Worli",Fixed,720p,Maintenance,0,30,2021-09-20,2024-06-25,CP Plus,0,FIR01227
+CAM0052,Electronic City,Bengaluru,19.015458,72.81348,"Bus Stand, Worli",Bullet,4K,Active,1,58,2022-04-27,2022-11-08,CP Plus,0,FIR01227; FIR01762; FIR01566
+CAM0053,Electronic City,Bengaluru,19.013237,72.818558,"ATM Cluster, Worli",Fixed,1080p,Maintenance,0,24,2020-09-07,2023-02-24,Axis,0,FIR01227; FIR01762; FIR01566
+CAM0054,Electronic City,Bengaluru,19.016251,72.812644,"Night Bazaar, Worli",Bullet,1080p,Active,0,46,2020-08-14,2020-10-01,CP Plus,0,FIR01227
+CAM0055,Marathahalli,Bengaluru,19.019195,72.847544,"Railway Gate, Dadar",Dome,1080p,Active,1,33,2020-10-30,2021-11-08,CP Plus,1,FIR02550
+CAM0056,Marathahalli,Bengaluru,19.020897,72.850067,"Bus Stand, Dadar",PTZ,4K,Active,1,112,2019-02-07,2022-07-12,CP Plus,1,FIR02550; FIR03292; FIR00488
+CAM0057,Marathahalli,Bengaluru,19.012909,72.845637,"Hospital Gate, Dadar",Dome,1080p,Active,0,30,2020-01-09,2020-01-11,Bosch,1,FIR02550; FIR03292; FIR00488
+CAM0058,Marathahalli,Bengaluru,19.014674,72.850209,"ATM Cluster, Dadar",Dome,1080p,Active,1,45,2022-08-23,2023-07-31,Hikvision,1,FIR02550; FIR03292; FIR00488
+CAM0059,Whitefield,Bengaluru,19.164965,72.855079,"Main Road Junction, Goregaon",Dome,720p,Active,1,68,2021-05-02,2024-09-02,Honeywell,0,FIR01901; FIR00187
+CAM0060,Whitefield,Bengaluru,19.168967,72.849768,"ATM Cluster, Goregaon",PTZ,1080p,Active,1,118,2022-05-10,2024-01-08,Dahua,0,FIR01901; FIR00187
+CAM0061,Whitefield,Bengaluru,19.162467,72.854212,"Railway Gate, Goregaon",PTZ,4K,Maintenance,0,143,2020-04-06,2020-09-11,Axis,0,FIR01901; FIR00187
+CAM0062,KR Puram,Bengaluru,19.229418,72.852301,"Bus Stand, Borivali",Fixed,720p,Active,0,79,2021-09-10,2024-01-15,CP Plus,0,FIR00003
+CAM0063,KR Puram,Bengaluru,19.224451,72.859291,"Park Entrance, Borivali",Bullet,1080p,Maintenance,0,56,2020-09-30,2023-04-18,CP Plus,0,FIR00003; FIR01629; FIR03462
+CAM0064,KR Puram,Bengaluru,19.233267,72.853603,"Hospital Gate, Borivali",Dome,1080p,Inactive,0,43,2019-01-28,2021-05-14,CP Plus,0,FIR00003; FIR01629
+CAM0065,KR Puram,Bengaluru,19.225884,72.853563,"Flyover Base, Borivali",Bullet,720p,Maintenance,0,25,2021-10-19,2023-06-21,Dahua,0,FIR00003
 CAM0066,Koramangala,Bengaluru,12.93465,77.625529,"Park Entrance, Koramangala",Dome,4K,Active,1,38,2021-06-15,2024-02-21,Bosch,1,FIR03356
 CAM0067,Koramangala,Bengaluru,12.931763,77.623173,"School Crossing, Koramangala",Dome,1080p,Active,0,41,2022-10-18,2024-11-22,Hikvision,1,FIR03356; FIR04946
 CAM0068,Koramangala,Bengaluru,12.93276,77.622107,"Railway Gate, Koramangala",PTZ,4K,Active,1,180,2020-11-27,2021-08-13,Hikvision,1,FIR03356; FIR04946
 CAM0069,Koramangala,Bengaluru,12.93988,77.621505,"Main Road Junction, Koramangala",Dome,1080p,Maintenance,0,59,2021-01-14,2022-01-27,CP Plus,1,FIR03356
 CAM0070,Koramangala,Bengaluru,12.935944,77.621873,"Market Entrance, Koramangala",Dome,1080p,Maintenance,0,23,2023-04-26,2023-12-09,Bosch,1,FIR03356; FIR04946
-CAM0071,Indiranagar,Bengaluru,12.978,77.642201,"Main Road Junction, Indiranagar",Fixed,4K,Inactive,0,40,2019-08-21,2021-08-26,Dahua,0,FIR04533; FIR03987
-CAM0072,Indiranagar,Bengaluru,12.97798,77.638938,"Market Entrance, Indiranagar",Dome,720p,Active,1,42,2019-01-24,2023-06-05,Honeywell,0,FIR04533; FIR03987; FIR01106
-CAM0073,Indiranagar,Bengaluru,12.976976,77.636157,"Railway Gate, Indiranagar",Fixed,1080p,Active,0,64,2020-01-07,2022-06-12,CP Plus,0,FIR04533; FIR03987; FIR01106
-CAM0074,Indiranagar,Bengaluru,12.976239,77.645022,"Night Bazaar, Indiranagar",Bullet,720p,Active,1,73,2022-10-09,2023-12-02,Honeywell,0,FIR04533; FIR03987; FIR01106
-CAM0075,Whitefield,Bengaluru,12.97207,77.745467,"ATM Cluster, Whitefield",Fixed,1080p,Active,1,26,2019-06-21,2020-09-15,Bosch,0,FIR02813
-CAM0076,Whitefield,Bengaluru,12.971671,77.753224,"Night Bazaar, Whitefield",PTZ,720p,Maintenance,0,125,2022-05-22,2022-08-13,Honeywell,0,FIR02813; FIR03510; FIR03301
-CAM0077,Whitefield,Bengaluru,12.974554,77.74532,"Park Entrance, Whitefield",Bullet,720p,Active,1,66,2020-12-15,2023-12-02,Bosch,0,FIR02813; FIR03510
-CAM0078,Whitefield,Bengaluru,12.971343,77.748021,"Shopping Complex, Whitefield",PTZ,1080p,Active,1,114,2020-10-08,2022-01-22,CP Plus,0,FIR02813; FIR03510; FIR03301
-CAM0079,JP Nagar,Bengaluru,12.907045,77.584439,"Bus Stand, JP Nagar",Fixed,1080p,Maintenance,0,74,2021-06-07,2022-03-27,CP Plus,0,FIR03030; FIR01346; FIR03277
-CAM0080,JP Nagar,Bengaluru,12.908247,77.581868,"Residential Gate, JP Nagar",Dome,1080p,Inactive,0,76,2021-11-06,2021-11-13,Honeywell,0,FIR03030
-CAM0081,JP Nagar,Bengaluru,12.909121,77.585849,"Night Bazaar, JP Nagar",Fixed,720p,Active,1,72,2021-09-29,2022-01-03,Bosch,0,FIR03030
-CAM0082,JP Nagar,Bengaluru,12.908849,77.584468,"Temple/Mosque Gate, JP Nagar",Bullet,1080p,Inactive,0,46,2020-06-13,2023-07-24,CP Plus,0,FIR03030; FIR01346
-CAM0083,Hebbal,Bengaluru,13.035144,77.595902,"Residential Gate, Hebbal",Dome,4K,Active,1,47,2022-12-17,2024-07-01,Axis,1,FIR03725
-CAM0084,Hebbal,Bengaluru,13.033493,77.59292,"Metro Station Exit, Hebbal",Dome,1080p,Maintenance,0,31,2020-06-30,2022-06-18,Axis,1,FIR03725; FIR04035
-CAM0085,Hebbal,Bengaluru,13.037522,77.594435,"ATM Cluster, Hebbal",Dome,1080p,Active,0,44,2019-03-15,2020-12-19,Bosch,1,FIR03725; FIR04035; FIR01204
-CAM0086,Hebbal,Bengaluru,13.030696,77.598931,"Night Bazaar, Hebbal",PTZ,1080p,Maintenance,0,138,2020-09-21,2023-11-21,Dahua,1,FIR03725
-CAM0087,HSR Layout,Bengaluru,12.910749,77.644503,"Shopping Complex, HSR Layout",PTZ,1080p,Inactive,0,112,2020-07-15,2022-12-28,Hikvision,0,FIR02378; FIR03905; FIR02957
-CAM0088,HSR Layout,Bengaluru,12.914133,77.64718,"Metro Station Exit, HSR Layout",Fixed,1080p,Active,1,28,2019-02-08,2020-09-13,Honeywell,0,FIR02378; FIR03905; FIR02957
-CAM0089,HSR Layout,Bengaluru,12.915595,77.646748,"ATM Cluster, HSR Layout",Dome,4K,Inactive,0,68,2020-01-09,2023-12-12,CP Plus,0,FIR02378; FIR03905; FIR02957
-CAM0090,Banjara Hills,Hyderabad,17.413966,78.443572,"Night Bazaar, Banjara Hills",PTZ,4K,Active,1,117,2022-09-06,2024-06-12,Honeywell,0,FIR04943; FIR04610
-CAM0091,Banjara Hills,Hyderabad,17.413935,78.448596,"Shopping Complex, Banjara Hills",Bullet,4K,Active,1,20,2019-09-22,2020-05-27,Honeywell,0,FIR04943; FIR04610
-CAM0092,Banjara Hills,Hyderabad,17.412777,78.448595,"Metro Station Exit, Banjara Hills",Dome,1080p,Maintenance,0,51,2019-11-25,2021-10-19,Honeywell,0,FIR04943
-CAM0093,Banjara Hills,Hyderabad,17.413198,78.451424,"Bus Stand, Banjara Hills",Dome,1080p,Inactive,0,28,2020-12-27,2022-10-02,CP Plus,0,FIR04943
-CAM0094,Secunderabad,Hyderabad,17.443173,78.49953,"Market Entrance, Secunderabad",PTZ,4K,Active,1,161,2021-05-20,2024-09-21,Hikvision,1,FIR02628; FIR00710; FIR02380
-CAM0095,Secunderabad,Hyderabad,17.443056,78.494586,"Hospital Gate, Secunderabad",Dome,1080p,Active,0,56,2019-08-25,2020-08-20,Axis,1,FIR02628; FIR00710; FIR02380
-CAM0096,Secunderabad,Hyderabad,17.439237,78.495112,"ATM Cluster, Secunderabad",Dome,1080p,Active,0,37,2019-06-20,2023-04-07,Dahua,1,FIR02628; FIR00710
-CAM0097,Secunderabad,Hyderabad,17.437614,78.503187,"Park Entrance, Secunderabad",Dome,4K,Maintenance,0,44,2022-05-02,2022-09-25,Axis,1,FIR02628
-CAM0098,Secunderabad,Hyderabad,17.443996,78.501908,"Residential Gate, Secunderabad",PTZ,4K,Active,1,172,2019-03-23,2022-07-06,Hikvision,1,FIR02628
-CAM0099,Charminar,Hyderabad,17.366167,78.478927,"Park Entrance, Charminar",Dome,1080p,Active,0,26,2021-11-14,2021-12-11,Hikvision,1,FIR01630; FIR00835; FIR00025
-CAM0100,Charminar,Hyderabad,17.35857,78.469703,"Police Post, Charminar",Dome,1080p,Active,1,71,2019-12-25,2021-07-25,Bosch,1,FIR01630; FIR00835; FIR00025
-CAM0101,Charminar,Hyderabad,17.35962,78.479658,"Residential Gate, Charminar",PTZ,4K,Active,1,84,2019-07-14,2020-11-24,Honeywell,1,FIR01630; FIR00835
-CAM0102,Charminar,Hyderabad,17.362619,78.471346,"Railway Gate, Charminar",PTZ,4K,Active,1,114,2023-05-03,2023-07-27,Honeywell,1,FIR01630
-CAM0103,Charminar,Hyderabad,17.35864,78.477453,"Flyover Base, Charminar",PTZ,1080p,Active,1,115,2021-01-08,2024-08-19,CP Plus,1,FIR01630; FIR00835
-CAM0104,Madhapur,Hyderabad,17.450217,78.388766,"Park Entrance, Madhapur",Bullet,4K,Maintenance,0,43,2023-01-03,2023-03-28,Honeywell,0,FIR00775; FIR02215; FIR02535
-CAM0105,Madhapur,Hyderabad,17.446822,78.387323,"Bus Stand, Madhapur",Bullet,1080p,Active,0,26,2023-04-14,2023-07-31,CP Plus,0,FIR00775; FIR02215; FIR02535
-CAM0106,Madhapur,Hyderabad,17.447167,78.390231,"Shopping Complex, Madhapur",Dome,1080p,Maintenance,0,63,2019-04-28,2022-06-05,Hikvision,0,FIR00775; FIR02215; FIR02535
-CAM0107,T Nagar,Chennai,13.043063,80.239097,"Metro Station Exit, T Nagar",Dome,4K,Active,0,33,2022-03-07,2022-06-06,Hikvision,1,FIR04520; FIR01233; FIR04830
-CAM0108,T Nagar,Chennai,13.04069,80.236354,"Park Entrance, T Nagar",Dome,1080p,Active,0,21,2021-04-14,2021-06-23,Bosch,1,FIR04520
-CAM0109,T Nagar,Chennai,13.044168,80.230972,"Bus Stand, T Nagar",Dome,1080p,Active,1,28,2020-07-17,2022-06-02,Bosch,1,FIR04520; FIR01233; FIR04830
-CAM0110,T Nagar,Chennai,13.038383,80.235616,"Police Post, T Nagar",Dome,1080p,Active,1,61,2022-02-26,2023-08-25,CP Plus,1,FIR04520
-CAM0111,Adyar,Chennai,13.003358,80.258235,"Market Entrance, Adyar",Dome,1080p,Inactive,0,79,2023-05-08,2024-09-02,Dahua,0,FIR01730; FIR02870
-CAM0112,Adyar,Chennai,13.003833,80.253707,"Night Bazaar, Adyar",Bullet,1080p,Active,0,64,2020-09-07,2022-08-18,CP Plus,0,FIR01730
-CAM0113,Adyar,Chennai,12.996246,80.258718,"Hospital Gate, Adyar",Fixed,4K,Active,1,78,2021-11-30,2023-10-30,Axis,0,FIR01730
-CAM0114,Velachery,Chennai,12.977565,80.216002,"Temple/Mosque Gate, Velachery",Bullet,4K,Inactive,0,76,2023-02-27,2024-09-02,Axis,0,FIR03316; FIR03830
-CAM0115,Velachery,Chennai,12.981423,80.219245,"Market Entrance, Velachery",Fixed,1080p,Inactive,0,26,2022-09-05,2024-05-21,Honeywell,0,FIR03316; FIR03830; FIR03203
-CAM0116,Velachery,Chennai,12.979427,80.218629,"Railway Gate, Velachery",Fixed,1080p,Inactive,0,28,2019-02-02,2023-12-04,Bosch,0,FIR03316; FIR03830
-CAM0117,Anna Nagar,Chennai,13.089737,80.215077,"Residential Gate, Anna Nagar",Dome,1080p,Active,1,57,2020-03-18,2022-10-24,Honeywell,0,FIR03492
-CAM0118,Anna Nagar,Chennai,13.088721,80.214994,"Flyover Base, Anna Nagar",Fixed,4K,Active,1,35,2021-01-06,2024-03-11,Bosch,0,FIR03492; FIR01074
-CAM0119,Anna Nagar,Chennai,13.082344,80.210552,"Shopping Complex, Anna Nagar",Fixed,1080p,Active,1,51,2022-05-26,2023-09-28,Bosch,0,FIR03492
-CAM0120,Anna Nagar,Chennai,13.082927,80.210993,"Main Road Junction, Anna Nagar",Dome,720p,Active,0,22,2023-04-01,2023-12-02,Honeywell,0,FIR03492; FIR01074; FIR01838
+CAM0071,BTM,Bengaluru,12.978,77.642201,"Main Road Junction, Indiranagar",Fixed,4K,Inactive,0,40,2019-08-21,2021-08-26,Dahua,0,FIR04533; FIR03987
+CAM0072,BTM,Bengaluru,12.97798,77.638938,"Market Entrance, Indiranagar",Dome,720p,Active,1,42,2019-01-24,2023-06-05,Honeywell,0,FIR04533; FIR03987; FIR01106
+CAM0073,BTM,Bengaluru,12.976976,77.636157,"Railway Gate, Indiranagar",Fixed,1080p,Active,0,64,2020-01-07,2022-06-12,CP Plus,0,FIR04533; FIR03987; FIR01106
+CAM0074,BTM,Bengaluru,12.976239,77.645022,"Night Bazaar, Indiranagar",Bullet,720p,Active,1,73,2022-10-09,2023-12-02,Honeywell,0,FIR04533; FIR03987; FIR01106
+CAM0075,Jayanagar,Bengaluru,12.97207,77.745467,"ATM Cluster, Whitefield",Fixed,1080p,Active,1,26,2019-06-21,2020-09-15,Bosch,0,FIR02813
+CAM0076,Jayanagar,Bengaluru,12.971671,77.753224,"Night Bazaar, Whitefield",PTZ,720p,Maintenance,0,125,2022-05-22,2022-08-13,Honeywell,0,FIR02813; FIR03510; FIR03301
+CAM0077,Jayanagar,Bengaluru,12.974554,77.74532,"Park Entrance, Whitefield",Bullet,720p,Active,1,66,2020-12-15,2023-12-02,Bosch,0,FIR02813; FIR03510
+CAM0078,Jayanagar,Bengaluru,12.971343,77.748021,"Shopping Complex, Whitefield",PTZ,1080p,Active,1,114,2020-10-08,2022-01-22,CP Plus,0,FIR02813; FIR03510; FIR03301
+CAM0079,Electronic City,Bengaluru,12.907045,77.584439,"Bus Stand, JP Nagar",Fixed,1080p,Maintenance,0,74,2021-06-07,2022-03-27,CP Plus,0,FIR03030; FIR01346; FIR03277
+CAM0080,Electronic City,Bengaluru,12.908247,77.581868,"Residential Gate, JP Nagar",Dome,1080p,Inactive,0,76,2021-11-06,2021-11-13,Honeywell,0,FIR03030
+CAM0081,Electronic City,Bengaluru,12.909121,77.585849,"Night Bazaar, JP Nagar",Fixed,720p,Active,1,72,2021-09-29,2022-01-03,Bosch,0,FIR03030
+CAM0082,Electronic City,Bengaluru,12.908849,77.584468,"Temple/Mosque Gate, JP Nagar",Bullet,1080p,Inactive,0,46,2020-06-13,2023-07-24,CP Plus,0,FIR03030; FIR01346
+CAM0083,Marathahalli,Bengaluru,13.035144,77.595902,"Residential Gate, Hebbal",Dome,4K,Active,1,47,2022-12-17,2024-07-01,Axis,1,FIR03725
+CAM0084,Marathahalli,Bengaluru,13.033493,77.59292,"Metro Station Exit, Hebbal",Dome,1080p,Maintenance,0,31,2020-06-30,2022-06-18,Axis,1,FIR03725; FIR04035
+CAM0085,Marathahalli,Bengaluru,13.037522,77.594435,"ATM Cluster, Hebbal",Dome,1080p,Active,0,44,2019-03-15,2020-12-19,Bosch,1,FIR03725; FIR04035; FIR01204
+CAM0086,Marathahalli,Bengaluru,13.030696,77.598931,"Night Bazaar, Hebbal",PTZ,1080p,Maintenance,0,138,2020-09-21,2023-11-21,Dahua,1,FIR03725
+CAM0087,Whitefield,Bengaluru,12.910749,77.644503,"Shopping Complex, HSR Layout",PTZ,1080p,Inactive,0,112,2020-07-15,2022-12-28,Hikvision,0,FIR02378; FIR03905; FIR02957
+CAM0088,Whitefield,Bengaluru,12.914133,77.64718,"Metro Station Exit, HSR Layout",Fixed,1080p,Active,1,28,2019-02-08,2020-09-13,Honeywell,0,FIR02378; FIR03905; FIR02957
+CAM0089,Whitefield,Bengaluru,12.915595,77.646748,"ATM Cluster, HSR Layout",Dome,4K,Inactive,0,68,2020-01-09,2023-12-12,CP Plus,0,FIR02378; FIR03905; FIR02957
+CAM0090,KR Puram,Bengaluru,17.413966,78.443572,"Night Bazaar, Banjara Hills",PTZ,4K,Active,1,117,2022-09-06,2024-06-12,Honeywell,0,FIR04943; FIR04610
+CAM0091,KR Puram,Bengaluru,17.413935,78.448596,"Shopping Complex, Banjara Hills",Bullet,4K,Active,1,20,2019-09-22,2020-05-27,Honeywell,0,FIR04943; FIR04610
+CAM0092,KR Puram,Bengaluru,17.412777,78.448595,"Metro Station Exit, Banjara Hills",Dome,1080p,Maintenance,0,51,2019-11-25,2021-10-19,Honeywell,0,FIR04943
+CAM0093,KR Puram,Bengaluru,17.413198,78.451424,"Bus Stand, Banjara Hills",Dome,1080p,Inactive,0,28,2020-12-27,2022-10-02,CP Plus,0,FIR04943
+CAM0094,Koramangala,Bengaluru,17.443173,78.49953,"Market Entrance, Secunderabad",PTZ,4K,Active,1,161,2021-05-20,2024-09-21,Hikvision,1,FIR02628; FIR00710; FIR02380
+CAM0095,Koramangala,Bengaluru,17.443056,78.494586,"Hospital Gate, Secunderabad",Dome,1080p,Active,0,56,2019-08-25,2020-08-20,Axis,1,FIR02628; FIR00710; FIR02380
+CAM0096,Koramangala,Bengaluru,17.439237,78.495112,"ATM Cluster, Secunderabad",Dome,1080p,Active,0,37,2019-06-20,2023-04-07,Dahua,1,FIR02628; FIR00710
+CAM0097,Koramangala,Bengaluru,17.437614,78.503187,"Park Entrance, Secunderabad",Dome,4K,Maintenance,0,44,2022-05-02,2022-09-25,Axis,1,FIR02628
+CAM0098,Koramangala,Bengaluru,17.443996,78.501908,"Residential Gate, Secunderabad",PTZ,4K,Active,1,172,2019-03-23,2022-07-06,Hikvision,1,FIR02628
+CAM0099,BTM,Bengaluru,17.366167,78.478927,"Park Entrance, Charminar",Dome,1080p,Active,0,26,2021-11-14,2021-12-11,Hikvision,1,FIR01630; FIR00835; FIR00025
+CAM0100,BTM,Bengaluru,17.35857,78.469703,"Police Post, Charminar",Dome,1080p,Active,1,71,2019-12-25,2021-07-25,Bosch,1,FIR01630; FIR00835; FIR00025
+CAM0101,BTM,Bengaluru,17.35962,78.479658,"Residential Gate, Charminar",PTZ,4K,Active,1,84,2019-07-14,2020-11-24,Honeywell,1,FIR01630; FIR00835
+CAM0102,BTM,Bengaluru,17.362619,78.471346,"Railway Gate, Charminar",PTZ,4K,Active,1,114,2023-05-03,2023-07-27,Honeywell,1,FIR01630
+CAM0103,BTM,Bengaluru,17.35864,78.477453,"Flyover Base, Charminar",PTZ,1080p,Active,1,115,2021-01-08,2024-08-19,CP Plus,1,FIR01630; FIR00835
+CAM0104,Jayanagar,Bengaluru,17.450217,78.388766,"Park Entrance, Madhapur",Bullet,4K,Maintenance,0,43,2023-01-03,2023-03-28,Honeywell,0,FIR00775; FIR02215; FIR02535
+CAM0105,Jayanagar,Bengaluru,17.446822,78.387323,"Bus Stand, Madhapur",Bullet,1080p,Active,0,26,2023-04-14,2023-07-31,CP Plus,0,FIR00775; FIR02215; FIR02535
+CAM0106,Jayanagar,Bengaluru,17.447167,78.390231,"Shopping Complex, Madhapur",Dome,1080p,Maintenance,0,63,2019-04-28,2022-06-05,Hikvision,0,FIR00775; FIR02215; FIR02535
+CAM0107,Electronic City,Bengaluru,13.043063,80.239097,"Metro Station Exit, T Nagar",Dome,4K,Active,0,33,2022-03-07,2022-06-06,Hikvision,1,FIR04520; FIR01233; FIR04830
+CAM0108,Electronic City,Bengaluru,13.04069,80.236354,"Park Entrance, T Nagar",Dome,1080p,Active,0,21,2021-04-14,2021-06-23,Bosch,1,FIR04520
+CAM0109,Electronic City,Bengaluru,13.044168,80.230972,"Bus Stand, T Nagar",Dome,1080p,Active,1,28,2020-07-17,2022-06-02,Bosch,1,FIR04520; FIR01233; FIR04830
+CAM0110,Electronic City,Bengaluru,13.038383,80.235616,"Police Post, T Nagar",Dome,1080p,Active,1,61,2022-02-26,2023-08-25,CP Plus,1,FIR04520
+CAM0111,Marathahalli,Bengaluru,13.003358,80.258235,"Market Entrance, Adyar",Dome,1080p,Inactive,0,79,2023-05-08,2024-09-02,Dahua,0,FIR01730; FIR02870
+CAM0112,Marathahalli,Bengaluru,13.003833,80.253707,"Night Bazaar, Adyar",Bullet,1080p,Active,0,64,2020-09-07,2022-08-18,CP Plus,0,FIR01730
+CAM0113,Marathahalli,Bengaluru,12.996246,80.258718,"Hospital Gate, Adyar",Fixed,4K,Active,1,78,2021-11-30,2023-10-30,Axis,0,FIR01730
+CAM0114,Whitefield,Bengaluru,12.977565,80.216002,"Temple/Mosque Gate, Velachery",Bullet,4K,Inactive,0,76,2023-02-27,2024-09-02,Axis,0,FIR03316; FIR03830
+CAM0115,Whitefield,Bengaluru,12.981423,80.219245,"Market Entrance, Velachery",Fixed,1080p,Inactive,0,26,2022-09-05,2024-05-21,Honeywell,0,FIR03316; FIR03830; FIR03203
+CAM0116,Whitefield,Bengaluru,12.979427,80.218629,"Railway Gate, Velachery",Fixed,1080p,Inactive,0,28,2019-02-02,2023-12-04,Bosch,0,FIR03316; FIR03830
+CAM0117,KR Puram,Bengaluru,13.089737,80.215077,"Residential Gate, Anna Nagar",Dome,1080p,Active,1,57,2020-03-18,2022-10-24,Honeywell,0,FIR03492
+CAM0118,KR Puram,Bengaluru,13.088721,80.214994,"Flyover Base, Anna Nagar",Fixed,4K,Active,1,35,2021-01-06,2024-03-11,Bosch,0,FIR03492; FIR01074
+CAM0119,KR Puram,Bengaluru,13.082344,80.210552,"Shopping Complex, Anna Nagar",Fixed,1080p,Active,1,51,2022-05-26,2023-09-28,Bosch,0,FIR03492
+CAM0120,KR Puram,Bengaluru,13.082927,80.210993,"Main Road Junction, Anna Nagar",Dome,720p,Active,0,22,2023-04-01,2023-12-02,Honeywell,0,FIR03492; FIR01074; FIR01838

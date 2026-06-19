@@ -133,6 +133,7 @@ def get_hotspots(days: int = 7):
             "area": area,
             "forecast_days": days,
             "avg_predicted_incidents": round(avg_count, 2),
+            "risk_score": round(normalized_score, 2),
             "risk_level": risk_level,
             "reasons": [
                 f"Forecasted {avg_count:.1f} daily incidents (area baseline: {area_baseline:.1f})",

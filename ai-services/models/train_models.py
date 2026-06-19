@@ -19,7 +19,7 @@ os.makedirs(SAVED_DIR, exist_ok=True)
 print("Starting Model Training Pipeline...")
 
 print("\nTraining Prophet Model for Hotspots...")
-df_ts = pd.read_csv(os.path.join(DATA_DIR, "time_series_prophet.csv"))
+df_ts = pd.read_csv(os.path.join(DATA_DIR, "time_series_prophet_sample.csv"))
 
 
 
@@ -76,7 +76,7 @@ print(f"Prophet models and per-area baselines saved for areas: {all_areas}")
 # 2. XGBoost for Repeat Offenders (Enhanced)
 # ---------------------------------------------------------
 print("\nTraining Enhanced XGBoost for Repeat Offenders...")
-df_offenders = pd.read_csv(os.path.join(DATA_DIR, "repeat_offenders.csv"))
+df_offenders = pd.read_csv(os.path.join(DATA_DIR, "repeat_offenders_sample.csv"))
 
 
 
@@ -114,7 +114,7 @@ print("Enhanced XGBoost model saved.")
 # 3. Data Prep for Crime Records (MLP & Random Forest)
 # ---------------------------------------------------------
 print("\nLoading and Preprocessing Crime Records...")
-df_crimes = pd.read_csv(os.path.join(DATA_DIR, "crime_records.csv"))
+df_crimes = pd.read_csv(os.path.join(DATA_DIR, "crime_records_sample.csv"))
 
 
 

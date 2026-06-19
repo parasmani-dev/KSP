@@ -12,17 +12,17 @@ ROOT_DIR = os.path.dirname(BASE_DIR)
 DATA_DIR = os.path.join(ROOT_DIR, "Dataset") if os.path.exists(os.path.join(ROOT_DIR, "Dataset")) else os.path.join(BASE_DIR, "Dataset")
 
 try:
-    df_cctv = pd.read_csv(os.path.join(DATA_DIR, "cctv_cameras.csv"))
+    df_cctv = pd.read_csv(os.path.join(DATA_DIR, "cctv_cameras_sample.csv"))
 except:
     df_cctv = pd.DataFrame()
 
-# Currently using open_cases.csv suspect_count
+# Currently using open_cases_sample.csv suspect_count
 # TODO: Replace with HTTP call to Graph Service
 # Expected: GET {graph_service_url}/graph/case/{id}
 # which will return actual graph-derived connections
 try:
-    df_open_cases = pd.read_csv(os.path.join(DATA_DIR, "open_cases.csv"))
-    df_mock_graph = pd.read_csv(os.path.join(DATA_DIR, "mock_graph.csv"))
+    df_open_cases = pd.read_csv(os.path.join(DATA_DIR, "open_cases_sample.csv"))
+    df_mock_graph = pd.read_csv(os.path.join(DATA_DIR, "mock_graph_sample.csv"))
 except:
     df_open_cases = pd.DataFrame()
     df_mock_graph = pd.DataFrame()
@@ -42,7 +42,7 @@ def get_patrol_recommendations():
     hotspots_response = get_hotspots(days=7)
     hotspots = hotspots_response.get("hotspots", [])
     try:
-        df_offenders = pd.read_csv(os.path.join(DATA_DIR, "repeat_offenders.csv"))
+        df_offenders = pd.read_csv(os.path.join(DATA_DIR, "repeat_offenders_sample.csv"))
     except:
         df_offenders = pd.DataFrame()
         
@@ -75,7 +75,7 @@ def get_investigation_recommendations(case_id: str = None):
     df_join = pd.merge(df_open_cases, df_mock_graph, on="case_id", how="inner")
     recommendations = []
     for _, row in df_join.iterrows():
-        # Use the integer count columns directly from open_cases.csv
+        # Use the integer count columns directly from open_cases_sample.csv
         suspect_count_val = int(row.get('suspect_count', 0)) if not pd.isna(row.get('suspect_count')) else 0
         missing_evidence_count = int(row.get('evidence_missing_count', 0)) if not pd.isna(row.get('evidence_missing_count')) else 0
             

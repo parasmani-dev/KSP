@@ -9,9 +9,13 @@
   via open_cases.csv ranked by suspect+evidence count
 
 ### Data note
-All Dataset/*.csv files are 100% synthetic, 
+All Dataset/*_sample.csv files are 100% synthetic, 
 generated via Faker + numpy. No real PII present.
-See dataset_requirements.md for schema definitions.
+All datasets have been aggressively sanitized to replace phone numbers with 'REDACTED_PHONE'.
+See Dataset/DATA_ORIGIN.md for dataset provenance.
+
+### Dynamic Multi-City Support
+This PR ensures that all datasets correctly encompass multiple major Indian cities (Delhi, Mumbai, Bengaluru, Hyderabad, Chennai, Nagpur). The backend `ai-services` codebase (e.g., `recommendations.py`, `train_models.py`) has been upgraded to dynamically calculate `AREA_CENTROIDS` directly from the newly provided datasets, ensuring the ML algorithms and APIs can seamlessly handle any new cities introduced by the data team without requiring any further hardcoded mapping changes.
 
 ### Model artifacts note  
 .joblib files committed intentionally for hackathon 

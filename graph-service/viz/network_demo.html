@@ -27,7 +27,7 @@
             --success:    #3fb950;
             --text:       #e6edf3;
             --text-sec:   #8b949e;
-            --text-muted: #484f58;
+            --text-muted: #6e7681;
 
             /* Node type colors */
             --c-citizen:  #58a6ff;
@@ -37,9 +37,9 @@
             --c-org:      #bc8cff;
             --c-default:  #484f58;
 
-            /* Dynamic text scale (set via JS) */
-            --label-size: 0.72rem;
-            --value-size: 0.9rem;
+            /* Text scale — readable defaults */
+            --label-size: 0.78rem;
+            --value-size: 1rem;
         }
 
         /* ───────────────────────────────────────────
@@ -130,8 +130,8 @@
             position: absolute;
             top: 0;
             left: 0;
-            right: 440px;
-            padding: 14px 20px;
+            right: 520px;
+            padding: 16px 24px;
             display: flex;
             align-items: center;
             gap: 16px;
@@ -347,7 +347,7 @@
            INSPECTOR PANEL (right rail)
         ─────────────────────────────────────────── */
         .sidebar {
-            width: 440px;
+            width: 520px;
             flex-shrink: 0;
             background: linear-gradient(180deg, #1a2030 0%, #161b22 60%);
             border-left: 1px solid var(--border);
@@ -367,12 +367,12 @@
         /* When sidebar is closed, the canvas takes full width */
         body.panel-closed .top-bar { right: 0; }
         body.panel-closed .controls { right: 20px; }
-        body:not(.panel-closed) .top-bar { right: 440px; }
-        body:not(.panel-closed) .controls { right: 460px; }
+        body:not(.panel-closed) .top-bar { right: 520px; }
+        body:not(.panel-closed) .controls { right: 540px; }
 
         /* Panel header */
         .sidebar-header {
-            padding: 20px 20px 18px;
+            padding: 22px 24px 18px;
             border-bottom: 1px solid var(--border);
             position: relative;
             background: linear-gradient(135deg, rgba(88,166,255,0.06) 0%, transparent 60%);
@@ -411,7 +411,7 @@
 
         .sidebar-title {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1.05rem;
+            font-size: 1.25rem;
             font-weight: 500;
             color: var(--text);
             word-break: break-all;
@@ -423,10 +423,10 @@
         /* Panel header controls */
         .panel-controls {
             position: absolute;
-            top: 14px;
-            right: 14px;
+            top: 18px;
+            right: 18px;
             display: flex;
-            gap: 4px;
+            gap: 6px;
         }
 
         .panel-controls button {
@@ -434,9 +434,9 @@
             border: 1px solid var(--border);
             color: var(--text-muted);
             border-radius: 4px;
-            width: 26px;
-            height: 26px;
-            font-size: 11px;
+            width: 30px;
+            height: 30px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
@@ -452,13 +452,13 @@
 
         /* AI Explanation block */
         .ai-block {
-            margin: 16px 20px 0;
-            padding: 14px 16px;
+            margin: 16px 24px 0;
+            padding: 16px 18px;
             border-left: 3px solid var(--accent);
             background: linear-gradient(135deg, rgba(88, 166, 255, 0.07), rgba(88, 166, 255, 0.03));
             border-radius: 0 6px 6px 0;
-            font-size: var(--label-size, 0.72rem);
-            line-height: 1.7;
+            font-size: 0.92rem;
+            line-height: 1.75;
             color: var(--text-sec);
             display: none;
             position: relative;
@@ -480,12 +480,12 @@
         }
 
         .ai-block .ai-label {
-            font-size: 0.58rem;
+            font-size: 0.65rem;
             font-weight: 700;
             letter-spacing: 0.14em;
             text-transform: uppercase;
             color: var(--accent);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -508,10 +508,9 @@
 
         /* Properties table */
         .sidebar-content {
-            padding: 16px 20px 20px;
+            padding: 18px 24px 24px;
             overflow-y: auto;
             flex-grow: 1;
-            /* Custom scrollbar */
             scrollbar-width: thin;
             scrollbar-color: var(--border) transparent;
         }
@@ -535,12 +534,12 @@
 
         /* Section label above table */
         .props-section-label {
-            font-size: 0.58rem;
+            font-size: 0.65rem;
             font-weight: 700;
             letter-spacing: 0.14em;
             text-transform: uppercase;
             color: var(--text-muted);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             margin-top: 4px;
             display: flex;
             align-items: center;
@@ -572,25 +571,27 @@
         }
 
         .props-table td {
-            padding: 9px 6px;
-            vertical-align: top;
-            font-size: var(--value-size, 0.9rem);
+            padding: 11px 6px;
+            vertical-align: middle;
+            font-size: var(--value-size, 1rem);
         }
 
         .props-table td.key {
-            color: var(--text-muted);
-            font-size: var(--label-size, 0.72rem);
+            color: var(--text-sec);
+            font-size: var(--label-size, 0.78rem);
             text-transform: uppercase;
             letter-spacing: 0.06em;
-            width: 38%;
-            padding-right: 14px;
+            width: 35%;
+            padding-right: 16px;
             padding-left: 0;
+            font-weight: 500;
         }
 
         .props-table td.val {
             font-family: 'JetBrains Mono', monospace;
             color: var(--text);
             word-break: break-word;
+            font-size: var(--value-size, 1rem);
         }
 
         .empty-state {
@@ -725,36 +726,37 @@
                     'label': 'data(id)',
                     'color': '#e6edf3',
                     'text-valign': 'bottom',
-                    'text-margin-y': 6,
-                    'font-size': '11px',
-                    'font-family': 'JetBrains Mono, monospace',
-                    'min-zoomed-font-size': 8,
-                    'text-outline-width': 2,
+                    'text-margin-y': 8,
+                    'font-size': '16px',
+                    'font-family': 'Inter, system-ui, sans-serif',
+                    'font-weight': '500',
+                    'min-zoomed-font-size': 10,
+                    'text-outline-width': 3,
                     'text-outline-color': '#0d1117',
                     'background-color': '#484f58',
-                    'width': 30,
-                    'height': 30
+                    'width': 46,
+                    'height': 46
                 }
             },
             {
                 selector: 'node[type = "Citizen"]',
-                style: { 'background-color': '#58a6ff', 'width': 34, 'height': 34 }
+                style: { 'background-color': '#58a6ff', 'width': 50, 'height': 50 }
             },
             {
                 selector: 'node[type = "Case"]',
-                style: { 'background-color': '#e3b341', 'shape': 'rectangle', 'width': 30, 'height': 30 }
+                style: { 'background-color': '#e3b341', 'shape': 'rectangle', 'width': 46, 'height': 46 }
             },
             {
                 selector: 'node[type = "Vehicle"]',
-                style: { 'background-color': '#8b949e', 'shape': 'triangle', 'width': 30, 'height': 30 }
+                style: { 'background-color': '#8b949e', 'shape': 'triangle', 'width': 46, 'height': 46 }
             },
             {
                 selector: 'node[type = "Location"]',
-                style: { 'background-color': '#3fb950', 'shape': 'diamond', 'width': 30, 'height': 30 }
+                style: { 'background-color': '#3fb950', 'shape': 'diamond', 'width': 50, 'height': 50 }
             },
             {
                 selector: 'node[type = "Organization"]',
-                style: { 'background-color': '#bc8cff', 'shape': 'hexagon', 'width': 38, 'height': 38 }
+                style: { 'background-color': '#bc8cff', 'shape': 'hexagon', 'width': 56, 'height': 56 }
             },
             // Edges — dark at rest
             {
@@ -770,10 +772,12 @@
             {
                 selector: 'node.highlighted',
                 style: {
-                    'border-width': 2,
+                    'border-width': 3,
                     'border-color': '#58a6ff',
+                    'border-opacity': 1,
                     'opacity': 1,
                     'z-index': 100,
+                    'box-shadow': '0 0 20px #58a6ff'
                 }
             },
             // Highlighted edge
@@ -781,7 +785,7 @@
                 selector: 'edge.highlighted',
                 style: {
                     'line-color': '#58a6ff',
-                    'width': 2,
+                    'width': 2.5,
                     'opacity': 1,
                     'z-index': 99
                 }
@@ -1011,7 +1015,7 @@
             document.body.classList.remove('panel-closed');
 
             // Nudge zoom controls
-            document.getElementById('zoom-controls').style.right = '340px';
+            document.getElementById('zoom-controls').style.right = '540px';
         }
 
         function closeSidebar() {

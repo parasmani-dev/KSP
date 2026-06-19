@@ -27,7 +27,7 @@ app.add_middleware(
 @app.get("/graph/network")
 def get_network():
     """Get full graph network in node-link JSON format."""
-    data = nx.node_link_data(GRAPH)
+    data = nx.node_link_data(GRAPH, edges="links")
     return {"network": data}
 
 @app.get("/graph/case/{case_id}")
@@ -39,7 +39,7 @@ def get_case_subgraph(case_id: str):
     neighbors = list(GRAPH.neighbors(case_id))
     nodes = [case_id] + neighbors
     subgraph = GRAPH.subgraph(nodes)
-    return {"network": nx.node_link_data(subgraph)}
+    return {"network": nx.node_link_data(subgraph, edges="links")}
 
 @app.get("/graph/centrality")
 def get_centrality():
@@ -63,7 +63,7 @@ def search_node(name: str):
         neighborhood.update(GRAPH.neighbors(match))
         
     subgraph = GRAPH.subgraph(neighborhood)
-    return {"network": nx.node_link_data(subgraph)}
+    return {"network": nx.node_link_data(subgraph, edges="links")}
 
 @app.get("/graph/hotspots")
 def get_hotspots_api():
@@ -88,6 +88,15 @@ def predict_clusters_api():
     """Crime cluster groupings."""
     # GNN disabled due to schema leakage in validation; classical baseline ships for demo
     return {"clusters": detect_communities(GRAPH), "status": "baseline"}
+
+from analysis.explainer import explain_node
+
+@app.get("/graph/explain/{node_id}")
+def explain_node_api(node_id: str):
+    """Generate XAI explanation for a specific node."""
+    if not GRAPH.has_node(node_id):
+        raise HTTPException(status_code=404, detail="Node not found")
+    return explain_node(GRAPH, node_id)
 
 if __name__ == "__main__":
     import uvicorn

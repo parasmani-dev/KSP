@@ -19,12 +19,9 @@ os.makedirs(SAVED_DIR, exist_ok=True)
 print("Starting Model Training Pipeline...")
 
 print("\nTraining Prophet Model for Hotspots...")
-df_ts = pd.read_csv(os.path.join(DATA_DIR, "time_series_prophet.csv"))
+df_ts = pd.read_csv(os.path.join(DATA_DIR, "time_series_prophet_sample.csv"))
 
-bengaluru_areas = ['Whitefield', 'KR Puram', 'Koramangala', 'BTM', 'Jayanagar', 'Electronic City', 'Marathahalli']
-unique_ts_areas = df_ts['area'].unique()
-ts_area_map = {a: bengaluru_areas[i % len(bengaluru_areas)] for i, a in enumerate(unique_ts_areas)}
-df_ts['area'] = df_ts['area'].map(ts_area_map)
+
 
 # Shift dates to end yesterday so that forecasts correctly reach into the actual future
 df_ts['ds'] = pd.to_datetime(df_ts['ds'])
@@ -79,11 +76,9 @@ print(f"Prophet models and per-area baselines saved for areas: {all_areas}")
 # 2. XGBoost for Repeat Offenders (Enhanced)
 # ---------------------------------------------------------
 print("\nTraining Enhanced XGBoost for Repeat Offenders...")
-df_offenders = pd.read_csv(os.path.join(DATA_DIR, "repeat_offenders.csv"))
+df_offenders = pd.read_csv(os.path.join(DATA_DIR, "repeat_offenders_sample.csv"))
 
-unique_off_areas = df_offenders['area'].unique()
-off_area_map = {a: bengaluru_areas[i % len(bengaluru_areas)] for i, a in enumerate(unique_off_areas)}
-df_offenders['area'] = df_offenders['area'].map(off_area_map)
+
 
 # Feature Engineering: Encode Categorical variables
 le_crime_xgb = LabelEncoder()
@@ -119,11 +114,9 @@ print("Enhanced XGBoost model saved.")
 # 3. Data Prep for Crime Records (MLP & Random Forest)
 # ---------------------------------------------------------
 print("\nLoading and Preprocessing Crime Records...")
-df_crimes = pd.read_csv(os.path.join(DATA_DIR, "crime_records.csv"))
+df_crimes = pd.read_csv(os.path.join(DATA_DIR, "crime_records_sample.csv"))
 
-unique_cr_areas = df_crimes['area'].unique()
-cr_area_map = {a: bengaluru_areas[i % len(bengaluru_areas)] for i, a in enumerate(unique_cr_areas)}
-df_crimes['area'] = df_crimes['area'].map(cr_area_map)
+
 
 # Label Encode categorical features
 le_area = LabelEncoder()

@@ -5,8 +5,8 @@ from datetime import datetime, timedelta
 class AlertManager:
     def __init__(self):
         BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        self.config_path = os.path.join(BASE_DIR, "Dataset", "alert_thresholds_config.csv")
-        self.history_path = os.path.join(BASE_DIR, "Dataset", "alert_history.csv")
+        self.config_path = os.path.join(BASE_DIR, "Dataset", "alert_thresholds_config_sample.csv")
+        self.history_path = os.path.join(BASE_DIR, "Dataset", "alert_history_sample.csv")
         
         self.config_df = pd.DataFrame()
         self.history = {} # in-memory history: (crime_type, area) -> datetime of last alert

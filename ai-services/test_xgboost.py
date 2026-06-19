@@ -10,7 +10,7 @@ DATA_DIR = os.path.join(BASE_DIR, "Dataset")
 
 print("Testing XGBoost Enhancements...\n")
 
-df_offenders = pd.read_csv(os.path.join(DATA_DIR, "repeat_offenders.csv"))
+df_offenders = pd.read_csv(os.path.join(DATA_DIR, "repeat_offenders_sample.csv"))
 
 # 1. Feature Engineering: Add Categorical Features
 le_crime = LabelEncoder()

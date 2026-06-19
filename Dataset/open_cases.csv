@@ -1,51 +1,51 @@
 case_id,crime_type,area,city,date_reported,suspects,suspect_count,evidence_missing,evidence_missing_count,related_cases,escalated_crime_type,case_status,priority
-FIR01727,Drug Offense,Dadar,Mumbai,2022-11-13,Omkar Desai; Qadir Shaikh,2,Ballistics Report; Phone Records,2,FIR01739; FIR03120,,Cold Case,High
-FIR01125,Auto Theft,Bandra,Mumbai,2023-05-26,Naresh Jha; Vijay Dubey; Jayesh Pandey,3,Phone Records; Forensics Report,2,FIR00292; FIR00931; FIR03675,,Under Investigation,Low
-FIR02557,Kidnapping,Charminar,Hyderabad,2023-12-08,Omkar Desai,1,Ballistics Report,1,FIR00904; FIR02163; FIR03558,,Awaiting Arrest,Medium
-FIR00535,Eve Teasing,Indiranagar,Bengaluru,2023-12-02,Sunil Patel; Wasim Akram; Sanjay Rawat,3,Forensics Report; Ballistics Report,2,FIR02013; FIR03810; FIR04953,,Cold Case,Medium
-FIR02126,Drug Offense,Madhapur,Hyderabad,2022-03-27,Suresh Nair; Yashraj Bhatt; Tarun Pillai,3,None,0,FIR02577; FIR02470,,Awaiting Arrest,Medium
-FIR02132,Chain Snatching,Rohini,Delhi,2023-10-20,Tarun Pillai; Nitin Chauhan; Elamaran V,3,None,0,FIR03322; FIR02102,Assault,Under Investigation,High
-FIR02139,Drug Offense,Chandni Chowk,Delhi,2024-07-26,Manish Joshi; Sanjay Rawat; Ajay Lakhani,3,Forensics Report,1,FIR01046; FIR02876,,Pending Trial,High
-FIR03530,Auto Theft,Charminar,Hyderabad,2022-11-04,Ganesh Patil; Nitin Chauhan,2,Forensics Report; Witness Statement; Financial Records,3,FIR00632,,Awaiting Arrest,High
-FIR02574,Drug Offense,Rohini,Delhi,2023-07-13,Ratan Das; Fayaz Dar,2,Ballistics Report; Witness Statement; Financial Records,3,FIR00768; FIR01988; FIR00377,,Under Investigation,Low
-FIR02761,Robbery,Indiranagar,Bengaluru,2022-05-08,Ankit Tiwari,1,Ballistics Report; Phone Records; CCTV Footage,3,FIR02425,Assault,Pending Trial,Medium
-FIR04406,Extortion,JP Nagar,Bengaluru,2023-06-29,Rakesh Verma; Deepak Yadav; Ratan Das,3,Witness Statement,1,FIR04829,Murder,Pending Trial,Low
+FIR01727,Drug Offense,Electronic City,Bengaluru,2022-11-13,Omkar Desai; Qadir Shaikh,2,Ballistics Report; Phone Records,2,FIR01739; FIR03120,,Cold Case,High
+FIR01125,Auto Theft,Koramangala,Bengaluru,2023-05-26,Naresh Jha; Vijay Dubey; Jayesh Pandey,3,Phone Records; Forensics Report,2,FIR00292; FIR00931; FIR03675,,Under Investigation,Low
+FIR02557,Kidnapping,Koramangala,Bengaluru,2023-12-08,Omkar Desai,1,Ballistics Report,1,FIR00904; FIR02163; FIR03558,,Awaiting Arrest,Medium
+FIR00535,Eve Teasing,Koramangala,Bengaluru,2023-12-02,Sunil Patel; Wasim Akram; Sanjay Rawat,3,Forensics Report; Ballistics Report,2,FIR02013; FIR03810; FIR04953,,Cold Case,Medium
+FIR02126,Drug Offense,BTM,Bengaluru,2022-03-27,Suresh Nair; Yashraj Bhatt; Tarun Pillai,3,None,0,FIR02577; FIR02470,,Awaiting Arrest,Medium
+FIR02132,Chain Snatching,BTM,Bengaluru,2023-10-20,Tarun Pillai; Nitin Chauhan; Elamaran V,3,None,0,FIR03322; FIR02102,Assault,Under Investigation,High
+FIR02139,Drug Offense,Electronic City,Bengaluru,2024-07-26,Manish Joshi; Sanjay Rawat; Ajay Lakhani,3,Forensics Report,1,FIR01046; FIR02876,,Pending Trial,High
+FIR03530,Auto Theft,Koramangala,Bengaluru,2022-11-04,Ganesh Patil; Nitin Chauhan,2,Forensics Report; Witness Statement; Financial Records,3,FIR00632,,Awaiting Arrest,High
+FIR02574,Drug Offense,BTM,Bengaluru,2023-07-13,Ratan Das; Fayaz Dar,2,Ballistics Report; Witness Statement; Financial Records,3,FIR00768; FIR01988; FIR00377,,Under Investigation,Low
+FIR02761,Robbery,Koramangala,Bengaluru,2022-05-08,Ankit Tiwari,1,Ballistics Report; Phone Records; CCTV Footage,3,FIR02425,Assault,Pending Trial,Medium
+FIR04406,Extortion,KR Puram,Bengaluru,2023-06-29,Rakesh Verma; Deepak Yadav; Ratan Das,3,Witness Statement,1,FIR04829,Murder,Pending Trial,Low
 FIR02631,Chain Snatching,Whitefield,Bengaluru,2022-12-25,Mukesh Singh; Uday Kiran; Jayesh Pandey; Dinesh Reddy,4,Financial Records; CCTV Footage,2,FIR02199; FIR03386,Robbery,Under Investigation,Low
-FIR02730,Cybercrime,Velachery,Chennai,2022-02-11,Vishal Thakur,1,Forensics Report,1,FIR00424,,Under Investigation,Low
-FIR02739,Auto Theft,T Nagar,Chennai,2022-08-10,Gopal Rao; Pravin Kadam; Hemant Sahu; Vishal Thakur,4,None,0,FIR02109; FIR03866,,Pending Trial,Medium
-FIR02760,Murder,Connaught Place,Delhi,2024-12-11,Harish Bose,1,CCTV Footage; Financial Records,2,FIR00092; FIR04876; FIR01391,,Cold Case,Low
-FIR02723,Vandalism,T Nagar,Chennai,2023-01-21,Hemant Sahu; Fayaz Dar; Pradeep Mishra,3,Ballistics Report; Witness Statement,2,FIR01334,,Cold Case,High
-FIR02727,Chain Snatching,Rohini,Delhi,2024-04-12,Farrukh Ansari; Harish Bose,2,None,0,FIR03359; FIR04588; FIR02862,Assault,Awaiting Arrest,High
-FIR02731,Assault,Lajpat Nagar,Delhi,2024-05-07,Lokesh Yadav; Tarun Pillai,2,Forensics Report,1,FIR04319,Extortion,Awaiting Arrest,High
-FIR02576,Extortion,Rohini,Delhi,2022-04-14,Lokesh Yadav; Wasim Akram; Hemant Sahu,3,Phone Records; CCTV Footage,2,FIR02090; FIR02416,Murder,Awaiting Arrest,Medium
-FIR02643,Murder,Dadar,Mumbai,2024-07-05,Qadir Shaikh; Jayesh Pandey; Sunil Patel,3,Forensics Report; Witness Statement,2,FIR02486,,Pending Trial,High
-FIR02795,Extortion,Secunderabad,Hyderabad,2022-10-06,Ankit Tiwari; Mukesh Singh; Qadir Shaikh; Babu Lal,4,Phone Records; Financial Records,3,FIR03631; FIR00014,Kidnapping,Cold Case,Medium
-FIR02919,Assault,Secunderabad,Hyderabad,2022-08-18,Rahul Sharma; Irfan Sheikh; Ganesh Patil; Harish Bose,4,Forensics Report; Phone Records,2,FIR04640,Extortion,Under Investigation,Medium
-FIR03059,Chain Snatching,Saket,Delhi,2022-04-05,Wasim Akram; Elamaran V,2,Ballistics Report; Phone Records; Witness Statement,3,FIR02274; FIR00824; FIR04675,Robbery,Cold Case,Low
-FIR02970,Chain Snatching,Dadar,Mumbai,2024-04-11,Aakash Mehta; Brijesh Tomar,2,Witness Statement; Financial Records,3,FIR00852; FIR02873,Robbery,Pending Trial,Medium
-FIR02762,Murder,Dharavi,Mumbai,2022-08-02,Suresh Nair; Pradeep Mishra; Vijay Dubey; Jayesh Pandey,4,Financial Records; Witness Statement; Phone Records,3,FIR00248; FIR02936,,Pending Trial,High
-FIR02798,Auto Theft,Andheri,Mumbai,2023-11-06,Imran Qureshi; Yashraj Bhatt; Wasim Akram,3,Forensics Report; Witness Statement,2,FIR02529; FIR01749,,Awaiting Arrest,High
-FIR02692,Murder,Borivali,Mumbai,2022-06-21,Elamaran V; Ankit Tiwari; Harish Bose,3,Ballistics Report,1,FIR04926; FIR04518; FIR00686,,Under Investigation,Low
-FIR02941,Theft,Adyar,Chennai,2023-05-14,Deepak Yadav; Tarun Pillai; Deepak Yadav; Arjun Singh,4,None,0,FIR00142,Robbery,Pending Trial,Medium
-FIR02768,Chain Snatching,Secunderabad,Hyderabad,2022-03-07,Vishal Thakur; Uday Kiran; Elamaran V; Pravin Kadam,4,Phone Records,1,FIR00231,Assault,Under Investigation,High
-FIR02972,Robbery,Anna Nagar,Chennai,2022-02-08,Chandan Kumar; Ankit Tiwari,2,None,0,FIR02563; FIR01073; FIR04913,Extortion,Under Investigation,Low
-FIR03007,Murder,Connaught Place,Delhi,2024-09-04,Pradeep Mishra; Vijay Dubey; Tushar Wagh; Gopal Rao,4,None,0,FIR04908,,Cold Case,High
-FIR02882,Vandalism,T Nagar,Chennai,2024-06-18,Imran Qureshi,1,Forensics Report; CCTV Footage,3,FIR01770; FIR04758; FIR03362,,Under Investigation,Medium
-FIR02668,Burglary,Goregaon,Mumbai,2024-07-24,Kiran Deshpande,1,CCTV Footage; Financial Records,2,FIR04177; FIR03871; FIR00026,Assault,Under Investigation,Low
-FIR02889,Auto Theft,Lajpat Nagar,Delhi,2024-05-01,Farrukh Ansari,1,Forensics Report,1,FIR00695; FIR02564,,Awaiting Arrest,High
-FIR02734,Auto Theft,Hebbal,Bengaluru,2022-12-05,Kiran Deshpande; Dilnawaz Memon,2,Forensics Report,1,FIR02418; FIR00282; FIR00892,,Cold Case,Low
-FIR02677,Chain Snatching,Worli,Mumbai,2023-01-25,Chetan More,1,None,0,FIR03280; FIR03236; FIR00337,Robbery,Pending Trial,Medium
-FIR03385,Theft,Connaught Place,Delhi,2022-02-26,Vijay Dubey; Vijay Dubey; Ravi Kumar; Mukesh Singh,4,CCTV Footage,1,FIR00032; FIR04270; FIR00741,Chain Snatching,Cold Case,Medium
-FIR03407,Theft,Velachery,Chennai,2022-01-23,Lokesh Yadav; Pradeep Mishra,2,Forensics Report; CCTV Footage,2,FIR00827; FIR03958; FIR02053,Robbery,Awaiting Arrest,Low
-FIR02992,Kidnapping,Rohini,Delhi,2022-08-26,Sumit Bansal; Chandan Kumar; Suresh Nair; Fayaz Dar,4,Ballistics Report; Financial Records,2,FIR02187; FIR04845; FIR03189,,Pending Trial,Medium
-FIR03374,Robbery,Rohini,Delhi,2023-06-20,Pradeep Mishra; Ratan Das; Lokesh Yadav,3,Witness Statement,1,FIR04634; FIR01276; FIR03571,Assault,Pending Trial,Medium
-FIR03341,Robbery,Chandni Chowk,Delhi,2023-09-24,Dinesh Reddy; Kiran Deshpande,2,Forensics Report; Financial Records; Phone Records,3,FIR03747; FIR04057,Assault,Awaiting Arrest,Medium
-FIR02983,Auto Theft,Karol Bagh,Delhi,2022-04-27,Sanjay Rawat; Chandan Kumar,2,Forensics Report; CCTV Footage; Financial Records,3,FIR04239; FIR01480; FIR00644,,Cold Case,Medium
-FIR00404,Eve Teasing,Madhapur,Hyderabad,2022-12-06,Pravin Kadam; Yashraj Bhatt,2,None,0,FIR03900; FIR03351,,Cold Case,Low
-FIR02754,Cybercrime,Rohini,Delhi,2023-11-01,Vijay Dubey; Salim Khan; Pravin Kadam; Uday Kiran,4,Witness Statement,1,FIR04689; FIR04166; FIR02568,,Cold Case,Low
-FIR03427,Vandalism,Karol Bagh,Delhi,2024-01-30,Ratan Das; Devraj Nair,2,None,0,FIR04035; FIR04490,,Awaiting Arrest,Medium
-FIR00443,Drug Offense,Charminar,Hyderabad,2024-05-19,Manish Joshi,1,None,0,FIR02028; FIR01136,,Pending Trial,Medium
-FIR02000,Eve Teasing,JP Nagar,Bengaluru,2023-01-26,Naresh Jha,1,Forensics Report; CCTV Footage; Phone Records,3,FIR01682; FIR03421,,Under Investigation,Medium
-FIR02022,Chain Snatching,Chandni Chowk,Delhi,2022-07-20,Rahul Sharma,1,Financial Records,1,FIR03993,Assault,Cold Case,High
-FIR03018,Fraud,Dadar,Mumbai,2023-02-10,Sumit Bansal,1,Phone Records,1,FIR03172; FIR01972,,Cold Case,Medium
-FIR02912,Auto Theft,Andheri,Mumbai,2024-07-13,Naresh Jha; Vishal Thakur,2,Ballistics Report,1,FIR00711; FIR00135; FIR03212,,Cold Case,Low
+FIR02730,Cybercrime,Koramangala,Bengaluru,2022-02-11,Vishal Thakur,1,Forensics Report,1,FIR00424,,Under Investigation,Low
+FIR02739,Auto Theft,Whitefield,Bengaluru,2022-08-10,Gopal Rao; Pravin Kadam; Hemant Sahu; Vishal Thakur,4,None,0,FIR02109; FIR03866,,Pending Trial,Medium
+FIR02760,Murder,Whitefield,Bengaluru,2024-12-11,Harish Bose,1,CCTV Footage; Financial Records,2,FIR00092; FIR04876; FIR01391,,Cold Case,Low
+FIR02723,Vandalism,Whitefield,Bengaluru,2023-01-21,Hemant Sahu; Fayaz Dar; Pradeep Mishra,3,Ballistics Report; Witness Statement,2,FIR01334,,Cold Case,High
+FIR02727,Chain Snatching,BTM,Bengaluru,2024-04-12,Farrukh Ansari; Harish Bose,2,None,0,FIR03359; FIR04588; FIR02862,Assault,Awaiting Arrest,High
+FIR02731,Assault,KR Puram,Bengaluru,2024-05-07,Lokesh Yadav; Tarun Pillai,2,Forensics Report,1,FIR04319,Extortion,Awaiting Arrest,High
+FIR02576,Extortion,BTM,Bengaluru,2022-04-14,Lokesh Yadav; Wasim Akram; Hemant Sahu,3,Phone Records; CCTV Footage,2,FIR02090; FIR02416,Murder,Awaiting Arrest,Medium
+FIR02643,Murder,Electronic City,Bengaluru,2024-07-05,Qadir Shaikh; Jayesh Pandey; Sunil Patel,3,Forensics Report; Witness Statement,2,FIR02486,,Pending Trial,High
+FIR02795,Extortion,KR Puram,Bengaluru,2022-10-06,Ankit Tiwari; Mukesh Singh; Qadir Shaikh; Babu Lal,4,Phone Records; Financial Records,3,FIR03631; FIR00014,Kidnapping,Cold Case,Medium
+FIR02919,Assault,KR Puram,Bengaluru,2022-08-18,Rahul Sharma; Irfan Sheikh; Ganesh Patil; Harish Bose,4,Forensics Report; Phone Records,2,FIR04640,Extortion,Under Investigation,Medium
+FIR03059,Chain Snatching,Koramangala,Bengaluru,2022-04-05,Wasim Akram; Elamaran V,2,Ballistics Report; Phone Records; Witness Statement,3,FIR02274; FIR00824; FIR04675,Robbery,Cold Case,Low
+FIR02970,Chain Snatching,Electronic City,Bengaluru,2024-04-11,Aakash Mehta; Brijesh Tomar,2,Witness Statement; Financial Records,3,FIR00852; FIR02873,Robbery,Pending Trial,Medium
+FIR02762,Murder,Whitefield,Bengaluru,2022-08-02,Suresh Nair; Pradeep Mishra; Vijay Dubey; Jayesh Pandey,4,Financial Records; Witness Statement; Phone Records,3,FIR00248; FIR02936,,Pending Trial,High
+FIR02798,Auto Theft,KR Puram,Bengaluru,2023-11-06,Imran Qureshi; Yashraj Bhatt; Wasim Akram,3,Forensics Report; Witness Statement,2,FIR02529; FIR01749,,Awaiting Arrest,High
+FIR02692,Murder,Whitefield,Bengaluru,2022-06-21,Elamaran V; Ankit Tiwari; Harish Bose,3,Ballistics Report,1,FIR04926; FIR04518; FIR00686,,Under Investigation,Low
+FIR02941,Theft,KR Puram,Bengaluru,2023-05-14,Deepak Yadav; Tarun Pillai; Deepak Yadav; Arjun Singh,4,None,0,FIR00142,Robbery,Pending Trial,Medium
+FIR02768,Chain Snatching,KR Puram,Bengaluru,2022-03-07,Vishal Thakur; Uday Kiran; Elamaran V; Pravin Kadam,4,Phone Records,1,FIR00231,Assault,Under Investigation,High
+FIR02972,Robbery,BTM,Bengaluru,2022-02-08,Chandan Kumar; Ankit Tiwari,2,None,0,FIR02563; FIR01073; FIR04913,Extortion,Under Investigation,Low
+FIR03007,Murder,Whitefield,Bengaluru,2024-09-04,Pradeep Mishra; Vijay Dubey; Tushar Wagh; Gopal Rao,4,None,0,FIR04908,,Cold Case,High
+FIR02882,Vandalism,Whitefield,Bengaluru,2024-06-18,Imran Qureshi,1,Forensics Report; CCTV Footage,3,FIR01770; FIR04758; FIR03362,,Under Investigation,Medium
+FIR02668,Burglary,Marathahalli,Bengaluru,2024-07-24,Kiran Deshpande,1,CCTV Footage; Financial Records,2,FIR04177; FIR03871; FIR00026,Assault,Under Investigation,Low
+FIR02889,Auto Theft,KR Puram,Bengaluru,2024-05-01,Farrukh Ansari,1,Forensics Report,1,FIR00695; FIR02564,,Awaiting Arrest,High
+FIR02734,Auto Theft,Whitefield,Bengaluru,2022-12-05,Kiran Deshpande; Dilnawaz Memon,2,Forensics Report,1,FIR02418; FIR00282; FIR00892,,Cold Case,Low
+FIR02677,Chain Snatching,Jayanagar,Bengaluru,2023-01-25,Chetan More,1,None,0,FIR03280; FIR03236; FIR00337,Robbery,Pending Trial,Medium
+FIR03385,Theft,Whitefield,Bengaluru,2022-02-26,Vijay Dubey; Vijay Dubey; Ravi Kumar; Mukesh Singh,4,CCTV Footage,1,FIR00032; FIR04270; FIR00741,Chain Snatching,Cold Case,Medium
+FIR03407,Theft,Koramangala,Bengaluru,2022-01-23,Lokesh Yadav; Pradeep Mishra,2,Forensics Report; CCTV Footage,2,FIR00827; FIR03958; FIR02053,Robbery,Awaiting Arrest,Low
+FIR02992,Kidnapping,BTM,Bengaluru,2022-08-26,Sumit Bansal; Chandan Kumar; Suresh Nair; Fayaz Dar,4,Ballistics Report; Financial Records,2,FIR02187; FIR04845; FIR03189,,Pending Trial,Medium
+FIR03374,Robbery,BTM,Bengaluru,2023-06-20,Pradeep Mishra; Ratan Das; Lokesh Yadav,3,Witness Statement,1,FIR04634; FIR01276; FIR03571,Assault,Pending Trial,Medium
+FIR03341,Robbery,Electronic City,Bengaluru,2023-09-24,Dinesh Reddy; Kiran Deshpande,2,Forensics Report; Financial Records; Phone Records,3,FIR03747; FIR04057,Assault,Awaiting Arrest,Medium
+FIR02983,Auto Theft,Marathahalli,Bengaluru,2022-04-27,Sanjay Rawat; Chandan Kumar,2,Forensics Report; CCTV Footage; Financial Records,3,FIR04239; FIR01480; FIR00644,,Cold Case,Medium
+FIR00404,Eve Teasing,BTM,Bengaluru,2022-12-06,Pravin Kadam; Yashraj Bhatt,2,None,0,FIR03900; FIR03351,,Cold Case,Low
+FIR02754,Cybercrime,BTM,Bengaluru,2023-11-01,Vijay Dubey; Salim Khan; Pravin Kadam; Uday Kiran,4,Witness Statement,1,FIR04689; FIR04166; FIR02568,,Cold Case,Low
+FIR03427,Vandalism,Marathahalli,Bengaluru,2024-01-30,Ratan Das; Devraj Nair,2,None,0,FIR04035; FIR04490,,Awaiting Arrest,Medium
+FIR00443,Drug Offense,Koramangala,Bengaluru,2024-05-19,Manish Joshi,1,None,0,FIR02028; FIR01136,,Pending Trial,Medium
+FIR02000,Eve Teasing,KR Puram,Bengaluru,2023-01-26,Naresh Jha,1,Forensics Report; CCTV Footage; Phone Records,3,FIR01682; FIR03421,,Under Investigation,Medium
+FIR02022,Chain Snatching,Electronic City,Bengaluru,2022-07-20,Rahul Sharma,1,Financial Records,1,FIR03993,Assault,Cold Case,High
+FIR03018,Fraud,Electronic City,Bengaluru,2023-02-10,Sumit Bansal,1,Phone Records,1,FIR03172; FIR01972,,Cold Case,Medium
+FIR02912,Auto Theft,KR Puram,Bengaluru,2024-07-13,Naresh Jha; Vishal Thakur,2,Ballistics Report,1,FIR00711; FIR00135; FIR03212,,Cold Case,Low

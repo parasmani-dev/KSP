@@ -12,7 +12,9 @@
     <!-- Fonts: Inter for UI, JetBrains Mono for data values -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.26.0/cytoscape.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         /* ───────────────────────────────────────────
@@ -657,6 +659,33 @@
         </div>
     </div>
 
+    <!-- Dashboard Left Panels -->
+    <div class="dashboard-left">
+        <!-- Centrality Panel -->
+        <div class="dash-panel" id="panel-centrality">
+            <h3>★ Top Suspects</h3>
+            <ul class="dash-list" id="list-centrality">
+                <li style="color:var(--text-muted); font-size:0.8rem; background:none;">Loading leaderboard...</li>
+            </ul>
+        </div>
+        
+        <!-- Communities Panel -->
+        <div class="dash-panel" id="panel-communities">
+            <h3>⬡ Detected Networks</h3>
+            <ul class="dash-list" id="list-communities">
+                <li style="color:var(--text-muted); font-size:0.8rem; background:none;">Loading communities...</li>
+            </ul>
+        </div>
+        
+        <!-- Hotspots Panel -->
+        <div class="dash-panel" id="panel-hotspots">
+            <h3>📍 Crime Hotspots</h3>
+            <div class="chart-container">
+                <canvas id="hotspotsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
     <!-- Legend — compact pill row -->
     <div class="legend">
         <span class="legend-label">Type</span>
@@ -1100,9 +1129,94 @@
         }
 
         // ─────────────────────────────────────────────────────
+        // DASHBOARD FETCHING (Centrality, Communities, Hotspots)
+        // ─────────────────────────────────────────────────────
+        async function loadDashboard() {
+            // 1. Centrality
+            try {
+                const res = await fetch(`${API_BASE}/graph/centrality`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const list = document.getElementById('list-centrality');
+                    list.innerHTML = '';
+                    const top5 = data.top_centrality.slice(0, 5);
+                    top5.forEach(item => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<span>${item.id}</span> <span class="dash-score">${item.score.toFixed(3)}</span>`;
+                        list.appendChild(li);
+                    });
+                }
+            } catch (e) { console.error("Centrality fetch failed:", e); }
+
+            // 2. Communities
+            try {
+                const res = await fetch(`${API_BASE}/graph/communities`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const list = document.getElementById('list-communities');
+                    list.innerHTML = '';
+                    const groups = Object.keys(data.communities).slice(0, 4); // Show top 4
+                    groups.forEach(groupName => {
+                        const li = document.createElement('li');
+                        const count = data.communities[groupName].length;
+                        li.innerHTML = `<span>Group: ${groupName}</span> <span class="dash-score">${count} nodes</span>`;
+                        list.appendChild(li);
+                    });
+                }
+            } catch (e) { console.error("Communities fetch failed:", e); }
+
+            // 3. Hotspots
+            try {
+                const res = await fetch(`${API_BASE}/graph/hotspots`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const topSpots = data.hotspots.slice(0, 5);
+                    
+                    const labels = topSpots.map(h => h.area);
+                    const counts = topSpots.map(h => h.crime_count);
+                    
+                    const ctx = document.getElementById('hotspotsChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Crime Count',
+                                data: counts,
+                                backgroundColor: '#f85149',
+                                borderRadius: 4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { display: false }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    grid: { color: '#30363d' },
+                                    ticks: { color: '#6e7681', stepSize: 1 }
+                                },
+                                x: {
+                                    grid: { display: false },
+                                    ticks: { color: '#a0aab4', font: { size: 10 } }
+                                }
+                            }
+                        }
+                    });
+                }
+            } catch (e) { console.error("Hotspots fetch failed:", e); }
+        }
+
+        // ─────────────────────────────────────────────────────
         // START
         // ─────────────────────────────────────────────────────
-        document.addEventListener('DOMContentLoaded', loadGraph);
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGraph();
+            loadDashboard();
+        });
     </script>
 </body>
 </html>

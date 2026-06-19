@@ -1,31 +1,31 @@
 prediction_id,area,city,risk_score,trend,peak_time,dominant_crime,predicted_count_7d,confidence,model
-PRED001,Connaught Place,Delhi,0.788,Rising,00:00-04:00,Vandalism,10,0.67,Random Forest
-PRED002,Lajpat Nagar,Delhi,0.883,Rising,22:00-02:00,Drug Offense,12,0.83,Random Forest
-PRED003,Saket,Delhi,0.491,Stable,08:00-11:00,Fraud,40,0.88,Gradient Boost
-PRED004,Rohini,Delhi,0.723,Rising,22:00-02:00,Extortion,29,0.75,Gradient Boost
-PRED005,Dwarka,Delhi,0.331,Declining,00:00-04:00,Kidnapping,8,0.76,Gradient Boost
-PRED006,Karol Bagh,Delhi,0.764,Stable,18:00-21:00,Fraud,38,0.9,Gradient Boost
-PRED007,Chandni Chowk,Delhi,0.791,Spike Expected,22:00-02:00,Extortion,35,0.95,Gradient Boost
-PRED008,Anand Vihar,Delhi,0.296,Declining,08:00-11:00,Fraud,31,0.66,LSTM
-PRED009,Dharavi,Mumbai,0.853,Rising,00:00-04:00,Assault,15,0.84,Prophet
-PRED010,Andheri,Mumbai,0.81,Spike Expected,22:00-02:00,Drug Offense,16,0.89,Gradient Boost
-PRED011,Bandra,Mumbai,0.562,Stable,22:00-02:00,Chain Snatching,12,0.96,Random Forest
-PRED012,Kurla,Mumbai,0.894,Rising,22:00-02:00,Murder,35,0.77,LSTM
-PRED013,Worli,Mumbai,0.552,Rising,00:00-04:00,Eve Teasing,22,0.7,Gradient Boost
-PRED014,Dadar,Mumbai,0.782,Rising,00:00-04:00,Auto Theft,27,0.72,Random Forest
-PRED015,Goregaon,Mumbai,0.426,Declining,22:00-02:00,Eve Teasing,10,0.71,LSTM
-PRED016,Borivali,Mumbai,0.426,Rising,00:00-04:00,Fraud,35,0.88,Prophet
+PRED001,Whitefield,Bengaluru,0.788,Rising,00:00-04:00,Vandalism,10,0.67,Random Forest
+PRED002,KR Puram,Bengaluru,0.883,Rising,22:00-02:00,Drug Offense,12,0.83,Random Forest
+PRED003,Koramangala,Bengaluru,0.491,Stable,08:00-11:00,Fraud,40,0.88,Gradient Boost
+PRED004,BTM,Bengaluru,0.723,Rising,22:00-02:00,Extortion,29,0.75,Gradient Boost
+PRED005,Jayanagar,Bengaluru,0.331,Declining,00:00-04:00,Kidnapping,8,0.76,Gradient Boost
+PRED006,Marathahalli,Bengaluru,0.764,Stable,18:00-21:00,Fraud,38,0.9,Gradient Boost
+PRED007,Electronic City,Bengaluru,0.791,Spike Expected,22:00-02:00,Extortion,35,0.95,Gradient Boost
+PRED008,Whitefield,Bengaluru,0.296,Declining,08:00-11:00,Fraud,31,0.66,LSTM
+PRED009,Whitefield,Bengaluru,0.853,Rising,00:00-04:00,Assault,15,0.84,Prophet
+PRED010,KR Puram,Bengaluru,0.81,Spike Expected,22:00-02:00,Drug Offense,16,0.89,Gradient Boost
+PRED011,Koramangala,Bengaluru,0.562,Stable,22:00-02:00,Chain Snatching,12,0.96,Random Forest
+PRED012,BTM,Bengaluru,0.894,Rising,22:00-02:00,Murder,35,0.77,LSTM
+PRED013,Jayanagar,Bengaluru,0.552,Rising,00:00-04:00,Eve Teasing,22,0.7,Gradient Boost
+PRED014,Electronic City,Bengaluru,0.782,Rising,00:00-04:00,Auto Theft,27,0.72,Random Forest
+PRED015,Marathahalli,Bengaluru,0.426,Declining,22:00-02:00,Eve Teasing,10,0.71,LSTM
+PRED016,Whitefield,Bengaluru,0.426,Rising,00:00-04:00,Fraud,35,0.88,Prophet
 PRED017,Koramangala,Bengaluru,0.622,Stable,00:00-04:00,Theft,9,0.78,LSTM
-PRED018,Indiranagar,Bengaluru,0.251,Declining,00:00-04:00,Drug Offense,8,0.96,Random Forest
+PRED018,Koramangala,Bengaluru,0.251,Declining,00:00-04:00,Drug Offense,8,0.96,Random Forest
 PRED019,Whitefield,Bengaluru,0.269,Stable,08:00-11:00,Murder,26,0.96,Prophet
-PRED020,JP Nagar,Bengaluru,0.206,Stable,14:00-17:00,Murder,5,0.95,Gradient Boost
-PRED021,Hebbal,Bengaluru,0.747,Spike Expected,00:00-04:00,Robbery,32,0.73,LSTM
-PRED022,HSR Layout,Bengaluru,0.393,Declining,08:00-11:00,Fraud,13,0.69,LSTM
-PRED023,Banjara Hills,Hyderabad,0.374,Rising,18:00-21:00,Fraud,19,0.77,Random Forest
-PRED024,Secunderabad,Hyderabad,0.696,Spike Expected,22:00-02:00,Cybercrime,13,0.78,LSTM
-PRED025,Charminar,Hyderabad,0.865,Rising,22:00-02:00,Murder,9,0.94,LSTM
-PRED026,Madhapur,Hyderabad,0.222,Declining,18:00-21:00,Kidnapping,10,0.91,Random Forest
-PRED027,T Nagar,Chennai,0.564,Stable,22:00-02:00,Cybercrime,34,0.93,Random Forest
-PRED028,Adyar,Chennai,0.444,Rising,22:00-02:00,Drug Offense,26,0.81,Gradient Boost
-PRED029,Velachery,Chennai,0.425,Declining,00:00-04:00,Assault,11,0.72,Random Forest
-PRED030,Anna Nagar,Chennai,0.21,Rising,18:00-21:00,Vandalism,17,0.69,LSTM
+PRED020,KR Puram,Bengaluru,0.206,Stable,14:00-17:00,Murder,5,0.95,Gradient Boost
+PRED021,Whitefield,Bengaluru,0.747,Spike Expected,00:00-04:00,Robbery,32,0.73,LSTM
+PRED022,BTM,Bengaluru,0.393,Declining,08:00-11:00,Fraud,13,0.69,LSTM
+PRED023,Whitefield,Bengaluru,0.374,Rising,18:00-21:00,Fraud,19,0.77,Random Forest
+PRED024,KR Puram,Bengaluru,0.696,Spike Expected,22:00-02:00,Cybercrime,13,0.78,LSTM
+PRED025,Koramangala,Bengaluru,0.865,Rising,22:00-02:00,Murder,9,0.94,LSTM
+PRED026,BTM,Bengaluru,0.222,Declining,18:00-21:00,Kidnapping,10,0.91,Random Forest
+PRED027,Whitefield,Bengaluru,0.564,Stable,22:00-02:00,Cybercrime,34,0.93,Random Forest
+PRED028,KR Puram,Bengaluru,0.444,Rising,22:00-02:00,Drug Offense,26,0.81,Gradient Boost
+PRED029,Koramangala,Bengaluru,0.425,Declining,00:00-04:00,Assault,11,0.72,Random Forest
+PRED030,BTM,Bengaluru,0.21,Rising,18:00-21:00,Vandalism,17,0.69,LSTM

@@ -699,3 +699,6 @@ Access is role-gated. Sensitive criminal intelligence (suspect data, GNN predict
 ---
 
 *KSP IntelligenceOS — Transforming Karnataka Police from reactive investigation to AI-native proactive intelligence.*
+
+GEOGRAPHICAL SCOPE NOTE:
+Initial deployment is scoped specifically to the Bengaluru metropolitan division (Whitefield, Koramangala, etc.) to prove scalability before a full statewide rollout. Dataset is strictly constrained to Bengaluru to reflect this.

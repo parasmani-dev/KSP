@@ -1,0 +1,12 @@
+fastapi
+uvicorn[standard]
+scikit-learn
+xgboost
+prophet
+torch
+pandas
+numpy
+kafka-python
+websockets
+python-dotenv
+pydantic

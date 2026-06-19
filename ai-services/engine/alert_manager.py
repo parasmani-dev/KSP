@@ -60,7 +60,14 @@ def evaluate_event(event: dict, provided_risk_score: float = None) -> dict | Non
             "risk_score": risk_score,
             "risk_threshold": risk_threshold,
             "message": f"Risk spike in {area}: {crime_type} activity exceeds threshold {risk_threshold}",
-            "severity": "CRITICAL" if risk_score >= 0.86 else "HIGH"
+            "severity": "CRITICAL" if risk_score >= 0.86 else "HIGH",
+            "reasons": [
+                {"code": "RISK_SCORE", "value": round(float(risk_score), 2)},
+                {"code": "RISK_THRESHOLD", "value": round(float(risk_threshold), 2)},
+                {"code": "CRIME_TYPE", "value": crime_type},
+                {"code": "AREA", "value": area},
+                {"code": "TRIGGER_TYPE", "value": "EMERGENCY_SPIKE"}
+            ]
         }
         
     return None

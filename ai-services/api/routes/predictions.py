@@ -136,9 +136,9 @@ def get_hotspots(days: int = 7):
             "risk_score": round(normalized_score, 2),
             "risk_level": risk_level,
             "reasons": [
-                f"Forecasted {avg_count:.1f} daily incidents (area baseline: {area_baseline:.1f})",
-                f"Trend: {'escalating' if growth_pct > 0 else 'stable or declining'} over forecast window",
-                f"Risk normalized to {normalized_score:.2f} against historical 90th percentile"
+                {"code": "FORECAST_DAILY_COUNT", "value": round(float(avg_count), 2), "baseline": round(float(area_baseline), 2)},
+                {"code": "TREND_DIRECTION", "value": "escalating" if growth_pct > 0 else "stable or declining"},
+                {"code": "NORMALIZED_RISK", "value": round(float(normalized_score), 2)}
             ]
         }
         
@@ -178,9 +178,10 @@ def get_escalation():
                 "growth_rate_percentage": round(growth_rate, 2),
                 "status": "Escalating",
                 "reasons": [
-                    f"Crime count grew {growth_rate:.1f}% over the past 14 days",
-                    f"Recent period: {round(next_7_days, 1)} incidents vs prior period: {round(prev_7_days, 1)} incidents",
-                    f"Threshold for escalation flag: >20% growth rate"
+                    {"code": "GROWTH_RATE_PCT", "value": round(float(growth_rate), 2), "window_days": 14},
+                    {"code": "RECENT_COUNT", "value": round(float(next_7_days), 1)},
+                    {"code": "PRIOR_COUNT", "value": round(float(prev_7_days), 1)},
+                    {"code": "ESCALATION_THRESHOLD", "value": 20.0}
                 ]
             })
             
@@ -222,10 +223,10 @@ def get_offender_risk(citizen_id: str, prior_crimes: int = 0, days_since: int = 
         "reoffend_probability": round(prob * 100, 2),
         "risk_level": get_risk_bucket(prob),
         "reasons": [
-            f"Prior crime count: {prior_crimes}",
-            f"Days since last crime: {days_since}",
-            f"Network connections to known offenders: {connections}",
-            f"XGBoost re-offend probability: {prob:.2f}"
+            {"code": "PRIOR_CRIME_COUNT", "value": prior_crimes},
+            {"code": "DAYS_SINCE_LAST_CRIME", "value": days_since},
+            {"code": "NETWORK_CONNECTIONS", "value": connections},
+            {"code": "XGBOOST_PROBABILITY", "value": round(float(prob), 4)}
         ]
     }
 
@@ -270,10 +271,10 @@ def detect_emerging_threats(req: ThreatRequest):
         threats.append(f"Sudden spike in {req.crime_type} activity detected at {req.area} (novel pattern)")
         
     reasons = [
-        f"Isolation Forest anomaly score: {score:.3f}",
-        f"Features with highest deviation: {top_features}",
-        f"Score threshold for anomaly flag: {threshold:.3f}",
-        f"Result: {'Outside normal range (Anomaly)' if is_anomaly else 'Inside normal range (Normal)'}"
+        {"code": "ISOLATION_SCORE", "value": round(float(score), 3)},
+        {"code": "TOP_DEVIATING_FEATURES", "value": [feature_names[i] for i in reversed(top_feature_idx)]},
+        {"code": "ANOMALY_THRESHOLD", "value": round(float(threshold), 3)},
+        {"code": "RANGE_STATUS", "value": "anomaly" if is_anomaly else "normal"}
     ]
         
     return {

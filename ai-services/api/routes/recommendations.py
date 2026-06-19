@@ -68,9 +68,9 @@ def get_patrol_recommendations():
                 "action": "Increase visible night patrols",
                 "priority": priority,
                 "reasons": [
-                    f"{suspects_count} known suspects reside in this area",
-                    f"Forecasted {forecasted} daily incidents over 7-day window",
-                    f"Risk level: {priority} based on Prophet forecast"
+                    {"code": "SUSPECT_COUNT", "value": int(suspects_count), "area": area_name},
+                    {"code": "FORECAST_INCIDENTS", "value": round(float(forecasted), 2), "window_days": 7},
+                    {"code": "RISK_LEVEL", "value": priority}
                 ]
             })
     return {"recommendations": recommendations}
@@ -100,9 +100,10 @@ def get_investigation_recommendations(case_id: str = None):
             "action": action,
             "priority": "High" if score > 0.7 else "Medium" if score > 0.4 else "Low",
             "reasons": [
-                f"Connected to {suspect_count_val} suspects (source: case records)",
-                f"{missing_evidence_count} evidence items still unprocessed",
-                f"Confidence score: {confidence}"
+                {"code": "SUSPECT_COUNT", "value": suspect_count_val},
+                {"code": "MISSING_EVIDENCE_COUNT", "value": missing_evidence_count},
+                {"code": "CONFIDENCE_SCORE", "value": round(float(confidence), 2)},
+                {"code": "COMPOSITE_SCORE", "value": round(float(score), 2)}
             ]
         })
         
@@ -155,9 +156,9 @@ def get_cctv_recommendations(area: str, crime_type: str = ""):
         "total_active_cameras": total_active,
         "recommended_cameras": top_cams,
         "reasons": [
-            f"{total_active} active cameras found in {area}",
-            "Sorted by proximity to area centroid",
-            f"{nearest_id} is nearest at {nearest_dist}m from area center",
-            f"Top {len(top_cams)} returned from {total_active} active cameras"
+            {"code": "ACTIVE_CAMERA_COUNT", "value": total_active, "area": area},
+            {"code": "SORT_METHOD", "value": "haversine_distance"},
+            {"code": "NEAREST_CAMERA_DISTANCE_M", "value": round(float(nearest_dist), 1), "camera_id": nearest_id},
+            {"code": "CAMERAS_RETURNED", "value": len(top_cams)}
         ]
     }

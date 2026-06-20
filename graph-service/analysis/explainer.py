@@ -17,7 +17,9 @@ def explain_node(graph: nx.Graph, node_id: str):
     # Safely extract all properties dynamically
     import pandas as pd
     
-    # Map threat_level to risk_score as per CLAUDE.md
+    # [WARNING: SCHEMA DISCREPANCY]
+    # The underlying entities.csv uses 'threat_level', but the frontend expects 'risk_score'.
+    # This runtime translation is a band-aid. The CSV schema should eventually be fixed.
     if 'threat_level' in node_data:
         node_data['risk_score'] = node_data.pop('threat_level')
         

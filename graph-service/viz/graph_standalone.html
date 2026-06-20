@@ -886,18 +886,18 @@
                 elements: elements,
                 style: cytoscapeStyle,
                 layout: {
-                    name: 'breadthfirst',
-                    circle: true,
-                    spacingFactor: 1.5,
-                    fit: true,
+                    name: 'concentric',
+                    concentric: node => node.degree(),
+                    levelWidth: () => 2,
                     padding: 50,
+                    minNodeSpacing: 20,
                     animate: false
                 },
                 wheelSensitivity: 0.15
             });
 
             cy.ready(() => {
-                cy.fit(null, 50);
+                setTimeout(() => { cy.zoom(0.15); cy.center(); }, 100);
             });
 
             bindEvents();
@@ -1194,13 +1194,7 @@
                                 },
                                 x: {
                                     grid: { display: false },
-                                    ticks: { 
-                                        color: '#a0aab4', 
-                                        font: { size: 9 },
-                                        autoSkip: false,
-                                        maxRotation: 45,
-                                        minRotation: 45
-                                    }
+                                    ticks: { color: '#a0aab4', font: { size: 10 } }
                                 }
                             }
                         }

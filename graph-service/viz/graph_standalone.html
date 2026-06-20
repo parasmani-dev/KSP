@@ -886,16 +886,19 @@
                 elements: elements,
                 style: cytoscapeStyle,
                 layout: {
-                    name: 'cose',
-                    animate: false,
+                    name: 'concentric',
+                    concentric: node => node.degree(),
+                    levelWidth: () => 2,
+                    padding: 50,
+                    minNodeSpacing: 30,
                     fit: true,
-                    padding: 50
+                    animate: false
                 },
                 wheelSensitivity: 0.15
             });
 
             cy.ready(() => {
-                setTimeout(() => { cy.zoom(0.15); cy.center(); }, 100);
+                cy.fit(null, 50);
             });
 
             bindEvents();

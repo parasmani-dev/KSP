@@ -886,12 +886,11 @@
                 elements: elements,
                 style: cytoscapeStyle,
                 layout: {
-                    name: 'concentric',
-                    concentric: node => node.degree(),
-                    levelWidth: () => 2,
-                    padding: 50,
-                    minNodeSpacing: 30,
+                    name: 'breadthfirst',
+                    circle: true,
+                    spacingFactor: 1.5,
                     fit: true,
+                    padding: 50,
                     animate: false
                 },
                 wheelSensitivity: 0.15
@@ -1195,7 +1194,13 @@
                                 },
                                 x: {
                                     grid: { display: false },
-                                    ticks: { color: '#a0aab4', font: { size: 10 } }
+                                    ticks: { 
+                                        color: '#a0aab4', 
+                                        font: { size: 9 },
+                                        autoSkip: false,
+                                        maxRotation: 45,
+                                        minRotation: 45
+                                    }
                                 }
                             }
                         }

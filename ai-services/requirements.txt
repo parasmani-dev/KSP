@@ -10,3 +10,5 @@ kafka-python
 websockets
 python-dotenv
 pydantic
+pytest
+httpx

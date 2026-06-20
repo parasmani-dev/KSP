@@ -7,6 +7,7 @@ router = APIRouter()
 _subscribers: list[asyncio.Queue] = []
 
 async def event_generator(queue: asyncio.Queue):
+    yield f"data: {json.dumps({'status': 'Connected', 'message': 'Listening for live events...'})}\n\n"
     while True:
         data = await queue.get()
         yield f"data: {json.dumps(data)}\n\n"

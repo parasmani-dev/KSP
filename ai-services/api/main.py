@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from api.routes import predictions, recommendations
 from engine import sse_stream
 
@@ -6,6 +7,13 @@ app = FastAPI(
     title="KSP CIOS AI Services",
     description="Intelligence and predictive layer for the Crime Intelligence Operating System",
     version="1.0.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Mount the routers for different modules

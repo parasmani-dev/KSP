@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from api.routes import predictions, recommendations
+from engine import sse_stream
 
 app = FastAPI(
     title="KSP CIOS AI Services",
@@ -10,6 +11,9 @@ app = FastAPI(
 # Mount the routers for different modules
 app.include_router(predictions.router, prefix="/predictions", tags=["Predictions (Module 4)"])
 app.include_router(recommendations.router, prefix="/recommendations", tags=["Recommendations (Module 6)"])
+
+# Feature 7 Branches
+app.include_router(sse_stream.router, tags=["Fusion Layer (Branch B - SSE)"])
 
 @app.on_event("startup")
 def startup_event():

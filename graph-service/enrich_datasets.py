@@ -6,8 +6,11 @@ import hashlib
 DATASET_DIR = os.path.join(os.path.dirname(__file__), '..', 'Dataset')
 
 def generate_datasets():
-    mock_df = pd.read_csv(os.path.join(DATASET_DIR, 'mock_graph.csv'))
-    crime_df = pd.read_csv(os.path.join(DATASET_DIR, 'crime_records.csv'))
+    print(f"Ensuring output directory exists: {DATASET_DIR}")
+    
+    # Load original datasets
+    mock_df = pd.read_csv(os.path.join(DATASET_DIR, 'mock_graph_sample.csv'))
+    crime_df = pd.read_csv(os.path.join(DATASET_DIR, 'crime_records_sample.csv'))
     
     entities = []
     seen = set()
@@ -53,19 +56,24 @@ def generate_datasets():
                 
         add_entity(row.get('network_id'), 'Organization')
 
-    # Save entities.csv
+    # Save entities_sample.csv
     entities_df = pd.DataFrame(entities)
-    entities_df.to_csv(os.path.join(DATASET_DIR, 'entities.csv'), index=False)
-    print(f"Generated entities.csv with {len(entities_df)} records.")
+    entities_df.to_csv(os.path.join(DATASET_DIR, 'entities_sample.csv'), index=False)
+    print(f"Generated entities_sample.csv with {len(entities_df)} records.")
     
-    # Enrich crime_records.csv with case_status and io_name
+    # Enrich crime_records_sample.csv with case_status and io_name
+    # Assuming 'case_id' matches 'incident_id' or we can randomly assign. 
+    # For now, we'll just add random case_status to crime_records_sample
+    statuses = ['Open', 'Closed', 'Under Investigation', 'Chargesheet Filed']
+    io_names = [f"Inspector {i}" for i in range(1, 10)]
+    
     if 'case_status' not in crime_df.columns:
-        crime_df['case_status'] = [random.choice(['Open', 'Closed', 'Cold Case', 'Under Investigation']) for _ in range(len(crime_df))]
+        crime_df['case_status'] = [random.choice(statuses) for _ in range(len(crime_df))]
     if 'io_name' not in crime_df.columns:
-        crime_df['io_name'] = [random.choice(['Insp. Reddy', 'Insp. Sharma', 'Insp. Kumar', 'Sub-Insp. Patel']) for _ in range(len(crime_df))]
+        crime_df['io_name'] = [random.choice(io_names) for _ in range(len(crime_df))]
         
-    crime_df.to_csv(os.path.join(DATASET_DIR, 'crime_records.csv'), index=False)
-    print(f"Enriched crime_records.csv.")
+    crime_df.to_csv(os.path.join(DATASET_DIR, 'crime_records_sample.csv'), index=False)
+    print(f"Enriched crime_records_sample.csv.")
 
 if __name__ == "__main__":
     generate_datasets()

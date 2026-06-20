@@ -69,6 +69,20 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hotspots:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        area:
+                          type: string
+                        crime_count:
+                          type: integer
   /predict/links:
     get:
       summary: Predict hidden connections
@@ -158,3 +172,37 @@ paths:
                 properties:
                   explanation:
                     type: string
+  /events/sse:
+    get:
+      summary: Real-time event stream
+      description: |
+        Python ai-services owns all SSE/WebSocket connections to frontend. 
+        Spring Boot does not proxy or duplicate real-time events.
+      responses:
+        '200':
+          description: SSE event stream
+          content:
+            text/event-stream:
+              schema:
+                type: string
+components:
+  schemas:
+    Reason:
+      description: |
+        XAI module owns formatting. Modules must NOT return pre-formatted human-readable strings.
+      type: object
+      properties:
+        reason_codes:
+          type: array
+          items:
+            type: string
+        weights:
+          type: object
+          additionalProperties:
+            type: number
+            format: float
+        entity_refs:
+          type: array
+          items:
+            type: string
+

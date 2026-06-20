@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "Dataset")
 
 print("--- EVALUATING XGBOOST (Repeat Offenders) ---")
-df_offenders = pd.read_csv(os.path.join(DATA_DIR, "repeat_offenders.csv"))
+df_offenders = pd.read_csv(os.path.join(DATA_DIR, "repeat_offenders_sample.csv"))
 
 from sklearn.preprocessing import LabelEncoder
 le_crime = LabelEncoder()
@@ -35,7 +35,7 @@ print(f"Recall:    {recall_score(y_test, y_pred) * 100:.2f}%")
 print(f"F1 Score:  {f1_score(y_test, y_pred) * 100:.2f}%")
 
 print("\n--- EVALUATING PROPHET (Hotspots) ---")
-df_ts = pd.read_csv(os.path.join(DATA_DIR, "time_series_prophet.csv"))
+df_ts = pd.read_csv(os.path.join(DATA_DIR, "time_series_prophet_sample.csv"))
 area = "Connaught Place"
 df_area = df_ts[df_ts['area'] == area][['ds', 'y']].copy()
 df_area['ds'] = pd.to_datetime(df_area['ds'])

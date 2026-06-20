@@ -1,0 +1,501 @@
+offender_id,name,area,primary_crime_type,prior_crime_count,days_since_last_crime,network_connections,escalation_score,reoffended
+OFF-5523,Suspect 1,Indiranagar,Kidnapping,2,271,5,0.94,0
+OFF-7334,Suspect 2,Karol Bagh,Robbery,2,44,5,0.83,1
+OFF-1312,Suspect 3,Madhapur,Kidnapping,2,83,1,1.0,0
+OFF-7418,Suspect 4,Rohini,Theft,7,65,2,0.48,1
+OFF-3896,Suspect 5,Rohini,Extortion,8,22,0,0.12,1
+OFF-7507,Suspect 6,Secunderabad,Kidnapping,4,145,0,0.63,1
+OFF-8675,Suspect 7,Madhapur,Theft,10,182,5,0.93,1
+OFF-2869,Suspect 8,Dharavi,Cybercrime,14,112,2,0.96,1
+OFF-5130,Suspect 9,Kurla,Fraud,14,291,0,0.83,1
+OFF-9827,Suspect 10,Koramangala,Auto Theft,2,23,4,0.61,1
+OFF-5237,Suspect 11,Karol Bagh,Burglary,8,16,1,0.68,1
+OFF-9339,Suspect 12,Koramangala,Murder,3,106,5,0.6,1
+OFF-7284,Suspect 13,JP Nagar,Auto Theft,9,277,0,0.97,1
+OFF-2849,Suspect 14,Whitefield,Auto Theft,7,136,5,0.56,1
+OFF-5805,Suspect 15,Bandra,Chain Snatching,15,179,0,0.39,1
+OFF-9205,Suspect 16,Borivali,Fraud,7,40,3,0.82,1
+OFF-5433,Suspect 17,Borivali,Cybercrime,4,171,3,1.0,1
+OFF-7858,Suspect 18,Goregaon,Kidnapping,12,123,1,0.22,1
+OFF-4487,Suspect 19,Rohini,Vandalism,14,37,1,0.26,0
+OFF-6427,Suspect 20,Adyar,Theft,3,205,1,0.02,0
+OFF-2244,Suspect 21,Hebbal,Burglary,2,64,1,0.84,1
+OFF-3032,Suspect 22,Secunderabad,Vandalism,7,50,2,0.81,1
+OFF-9039,Suspect 23,Indiranagar,Vandalism,2,205,3,0.37,1
+OFF-6431,Suspect 24,Madhapur,Kidnapping,7,231,1,0.59,0
+OFF-2670,Suspect 25,Charminar,Eve Teasing,15,106,3,0.08,0
+OFF-2813,Suspect 26,JP Nagar,Cybercrime,7,296,5,0.21,0
+OFF-3431,Suspect 27,T Nagar,Murder,6,251,4,0.69,0
+OFF-1845,Suspect 28,Rohini,Theft,11,10,0,0.09,0
+OFF-1207,Suspect 29,Whitefield,Chain Snatching,15,66,5,0.43,1
+OFF-3800,Suspect 30,Bandra,Chain Snatching,10,80,0,0.49,0
+OFF-6849,Suspect 31,Koramangala,Fraud,10,115,4,0.1,1
+OFF-7773,Suspect 32,KR Puram,Kidnapping,13,14,5,0.1,1
+OFF-1078,Suspect 33,Banjara Hills,Fraud,11,15,2,0.0,0
+OFF-8094,Suspect 34,Goregaon,Chain Snatching,9,193,4,0.6,1
+OFF-3572,Suspect 35,Velachery,Cybercrime,5,221,5,0.95,1
+OFF-1821,Suspect 36,Bandra,Extortion,5,147,4,0.76,0
+OFF-2432,Suspect 37,Connaught Place,Assault,6,256,2,0.17,0
+OFF-1263,Suspect 38,Secunderabad,Fraud,14,134,0,0.97,0
+OFF-2693,Suspect 39,Kurla,Burglary,15,190,3,0.24,0
+OFF-8896,Suspect 40,Indiranagar,Drug Offense,14,229,2,0.44,1
+OFF-3406,Suspect 41,Whitefield,Extortion,15,264,0,0.26,1
+OFF-1705,Suspect 42,T Nagar,Chain Snatching,3,158,0,0.84,1
+OFF-8178,Suspect 43,Bandra,Drug Offense,8,256,3,0.61,1
+OFF-9250,Suspect 44,Banjara Hills,Theft,5,209,2,0.91,0
+OFF-1167,Suspect 45,Secunderabad,Extortion,5,133,0,0.21,0
+OFF-6059,Suspect 46,Secunderabad,Kidnapping,5,30,1,0.66,0
+OFF-6059,Suspect 47,Rohini,Kidnapping,7,257,5,0.51,0
+OFF-3117,Suspect 48,Andheri,Drug Offense,6,195,0,0.96,1
+OFF-2665,Suspect 49,Lajpat Nagar,Drug Offense,11,267,3,0.8,1
+OFF-4284,Suspect 50,Kurla,Extortion,2,166,4,0.4,1
+OFF-4204,Suspect 51,Indiranagar,Chain Snatching,15,5,4,0.14,0
+OFF-5132,Suspect 52,Rohini,Drug Offense,4,53,0,0.65,1
+OFF-4636,Suspect 53,Dadar,Murder,13,177,3,0.58,0
+OFF-1384,Suspect 54,KR Puram,Fraud,7,37,4,0.38,1
+OFF-8250,Suspect 55,Andheri,Theft,3,218,0,0.53,0
+OFF-2798,Suspect 56,Dharavi,Murder,12,212,1,0.34,0
+OFF-6431,Suspect 57,Indiranagar,Kidnapping,15,284,4,0.93,1
+OFF-3837,Suspect 58,Secunderabad,Chain Snatching,10,178,4,0.08,0
+OFF-3318,Suspect 59,Anand Vihar,Burglary,13,17,2,0.29,1
+OFF-3314,Suspect 60,Banjara Hills,Murder,7,74,2,0.01,0
+OFF-1265,Suspect 61,Anand Vihar,Theft,8,282,3,0.5,1
+OFF-6576,Suspect 62,Goregaon,Extortion,9,148,1,0.99,0
+OFF-1486,Suspect 63,Madhapur,Burglary,2,93,2,0.28,0
+OFF-6144,Suspect 64,Velachery,Eve Teasing,9,75,5,0.01,1
+OFF-4115,Suspect 65,Banjara Hills,Murder,14,217,3,0.8,0
+OFF-4866,Suspect 66,Anna Nagar,Burglary,3,71,2,0.57,1
+OFF-8600,Suspect 67,Chandni Chowk,Theft,6,162,2,0.18,1
+OFF-5447,Suspect 68,Whitefield,Fraud,9,251,3,0.03,0
+OFF-3531,Suspect 69,Koramangala,Eve Teasing,14,99,2,0.62,0
+OFF-5247,Suspect 70,Worli,Drug Offense,11,128,5,0.68,0
+OFF-1693,Suspect 71,Chandni Chowk,Murder,13,170,5,0.99,0
+OFF-7725,Suspect 72,Indiranagar,Chain Snatching,9,270,5,0.45,0
+OFF-4395,Suspect 73,Velachery,Auto Theft,2,256,2,0.48,0
+OFF-8633,Suspect 74,Indiranagar,Drug Offense,4,201,2,0.38,1
+OFF-4223,Suspect 75,Anna Nagar,Drug Offense,13,135,3,0.94,1
+OFF-8726,Suspect 76,Indiranagar,Assault,7,133,3,0.44,0
+OFF-3053,Suspect 77,Whitefield,Drug Offense,9,60,0,0.7,1
+OFF-9315,Suspect 78,Goregaon,Extortion,13,49,5,0.76,0
+OFF-2682,Suspect 79,Karol Bagh,Cybercrime,11,138,1,0.48,0
+OFF-3572,Suspect 80,Adyar,Murder,9,178,0,0.15,1
+OFF-1345,Suspect 81,Koramangala,Kidnapping,15,44,1,0.88,0
+OFF-2385,Suspect 82,T Nagar,Auto Theft,4,206,0,0.34,1
+OFF-9887,Suspect 83,Anand Vihar,Chain Snatching,2,234,5,0.13,0
+OFF-6292,Suspect 84,Whitefield,Kidnapping,11,84,2,0.77,0
+OFF-8018,Suspect 85,Borivali,Assault,7,252,5,0.4,0
+OFF-5841,Suspect 86,Banjara Hills,Kidnapping,15,244,2,0.11,1
+OFF-3323,Suspect 87,Bandra,Auto Theft,15,240,0,0.27,0
+OFF-8785,Suspect 88,Andheri,Murder,5,184,5,0.17,1
+OFF-4602,Suspect 89,HSR Layout,Murder,14,276,2,0.08,1
+OFF-3196,Suspect 90,JP Nagar,Burglary,9,126,0,0.52,0
+OFF-8336,Suspect 91,Secunderabad,Auto Theft,8,82,2,0.14,1
+OFF-2033,Suspect 92,Saket,Burglary,8,75,4,0.16,1
+OFF-1362,Suspect 93,T Nagar,Auto Theft,6,71,0,0.52,0
+OFF-5298,Suspect 94,Anand Vihar,Kidnapping,3,270,0,0.75,1
+OFF-5668,Suspect 95,Whitefield,Kidnapping,14,172,5,0.81,0
+OFF-7260,Suspect 96,Madhapur,Burglary,13,108,4,0.74,1
+OFF-9690,Suspect 97,JP Nagar,Vandalism,6,91,3,0.23,0
+OFF-3760,Suspect 98,KR Puram,Robbery,13,188,5,0.56,1
+OFF-2925,Suspect 99,Goregaon,Chain Snatching,9,239,2,0.71,0
+OFF-4101,Suspect 100,Charminar,Extortion,5,173,1,0.14,1
+OFF-3043,Suspect 101,Velachery,Extortion,3,170,5,0.54,1
+OFF-4314,Suspect 102,Adyar,Theft,14,220,1,0.16,1
+OFF-9952,Suspect 103,Worli,Vandalism,6,111,0,0.81,0
+OFF-7773,Suspect 104,Dwarka,Robbery,13,174,2,0.21,1
+OFF-6002,Suspect 105,Connaught Place,Cybercrime,3,220,3,0.87,1
+OFF-7309,Suspect 106,Kurla,Extortion,15,12,2,0.49,1
+OFF-2739,Suspect 107,KR Puram,Theft,4,217,3,0.72,0
+OFF-1940,Suspect 108,Madhapur,Cybercrime,2,283,0,0.51,0
+OFF-2814,Suspect 109,Andheri,Eve Teasing,7,46,2,0.49,1
+OFF-7811,Suspect 110,Hebbal,Chain Snatching,5,119,2,0.69,1
+OFF-4601,Suspect 111,Anand Vihar,Fraud,10,41,0,0.42,0
+OFF-5531,Suspect 112,Whitefield,Robbery,12,143,0,0.59,1
+OFF-6739,Suspect 113,T Nagar,Eve Teasing,15,59,3,0.94,0
+OFF-8456,Suspect 114,T Nagar,Extortion,4,242,0,0.6,1
+OFF-9061,Suspect 115,Worli,Murder,9,207,4,0.45,0
+OFF-6554,Suspect 116,Indiranagar,Kidnapping,13,293,1,0.35,1
+OFF-8857,Suspect 117,Adyar,Cybercrime,2,116,0,0.36,0
+OFF-3569,Suspect 118,Whitefield,Robbery,5,277,3,0.75,1
+OFF-7869,Suspect 119,Goregaon,Eve Teasing,8,11,2,0.82,0
+OFF-3821,Suspect 120,JP Nagar,Theft,3,142,2,0.12,1
+OFF-3020,Suspect 121,Goregaon,Chain Snatching,15,255,0,0.9,1
+OFF-1904,Suspect 122,Chandni Chowk,Robbery,14,260,3,0.04,0
+OFF-6723,Suspect 123,Velachery,Chain Snatching,15,290,5,0.16,1
+OFF-5519,Suspect 124,Bandra,Fraud,6,264,5,0.15,0
+OFF-5947,Suspect 125,Kurla,Eve Teasing,7,287,1,0.28,1
+OFF-2068,Suspect 126,Indiranagar,Murder,13,300,2,0.96,0
+OFF-6948,Suspect 127,Koramangala,Theft,11,141,4,0.58,1
+OFF-7107,Suspect 128,Hebbal,Eve Teasing,2,25,2,0.02,1
+OFF-9496,Suspect 129,HSR Layout,Extortion,6,189,2,0.21,1
+OFF-6130,Suspect 130,Lajpat Nagar,Chain Snatching,12,300,2,0.02,0
+OFF-2541,Suspect 131,Kurla,Chain Snatching,14,181,5,0.39,1
+OFF-8166,Suspect 132,Anna Nagar,Eve Teasing,11,30,2,0.95,0
+OFF-5749,Suspect 133,Goregaon,Murder,9,296,2,0.77,1
+OFF-6203,Suspect 134,Worli,Auto Theft,15,126,1,0.49,1
+OFF-9957,Suspect 135,Saket,Cybercrime,3,37,3,0.71,0
+OFF-2997,Suspect 136,Connaught Place,Fraud,15,161,1,0.48,1
+OFF-3319,Suspect 137,Worli,Robbery,9,20,1,0.44,0
+OFF-6168,Suspect 138,Madhapur,Burglary,6,229,3,0.76,1
+OFF-3106,Suspect 139,Banjara Hills,Extortion,7,169,1,0.21,0
+OFF-4848,Suspect 140,Lajpat Nagar,Chain Snatching,11,76,3,0.01,0
+OFF-9393,Suspect 141,Connaught Place,Robbery,6,153,5,0.96,0
+OFF-1110,Suspect 142,Indiranagar,Robbery,2,231,2,0.31,0
+OFF-2199,Suspect 143,Charminar,Vandalism,13,260,4,0.45,0
+OFF-6304,Suspect 144,Worli,Auto Theft,3,147,2,0.71,1
+OFF-6760,Suspect 145,Whitefield,Chain Snatching,13,234,4,0.32,1
+OFF-5331,Suspect 146,Borivali,Murder,14,184,3,0.12,0
+OFF-7828,Suspect 147,Adyar,Auto Theft,15,132,0,0.38,0
+OFF-8356,Suspect 148,Charminar,Burglary,2,137,4,0.95,0
+OFF-9213,Suspect 149,Chandni Chowk,Extortion,8,169,2,0.32,0
+OFF-7219,Suspect 150,Banjara Hills,Murder,10,57,4,0.59,1
+OFF-4544,Suspect 151,Kurla,Cybercrime,5,27,2,0.88,0
+OFF-8726,Suspect 152,Karol Bagh,Vandalism,15,63,1,0.9,1
+OFF-3597,Suspect 153,T Nagar,Murder,8,38,5,0.54,1
+OFF-3435,Suspect 154,Secunderabad,Kidnapping,7,6,2,0.89,0
+OFF-4169,Suspect 155,Velachery,Auto Theft,3,284,4,0.14,1
+OFF-8967,Suspect 156,Chandni Chowk,Drug Offense,7,204,0,0.29,0
+OFF-9070,Suspect 157,Koramangala,Burglary,3,32,3,0.7,1
+OFF-6615,Suspect 158,Kurla,Murder,15,263,1,0.57,1
+OFF-4594,Suspect 159,JP Nagar,Murder,14,233,3,0.02,1
+OFF-5667,Suspect 160,Goregaon,Drug Offense,2,248,4,0.25,1
+OFF-3419,Suspect 161,Anna Nagar,Robbery,2,134,0,0.32,1
+OFF-3259,Suspect 162,HSR Layout,Chain Snatching,12,49,1,0.96,1
+OFF-5795,Suspect 163,Velachery,Murder,10,82,4,0.01,0
+OFF-8855,Suspect 164,T Nagar,Fraud,5,252,5,0.28,1
+OFF-2648,Suspect 165,Lajpat Nagar,Fraud,2,70,3,0.98,0
+OFF-5141,Suspect 166,T Nagar,Fraud,7,284,4,0.1,1
+OFF-4859,Suspect 167,HSR Layout,Extortion,11,29,1,0.05,0
+OFF-9141,Suspect 168,Borivali,Chain Snatching,9,125,4,0.4,0
+OFF-2633,Suspect 169,Borivali,Chain Snatching,14,265,2,0.57,1
+OFF-2513,Suspect 170,Charminar,Kidnapping,11,85,0,0.74,0
+OFF-5360,Suspect 171,Connaught Place,Burglary,5,100,1,0.97,0
+OFF-9562,Suspect 172,Connaught Place,Murder,11,52,5,0.22,1
+OFF-5688,Suspect 173,Banjara Hills,Extortion,13,262,2,0.32,0
+OFF-1749,Suspect 174,Bandra,Kidnapping,9,56,5,0.9,0
+OFF-5411,Suspect 175,Indiranagar,Cybercrime,10,89,4,0.17,0
+OFF-8581,Suspect 176,Connaught Place,Theft,2,177,1,0.44,1
+OFF-3448,Suspect 177,Whitefield,Theft,9,97,3,0.93,1
+OFF-8970,Suspect 178,Charminar,Burglary,7,23,0,0.49,1
+OFF-4914,Suspect 179,Rohini,Fraud,5,156,4,0.13,0
+OFF-7397,Suspect 180,Saket,Chain Snatching,7,146,2,0.22,0
+OFF-4861,Suspect 181,Charminar,Chain Snatching,11,20,5,0.16,0
+OFF-5470,Suspect 182,Chandni Chowk,Cybercrime,11,128,2,0.16,1
+OFF-9938,Suspect 183,T Nagar,Chain Snatching,12,80,5,0.37,0
+OFF-5830,Suspect 184,Anand Vihar,Cybercrime,14,147,5,0.35,1
+OFF-1972,Suspect 185,Velachery,Kidnapping,12,299,2,0.8,0
+OFF-9543,Suspect 186,Bandra,Assault,10,284,3,0.89,0
+OFF-1846,Suspect 187,Karol Bagh,Robbery,12,49,5,0.6,1
+OFF-4865,Suspect 188,Lajpat Nagar,Cybercrime,5,82,2,0.32,0
+OFF-2740,Suspect 189,Lajpat Nagar,Vandalism,5,162,3,0.35,1
+OFF-6920,Suspect 190,Borivali,Murder,5,240,3,0.16,0
+OFF-5838,Suspect 191,Chandni Chowk,Fraud,7,67,3,0.05,0
+OFF-5529,Suspect 192,KR Puram,Burglary,12,58,0,0.06,1
+OFF-5465,Suspect 193,Goregaon,Cybercrime,2,150,1,0.38,1
+OFF-4206,Suspect 194,Secunderabad,Murder,14,290,4,0.45,0
+OFF-3295,Suspect 195,Andheri,Murder,13,35,2,0.72,0
+OFF-3157,Suspect 196,Koramangala,Vandalism,3,163,2,0.48,0
+OFF-3760,Suspect 197,Dwarka,Kidnapping,12,54,3,0.94,0
+OFF-7112,Suspect 198,Anna Nagar,Theft,5,30,0,0.14,0
+OFF-9750,Suspect 199,Connaught Place,Fraud,4,84,1,0.13,0
+OFF-5055,Suspect 200,Saket,Burglary,12,231,4,0.58,0
+OFF-6005,Suspect 201,Adyar,Chain Snatching,5,128,5,0.93,0
+OFF-1718,Suspect 202,Borivali,Vandalism,7,238,5,0.01,0
+OFF-9361,Suspect 203,Banjara Hills,Auto Theft,2,8,1,0.05,0
+OFF-9472,Suspect 204,Indiranagar,Extortion,2,214,0,0.52,1
+OFF-5400,Suspect 205,Chandni Chowk,Murder,8,64,1,0.98,1
+OFF-4118,Suspect 206,Secunderabad,Auto Theft,2,118,1,0.64,1
+OFF-4693,Suspect 207,Anand Vihar,Cybercrime,14,178,0,0.68,1
+OFF-8047,Suspect 208,KR Puram,Kidnapping,7,22,2,0.6,0
+OFF-1922,Suspect 209,Lajpat Nagar,Fraud,8,199,4,0.14,0
+OFF-4584,Suspect 210,Whitefield,Eve Teasing,8,5,3,0.83,1
+OFF-4302,Suspect 211,Secunderabad,Kidnapping,6,158,1,0.93,1
+OFF-1271,Suspect 212,Hebbal,Theft,12,135,3,0.15,0
+OFF-8588,Suspect 213,Lajpat Nagar,Vandalism,14,48,4,0.33,0
+OFF-5194,Suspect 214,Whitefield,Fraud,8,162,4,0.39,0
+OFF-1409,Suspect 215,Lajpat Nagar,Murder,3,10,2,0.11,0
+OFF-1712,Suspect 216,Goregaon,Murder,8,141,0,0.61,0
+OFF-7779,Suspect 217,Hebbal,Drug Offense,13,119,0,0.01,0
+OFF-5517,Suspect 218,Banjara Hills,Kidnapping,14,295,0,0.03,0
+OFF-4362,Suspect 219,Whitefield,Eve Teasing,14,161,2,0.85,0
+OFF-4554,Suspect 220,Whitefield,Drug Offense,14,107,4,0.44,1
+OFF-7553,Suspect 221,Indiranagar,Drug Offense,5,256,2,0.49,0
+OFF-1533,Suspect 222,Goregaon,Eve Teasing,7,149,4,0.58,1
+OFF-6119,Suspect 223,Anand Vihar,Theft,13,107,5,0.24,0
+OFF-8990,Suspect 224,Adyar,Robbery,14,154,3,0.73,0
+OFF-6563,Suspect 225,Adyar,Fraud,5,258,3,0.67,0
+OFF-8335,Suspect 226,Banjara Hills,Vandalism,14,100,5,0.87,0
+OFF-2098,Suspect 227,Charminar,Theft,14,268,2,0.88,0
+OFF-7815,Suspect 228,Connaught Place,Auto Theft,6,160,3,0.72,0
+OFF-1137,Suspect 229,Dwarka,Murder,13,158,4,1.0,1
+OFF-8171,Suspect 230,Koramangala,Vandalism,13,182,3,0.92,1
+OFF-2368,Suspect 231,Saket,Extortion,5,297,2,0.6,1
+OFF-4281,Suspect 232,Lajpat Nagar,Auto Theft,13,265,5,0.64,0
+OFF-2538,Suspect 233,Borivali,Vandalism,6,16,1,0.45,1
+OFF-1407,Suspect 234,Koramangala,Eve Teasing,10,167,3,0.45,0
+OFF-4106,Suspect 235,Indiranagar,Drug Offense,6,71,3,0.47,0
+OFF-9622,Suspect 236,Lajpat Nagar,Robbery,9,224,3,0.39,0
+OFF-2350,Suspect 237,Indiranagar,Vandalism,10,255,4,0.44,1
+OFF-1438,Suspect 238,HSR Layout,Theft,12,113,0,0.96,1
+OFF-8070,Suspect 239,Dharavi,Auto Theft,9,134,2,0.94,1
+OFF-4205,Suspect 240,Indiranagar,Auto Theft,7,189,2,0.38,1
+OFF-4393,Suspect 241,Karol Bagh,Murder,13,194,5,0.54,1
+OFF-5088,Suspect 242,Indiranagar,Chain Snatching,11,255,2,0.27,0
+OFF-8436,Suspect 243,KR Puram,Vandalism,2,206,5,0.56,1
+OFF-9380,Suspect 244,Andheri,Theft,9,200,1,0.68,1
+OFF-3782,Suspect 245,Secunderabad,Burglary,5,211,3,0.17,1
+OFF-2625,Suspect 246,Lajpat Nagar,Cybercrime,7,251,1,0.62,1
+OFF-4179,Suspect 247,Borivali,Fraud,15,200,3,0.46,0
+OFF-8962,Suspect 248,Koramangala,Eve Teasing,14,256,1,0.88,1
+OFF-2869,Suspect 249,Andheri,Kidnapping,6,116,2,0.53,1
+OFF-9177,Suspect 250,Banjara Hills,Drug Offense,2,14,0,0.98,1
+OFF-9094,Suspect 251,Karol Bagh,Eve Teasing,7,102,2,0.14,0
+OFF-8693,Suspect 252,Borivali,Cybercrime,4,116,5,0.2,0
+OFF-9728,Suspect 253,Dharavi,Extortion,6,38,2,0.68,0
+OFF-5211,Suspect 254,KR Puram,Cybercrime,10,164,0,0.57,1
+OFF-8266,Suspect 255,Dharavi,Vandalism,6,271,0,0.73,1
+OFF-9340,Suspect 256,Anand Vihar,Assault,3,17,5,0.18,0
+OFF-2622,Suspect 257,Charminar,Vandalism,4,21,0,0.25,1
+OFF-8703,Suspect 258,Whitefield,Drug Offense,14,203,3,0.36,0
+OFF-4997,Suspect 259,Saket,Auto Theft,11,211,4,1.0,0
+OFF-7061,Suspect 260,Indiranagar,Auto Theft,3,18,4,0.01,1
+OFF-3254,Suspect 261,Dwarka,Murder,5,208,4,0.38,1
+OFF-2907,Suspect 262,Dwarka,Cybercrime,12,245,0,0.31,0
+OFF-2525,Suspect 263,Dwarka,Murder,7,294,5,0.23,0
+OFF-5116,Suspect 264,Saket,Drug Offense,11,105,3,0.85,1
+OFF-9631,Suspect 265,Chandni Chowk,Vandalism,7,69,0,0.2,0
+OFF-3383,Suspect 266,KR Puram,Murder,4,100,4,0.26,0
+OFF-9785,Suspect 267,Hebbal,Extortion,4,105,2,0.77,0
+OFF-4196,Suspect 268,Madhapur,Assault,5,20,1,0.67,0
+OFF-2562,Suspect 269,Bandra,Cybercrime,6,238,4,0.59,1
+OFF-3411,Suspect 270,Bandra,Assault,12,255,2,0.05,1
+OFF-7330,Suspect 271,Anand Vihar,Extortion,4,84,3,0.21,0
+OFF-1879,Suspect 272,Koramangala,Cybercrime,8,34,0,0.12,1
+OFF-9481,Suspect 273,Lajpat Nagar,Vandalism,8,56,3,0.88,1
+OFF-4004,Suspect 274,Hebbal,Theft,14,98,2,0.44,0
+OFF-5031,Suspect 275,T Nagar,Cybercrime,12,86,0,0.99,1
+OFF-7582,Suspect 276,Lajpat Nagar,Auto Theft,2,30,5,0.55,1
+OFF-6853,Suspect 277,Lajpat Nagar,Eve Teasing,11,18,2,0.17,0
+OFF-9420,Suspect 278,Hebbal,Cybercrime,3,74,2,0.14,1
+OFF-6245,Suspect 279,Dwarka,Burglary,12,218,5,0.15,0
+OFF-1568,Suspect 280,Bandra,Auto Theft,15,25,4,0.94,0
+OFF-2424,Suspect 281,Dharavi,Burglary,12,36,2,0.62,1
+OFF-7615,Suspect 282,Whitefield,Burglary,9,126,3,0.72,1
+OFF-7822,Suspect 283,Madhapur,Auto Theft,11,70,2,0.82,0
+OFF-6561,Suspect 284,Worli,Vandalism,7,66,2,0.51,1
+OFF-1392,Suspect 285,Bandra,Eve Teasing,11,42,0,0.71,1
+OFF-1227,Suspect 286,Borivali,Theft,14,122,2,0.91,1
+OFF-8550,Suspect 287,Dwarka,Auto Theft,13,200,0,0.98,1
+OFF-6374,Suspect 288,Adyar,Drug Offense,2,51,5,0.2,1
+OFF-2950,Suspect 289,Worli,Burglary,9,99,2,0.57,1
+OFF-8407,Suspect 290,Indiranagar,Robbery,14,222,2,0.41,1
+OFF-9931,Suspect 291,Madhapur,Fraud,2,144,0,0.53,1
+OFF-5844,Suspect 292,JP Nagar,Theft,5,298,0,0.64,1
+OFF-7627,Suspect 293,Rohini,Eve Teasing,10,274,3,0.94,1
+OFF-4669,Suspect 294,Worli,Eve Teasing,5,224,1,0.03,0
+OFF-8170,Suspect 295,Karol Bagh,Chain Snatching,12,127,5,0.21,1
+OFF-3938,Suspect 296,Goregaon,Assault,11,141,4,0.87,0
+OFF-3789,Suspect 297,Karol Bagh,Assault,4,272,4,0.55,1
+OFF-3697,Suspect 298,Goregaon,Robbery,7,73,3,0.15,0
+OFF-9241,Suspect 299,Indiranagar,Kidnapping,5,99,2,0.88,0
+OFF-8831,Suspect 300,Karol Bagh,Theft,8,66,2,0.99,1
+OFF-9275,Suspect 301,Anna Nagar,Eve Teasing,7,180,0,0.1,0
+OFF-5808,Suspect 302,Saket,Auto Theft,6,252,3,0.28,1
+OFF-5498,Suspect 303,Anand Vihar,Fraud,7,44,3,0.65,1
+OFF-3424,Suspect 304,Indiranagar,Chain Snatching,4,139,1,0.25,0
+OFF-5800,Suspect 305,Karol Bagh,Extortion,14,185,3,0.92,0
+OFF-9230,Suspect 306,Dadar,Assault,10,37,1,0.22,0
+OFF-9159,Suspect 307,Indiranagar,Drug Offense,6,142,3,0.41,1
+OFF-5992,Suspect 308,T Nagar,Auto Theft,6,32,4,0.3,1
+OFF-9116,Suspect 309,Chandni Chowk,Drug Offense,4,210,4,0.38,1
+OFF-6212,Suspect 310,T Nagar,Extortion,7,143,0,0.02,1
+OFF-3517,Suspect 311,Secunderabad,Robbery,6,119,4,0.6,1
+OFF-5086,Suspect 312,T Nagar,Auto Theft,9,85,3,0.52,1
+OFF-1380,Suspect 313,Charminar,Auto Theft,9,257,4,0.89,0
+OFF-1121,Suspect 314,Worli,Eve Teasing,9,31,0,0.53,1
+OFF-1637,Suspect 315,Saket,Theft,2,45,3,0.26,0
+OFF-4651,Suspect 316,Dharavi,Burglary,12,289,3,0.31,0
+OFF-3296,Suspect 317,Adyar,Chain Snatching,10,37,5,0.35,1
+OFF-5487,Suspect 318,Kurla,Extortion,2,226,0,0.6,1
+OFF-8324,Suspect 319,JP Nagar,Auto Theft,8,15,2,0.41,0
+OFF-3905,Suspect 320,Dwarka,Eve Teasing,9,200,0,0.65,0
+OFF-3269,Suspect 321,Velachery,Assault,3,123,4,0.18,1
+OFF-8455,Suspect 322,Dwarka,Assault,14,101,4,0.17,0
+OFF-2101,Suspect 323,Banjara Hills,Kidnapping,5,237,1,0.54,0
+OFF-5846,Suspect 324,Borivali,Burglary,6,38,0,0.91,0
+OFF-4356,Suspect 325,Charminar,Murder,7,21,1,0.91,1
+OFF-3050,Suspect 326,Worli,Murder,10,5,5,0.58,1
+OFF-4800,Suspect 327,Bandra,Vandalism,7,247,3,0.51,0
+OFF-5454,Suspect 328,Hebbal,Chain Snatching,9,251,1,0.87,0
+OFF-2194,Suspect 329,KR Puram,Fraud,3,283,5,0.39,0
+OFF-5442,Suspect 330,Charminar,Burglary,7,232,5,0.28,1
+OFF-9785,Suspect 331,KR Puram,Drug Offense,2,256,5,0.98,0
+OFF-4006,Suspect 332,Adyar,Extortion,13,192,3,0.55,1
+OFF-8556,Suspect 333,JP Nagar,Kidnapping,11,132,3,0.73,1
+OFF-9279,Suspect 334,Dharavi,Robbery,4,257,2,0.81,1
+OFF-2628,Suspect 335,Indiranagar,Extortion,14,259,0,0.74,1
+OFF-6360,Suspect 336,Velachery,Auto Theft,9,256,1,0.02,0
+OFF-4331,Suspect 337,Anna Nagar,Vandalism,7,291,1,0.5,1
+OFF-5497,Suspect 338,Whitefield,Assault,5,75,0,0.93,1
+OFF-6619,Suspect 339,Connaught Place,Kidnapping,7,71,0,0.25,1
+OFF-2748,Suspect 340,Secunderabad,Theft,11,231,5,0.94,1
+OFF-3635,Suspect 341,Dadar,Burglary,9,129,5,0.21,0
+OFF-8313,Suspect 342,HSR Layout,Drug Offense,3,106,1,0.69,1
+OFF-4904,Suspect 343,Goregaon,Assault,2,160,3,0.28,1
+OFF-9606,Suspect 344,Andheri,Robbery,2,263,0,0.59,0
+OFF-3205,Suspect 345,Bandra,Fraud,6,257,2,0.92,0
+OFF-8498,Suspect 346,Madhapur,Burglary,8,216,4,0.39,1
+OFF-3597,Suspect 347,Worli,Extortion,3,130,4,0.23,1
+OFF-8517,Suspect 348,Anna Nagar,Extortion,9,32,4,0.66,1
+OFF-4960,Suspect 349,Kurla,Burglary,9,280,3,0.57,1
+OFF-7535,Suspect 350,Whitefield,Robbery,15,284,2,0.31,0
+OFF-8653,Suspect 351,Adyar,Fraud,3,148,4,0.42,1
+OFF-4819,Suspect 352,Velachery,Drug Offense,3,22,2,0.17,1
+OFF-7451,Suspect 353,Goregaon,Theft,6,50,5,0.54,1
+OFF-3561,Suspect 354,Charminar,Fraud,4,90,3,0.02,0
+OFF-6449,Suspect 355,Bandra,Eve Teasing,12,92,4,0.82,1
+OFF-5594,Suspect 356,Dadar,Kidnapping,12,69,5,0.15,0
+OFF-9385,Suspect 357,Saket,Cybercrime,13,149,1,0.9,0
+OFF-5279,Suspect 358,Anand Vihar,Murder,5,184,0,0.45,1
+OFF-6168,Suspect 359,Kurla,Vandalism,8,267,0,0.61,1
+OFF-1873,Suspect 360,Anna Nagar,Kidnapping,11,113,0,1.0,1
+OFF-1402,Suspect 361,Karol Bagh,Cybercrime,7,174,3,0.86,0
+OFF-5337,Suspect 362,Borivali,Cybercrime,9,125,3,0.01,1
+OFF-3642,Suspect 363,Chandni Chowk,Eve Teasing,12,280,5,0.19,0
+OFF-6537,Suspect 364,Whitefield,Murder,8,238,3,0.65,1
+OFF-8501,Suspect 365,Hebbal,Theft,2,191,4,0.32,0
+OFF-6614,Suspect 366,Lajpat Nagar,Theft,3,93,4,0.8,0
+OFF-4696,Suspect 367,Adyar,Robbery,12,91,4,0.84,0
+OFF-2991,Suspect 368,Goregaon,Murder,3,230,1,0.95,1
+OFF-3578,Suspect 369,JP Nagar,Vandalism,2,185,5,0.0,0
+OFF-8122,Suspect 370,Madhapur,Chain Snatching,9,288,5,0.96,0
+OFF-5024,Suspect 371,Anand Vihar,Assault,7,186,3,0.16,1
+OFF-2457,Suspect 372,Whitefield,Fraud,12,192,4,0.73,0
+OFF-9473,Suspect 373,Andheri,Assault,8,257,5,0.84,0
+OFF-8154,Suspect 374,Charminar,Auto Theft,12,236,1,0.96,1
+OFF-3278,Suspect 375,Saket,Murder,6,210,2,0.29,0
+OFF-3696,Suspect 376,Worli,Chain Snatching,8,276,3,0.79,1
+OFF-7592,Suspect 377,Hebbal,Extortion,11,140,5,0.78,0
+OFF-3041,Suspect 378,HSR Layout,Fraud,11,106,0,0.82,0
+OFF-3522,Suspect 379,Indiranagar,Burglary,7,168,0,0.0,0
+OFF-5440,Suspect 380,Chandni Chowk,Robbery,9,20,1,0.37,0
+OFF-7528,Suspect 381,Indiranagar,Eve Teasing,12,247,1,0.98,1
+OFF-3659,Suspect 382,Indiranagar,Robbery,3,116,4,0.25,1
+OFF-8079,Suspect 383,Dwarka,Assault,11,111,5,0.73,0
+OFF-4094,Suspect 384,Banjara Hills,Fraud,15,193,2,0.32,0
+OFF-8230,Suspect 385,Anand Vihar,Theft,11,278,0,0.18,0
+OFF-6288,Suspect 386,Rohini,Vandalism,2,136,4,0.11,0
+OFF-5154,Suspect 387,Chandni Chowk,Auto Theft,7,209,0,0.79,0
+OFF-4278,Suspect 388,Indiranagar,Cybercrime,13,241,0,0.1,0
+OFF-4954,Suspect 389,Dharavi,Murder,6,261,0,0.94,0
+OFF-3680,Suspect 390,Anna Nagar,Kidnapping,5,179,4,0.97,0
+OFF-1434,Suspect 391,Koramangala,Extortion,2,280,0,0.28,1
+OFF-3375,Suspect 392,Adyar,Chain Snatching,4,268,2,0.68,1
+OFF-5927,Suspect 393,HSR Layout,Extortion,13,194,5,0.74,1
+OFF-8203,Suspect 394,Lajpat Nagar,Auto Theft,15,177,2,0.63,1
+OFF-5279,Suspect 395,Koramangala,Kidnapping,15,96,0,0.03,0
+OFF-1923,Suspect 396,Anna Nagar,Extortion,9,234,1,0.23,0
+OFF-1818,Suspect 397,Borivali,Cybercrime,9,235,4,0.06,1
+OFF-6147,Suspect 398,Andheri,Assault,13,295,2,0.23,0
+OFF-7824,Suspect 399,Karol Bagh,Murder,8,252,0,0.3,0
+OFF-9660,Suspect 400,Karol Bagh,Assault,9,288,1,0.9,1
+OFF-8839,Suspect 401,Lajpat Nagar,Murder,11,175,5,0.8,1
+OFF-5845,Suspect 402,Goregaon,Eve Teasing,6,219,4,0.62,1
+OFF-2467,Suspect 403,T Nagar,Vandalism,13,251,5,0.65,0
+OFF-7935,Suspect 404,Connaught Place,Chain Snatching,7,196,0,0.34,1
+OFF-6700,Suspect 405,Anna Nagar,Kidnapping,10,134,5,0.77,1
+OFF-5121,Suspect 406,Dharavi,Vandalism,14,234,2,0.69,0
+OFF-9810,Suspect 407,JP Nagar,Murder,15,142,1,0.22,0
+OFF-4746,Suspect 408,Madhapur,Auto Theft,10,106,1,0.89,0
+OFF-8164,Suspect 409,Anna Nagar,Eve Teasing,14,81,5,0.85,0
+OFF-5411,Suspect 410,Anna Nagar,Extortion,8,285,5,0.11,0
+OFF-5594,Suspect 411,Adyar,Vandalism,8,83,4,0.84,0
+OFF-1399,Suspect 412,Karol Bagh,Kidnapping,9,181,4,0.26,1
+OFF-1829,Suspect 413,Chandni Chowk,Chain Snatching,15,206,2,0.12,0
+OFF-6941,Suspect 414,Whitefield,Kidnapping,7,71,2,0.36,1
+OFF-9401,Suspect 415,Dharavi,Burglary,12,191,1,0.62,1
+OFF-3733,Suspect 416,Dharavi,Burglary,4,267,1,0.94,1
+OFF-7259,Suspect 417,Charminar,Drug Offense,8,201,2,0.89,1
+OFF-4695,Suspect 418,Connaught Place,Eve Teasing,6,200,0,0.32,0
+OFF-5438,Suspect 419,Lajpat Nagar,Auto Theft,3,231,0,0.5,1
+OFF-4849,Suspect 420,Anna Nagar,Fraud,5,245,0,0.03,0
+OFF-4938,Suspect 421,Whitefield,Fraud,13,210,3,0.83,0
+OFF-7999,Suspect 422,Velachery,Chain Snatching,15,228,1,0.13,0
+OFF-5713,Suspect 423,Lajpat Nagar,Robbery,6,51,1,0.25,0
+OFF-5673,Suspect 424,Adyar,Burglary,4,112,3,0.48,1
+OFF-7330,Suspect 425,Banjara Hills,Fraud,14,208,1,0.61,0
+OFF-7039,Suspect 426,Worli,Drug Offense,10,47,1,0.37,0
+OFF-1502,Suspect 427,HSR Layout,Fraud,10,279,2,0.71,0
+OFF-7947,Suspect 428,Karol Bagh,Kidnapping,5,54,3,0.01,1
+OFF-5457,Suspect 429,Kurla,Kidnapping,9,257,5,0.28,0
+OFF-8272,Suspect 430,Connaught Place,Eve Teasing,8,208,4,0.69,1
+OFF-3639,Suspect 431,Banjara Hills,Kidnapping,13,41,1,0.53,0
+OFF-3285,Suspect 432,Indiranagar,Murder,11,98,3,0.08,1
+OFF-3818,Suspect 433,Madhapur,Extortion,10,140,3,0.72,1
+OFF-7765,Suspect 434,Adyar,Fraud,9,36,1,0.05,1
+OFF-9239,Suspect 435,Secunderabad,Fraud,3,183,0,0.84,0
+OFF-3144,Suspect 436,Velachery,Auto Theft,3,36,1,0.05,0
+OFF-5797,Suspect 437,Karol Bagh,Vandalism,10,126,1,0.84,0
+OFF-2251,Suspect 438,Karol Bagh,Auto Theft,12,99,4,0.04,0
+OFF-7679,Suspect 439,Andheri,Theft,2,210,0,0.35,0
+OFF-7080,Suspect 440,Rohini,Assault,13,108,3,0.42,1
+OFF-4970,Suspect 441,Anna Nagar,Extortion,6,156,2,0.13,1
+OFF-1839,Suspect 442,Koramangala,Drug Offense,14,160,3,0.24,1
+OFF-8555,Suspect 443,HSR Layout,Assault,15,97,5,0.72,0
+OFF-4718,Suspect 444,Lajpat Nagar,Burglary,12,84,0,0.89,0
+OFF-7556,Suspect 445,Koramangala,Assault,6,241,0,0.08,1
+OFF-3890,Suspect 446,Banjara Hills,Assault,6,183,0,0.39,0
+OFF-5796,Suspect 447,Karol Bagh,Chain Snatching,13,204,0,0.86,1
+OFF-3153,Suspect 448,Goregaon,Burglary,8,123,2,0.72,1
+OFF-5418,Suspect 449,JP Nagar,Vandalism,12,127,4,0.21,1
+OFF-2493,Suspect 450,Anand Vihar,Fraud,4,150,4,0.23,1
+OFF-2762,Suspect 451,Bandra,Murder,14,59,3,0.15,0
+OFF-3283,Suspect 452,Hebbal,Extortion,10,270,3,0.81,1
+OFF-3673,Suspect 453,T Nagar,Chain Snatching,4,181,2,0.19,0
+OFF-9197,Suspect 454,Secunderabad,Cybercrime,10,142,2,0.6,0
+OFF-2552,Suspect 455,Chandni Chowk,Burglary,15,201,3,0.94,0
+OFF-3138,Suspect 456,Hebbal,Assault,14,48,1,0.52,0
+OFF-7160,Suspect 457,HSR Layout,Drug Offense,12,102,3,0.41,0
+OFF-6061,Suspect 458,Indiranagar,Eve Teasing,11,92,2,0.0,1
+OFF-5060,Suspect 459,Andheri,Cybercrime,14,217,4,0.68,1
+OFF-2154,Suspect 460,Anand Vihar,Fraud,3,287,4,0.41,1
+OFF-5301,Suspect 461,Koramangala,Robbery,5,80,2,0.66,0
+OFF-2171,Suspect 462,Secunderabad,Murder,5,13,2,0.24,1
+OFF-6040,Suspect 463,Borivali,Vandalism,9,64,2,0.92,1
+OFF-6287,Suspect 464,Lajpat Nagar,Extortion,6,89,3,0.53,1
+OFF-1081,Suspect 465,Banjara Hills,Murder,5,101,2,0.51,0
+OFF-7960,Suspect 466,Kurla,Theft,13,43,4,0.15,1
+OFF-3667,Suspect 467,Anna Nagar,Kidnapping,9,177,4,0.22,1
+OFF-9288,Suspect 468,Charminar,Theft,10,94,0,0.94,1
+OFF-6142,Suspect 469,T Nagar,Extortion,12,226,2,0.98,0
+OFF-6724,Suspect 470,Chandni Chowk,Theft,10,256,4,0.12,0
+OFF-9014,Suspect 471,Andheri,Chain Snatching,10,273,0,0.8,0
+OFF-8240,Suspect 472,Goregaon,Robbery,4,102,4,0.33,1
+OFF-6592,Suspect 473,Dwarka,Eve Teasing,12,58,3,0.55,1
+OFF-3755,Suspect 474,Kurla,Vandalism,6,266,1,0.47,0
+OFF-2257,Suspect 475,Dwarka,Cybercrime,4,33,0,0.94,0
+OFF-2503,Suspect 476,Koramangala,Fraud,6,221,3,0.65,0
+OFF-2574,Suspect 477,Borivali,Theft,12,82,2,0.79,0
+OFF-8644,Suspect 478,Dadar,Eve Teasing,8,297,2,1.0,1
+OFF-7901,Suspect 479,Worli,Theft,10,10,0,0.25,0
+OFF-7549,Suspect 480,Banjara Hills,Assault,7,252,4,0.64,1
+OFF-9182,Suspect 481,Dharavi,Murder,9,254,5,0.51,0
+OFF-5245,Suspect 482,KR Puram,Burglary,6,90,1,0.91,0
+OFF-6130,Suspect 483,Madhapur,Eve Teasing,15,141,5,0.05,0
+OFF-6094,Suspect 484,Koramangala,Murder,12,71,2,0.78,1
+OFF-2137,Suspect 485,Worli,Burglary,2,78,2,0.67,0
+OFF-8037,Suspect 486,Dwarka,Chain Snatching,15,171,3,0.51,1
+OFF-1775,Suspect 487,Banjara Hills,Robbery,12,292,4,0.81,0
+OFF-2349,Suspect 488,Dharavi,Drug Offense,3,80,1,0.06,1
+OFF-6576,Suspect 489,Adyar,Robbery,9,248,0,0.85,1
+OFF-3082,Suspect 490,T Nagar,Kidnapping,15,278,2,0.07,1
+OFF-5508,Suspect 491,Goregaon,Chain Snatching,7,269,4,0.11,1
+OFF-4802,Suspect 492,Karol Bagh,Theft,12,83,4,0.92,1
+OFF-8856,Suspect 493,Whitefield,Theft,10,26,3,0.57,0
+OFF-3237,Suspect 494,Banjara Hills,Eve Teasing,10,56,3,0.3,1
+OFF-6393,Suspect 495,Anand Vihar,Murder,13,209,3,0.4,1
+OFF-9427,Suspect 496,Worli,Cybercrime,11,33,4,0.29,1
+OFF-1354,Suspect 497,Bandra,Burglary,15,263,0,1.0,0
+OFF-4059,Suspect 498,Secunderabad,Eve Teasing,3,80,0,0.11,0
+OFF-9145,Suspect 499,Secunderabad,Auto Theft,3,249,1,0.18,1
+OFF-4898,Suspect 500,Secunderabad,Drug Offense,3,224,5,0.19,0

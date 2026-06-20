@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: AI Services API (KSP CIOS)
   version: 1.0.0
-  description: OpenAPI specifications for Predictive Crime Intelligence (M4) and Decision Support (M6).
+  description: OpenAPI specifications for Predictive Crime Intelligence (M4), Decision Support (M6), and Live Incident Fusion (M7).
 paths:
   /predictions:
     get:
@@ -44,6 +44,13 @@ paths:
                         forecast_days: { type: integer }
                         avg_predicted_incidents: { type: number }
                         risk_level: { type: string }
+                        reasons:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              code: { type: string }
+                              value: {}
   /predictions/escalation:
     get:
       summary: (Feature 4.2) Identifies areas where crime rate is growing rapidly.
@@ -63,6 +70,13 @@ paths:
                         area: { type: string }
                         growth_rate_percentage: { type: number }
                         status: { type: string }
+                        reasons:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              code: { type: string }
+                              value: {}
   /predictions/offender/{citizen_id}:
     get:
       summary: Get the re-offend risk score for a specific citizen
@@ -83,6 +97,13 @@ paths:
                   citizen_id: { type: string }
                   reoffend_probability: { type: number }
                   risk_level: { type: string }
+                  reasons:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code: { type: string }
+                        value: {}
   /predictions/emerging_threats:
     get:
       summary: (Feature 4.4) Flags unusual spikes or novel crime patterns.
@@ -99,18 +120,66 @@ paths:
                   alerts:
                     type: array
                     items: { type: string }
+                  reasons:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code: { type: string }
+                        value: {}
   /recommendations/patrol:
     get:
       summary: Get actionable patrol recommendations
       responses:
         '200':
           description: List of prioritized patrol recommendations
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recommendations:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        area: { type: string }
+                        action: { type: string }
+                        priority: { type: string }
+                        reasons:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              code: { type: string }
+                              value: {}
   /recommendations/investigation:
     get:
       summary: Get actionable investigation recommendations
       responses:
         '200':
           description: List of prioritized investigation recommendations
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recommendations:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        case_id: { type: string }
+                        score: { type: number }
+                        action: { type: string }
+                        priority: { type: string }
+                        reasons:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              code: { type: string }
+                              value: {}
   /recommendations/cctv:
     get:
       summary: Get actionable CCTV search suggestions for an area and time window
@@ -133,9 +202,66 @@ paths:
       responses:
         '200':
           description: List of CCTV cameras to review
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recommended_cameras:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        camera_id: { type: string }
+                        distance_from_centroid_m: { type: number }
+                  reasons:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code: { type: string }
+                        value: {}
   /recommendations/generate:
     post:
       summary: Generate recommendations based on the latest intelligence
       responses:
         '200':
           description: Recommendations successfully generated
+
+  /fusion/simulate-fir:
+    post:
+      tags:
+        - Fusion Layer
+      summary: Simulates a new FIR event
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                crime_type:
+                  type: string
+                area:
+                  type: string
+                severity:
+                  type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /stream/alerts:
+    get:
+      tags:
+        - Fusion Layer
+      summary: SSE Stream for Live Alerts
+      responses:
+        "200":
+          description: Server-Sent Events stream
+          content:
+            text/event-stream:
+              schema:
+                type: object

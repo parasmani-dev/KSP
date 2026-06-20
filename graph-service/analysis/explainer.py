@@ -50,7 +50,7 @@ def explain_node(graph: nx.Graph, node_id: str):
         if orgs:
             explanation_lines.append(f"They are part of the following organization(s): {', '.join(orgs)}.")
         if associates:
-            explanation_lines.append(f"They are known to associate with {len(associates)} other citizen(s): {', '.join(associates[:5])}{'...' if len(associates)>5 else ''}.")
+            explanation_lines.append(f"They are known to associate with {len(associates)} other citizen(s): {', '.join(associates)}.")
             
     elif node_type == 'Case':
         suspects = []

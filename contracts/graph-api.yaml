@@ -21,6 +21,10 @@ paths:
                         type: array
                         items:
                           type: object
+                          description: >
+                            Warning: Source entities.csv uses 'threat_level', but the 
+                            frontend dashboard expects 'risk_score'. The backend API currently 
+                            translates this at runtime, but this is a band-aid. Fix CSV schema.
                       links:
                         type: array
                         items:

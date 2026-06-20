@@ -16,7 +16,14 @@ def explain_node(graph: nx.Graph, node_id: str):
     
     # Safely extract all properties dynamically
     import pandas as pd
-    props = [f"{k.replace('_', ' ').title()}: {v}" for k, v in node_data.items() if k not in ['id', 'type', 'name'] and pd.notna(v)]
+    
+    # [WARNING: SCHEMA DISCREPANCY]
+    # The underlying entities.csv uses 'threat_level', but the frontend expects 'risk_score'.
+    # This runtime translation is a band-aid. The CSV schema should eventually be fixed.
+    if 'threat_level' in node_data:
+        node_data['risk_score'] = node_data.pop('threat_level')
+        
+    props = [f"{k.replace('_', ' ').title()}: {v}" for k, v in node_data.items() if k not in ['id', 'type', 'name', 'investigating_officer'] and pd.notna(v)]
     props_str = f" Known attributes: {', '.join(props)}." if props else ""
     
     explanation_lines.append(f"This node represents {node_id}, classified as a {node_type}.{props_str}")

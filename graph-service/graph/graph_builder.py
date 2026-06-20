@@ -43,6 +43,16 @@ def build_graph():
     # Process Mock Graph -> Delegates case-linking logic
     G = link_case_entities(G, mock_df)
     
+    # Process Vehicles from mock_graph
+    for _, row in mock_df.iterrows():
+        vehicle_id = row.get('vehicle_id')
+        suspect = row.get('primary_suspect')
+        if pd.notna(vehicle_id) and pd.notna(suspect):
+            if not G.has_node(vehicle_id):
+                G.add_node(vehicle_id, type='Vehicle')
+            # Create edge: Citizen -> OWNS -> Vehicle
+            G.add_edge(suspect, vehicle_id, relationship='OWNS')
+    
     # Load Real Entity Attributes from entities_sample.csv
     try:
         entities_path = os.path.join(DATASET_DIR, 'entities_sample.csv')

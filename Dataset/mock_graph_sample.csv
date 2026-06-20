@@ -1,31 +1,31 @@
-graph_id,case_id,primary_suspect,suspects,network_id,network_members,confidence,missing_evidence,link_strength,crime_type,escalation_path
-GRF001,FIR01727,Omkar Desai,Omkar Desai; Qadir Shaikh,NET2,Mukesh Singh; Salim Khan; Ankit Tiwari,0.62,Ballistics Report; Phone Records,Strong,Drug Offense,Drug Offense
-GRF002,FIR01125,Naresh Jha,Naresh Jha; Vijay Dubey; Jayesh Pandey,NET0,Sumit Bansal; Uday Kiran; Harish Bose,0.74,Phone Records; Forensics Report,Weak,Auto Theft,Auto Theft
-GRF003,FIR02557,Omkar Desai,Omkar Desai,NET0,Sumit Bansal; Uday Kiran; Harish Bose,0.67,Ballistics Report,Strong,Kidnapping,Kidnapping
-GRF004,FIR00535,Sunil Patel,Sunil Patel; Wasim Akram; Sanjay Rawat,NET3,Mukesh Singh; Salim Khan; Ankit Tiwari,0.76,Forensics Report; Ballistics Report,Strong,Eve Teasing,Eve Teasing
-GRF005,FIR02126,Suresh Nair,Suresh Nair; Yashraj Bhatt; Tarun Pillai,NET0,Sumit Bansal; Uday Kiran; Harish Bose,0.66,Witness Statement,Moderate,Drug Offense,Drug Offense
-GRF006,FIR02132,Tarun Pillai,Tarun Pillai; Nitin Chauhan; Elamaran V,NET0,Brijesh Tomar; Rahul Sharma; Gopal Rao,0.84,Witness Statement,Weak,Chain Snatching,Chain Snatching → Assault
-GRF007,FIR02139,Manish Joshi,Manish Joshi; Sanjay Rawat; Ajay Lakhani,NET0,Mukesh Singh; Salim Khan; Ankit Tiwari,0.91,Forensics Report,Weak,Drug Offense,Drug Offense
-GRF008,FIR03530,Ganesh Patil,Ganesh Patil; Nitin Chauhan,NET3,Sumit Bansal; Uday Kiran; Harish Bose,0.77,Forensics Report; Witness Statement; Financial Records,Strong,Auto Theft,Auto Theft
-GRF009,FIR02574,Ratan Das,Ratan Das; Fayaz Dar,NET4,Chetan More; Jayesh Pandey; Ganesh Patil,0.64,Ballistics Report; Witness Statement; Financial Records,Weak,Drug Offense,Drug Offense
-GRF010,FIR02761,Ankit Tiwari,Ankit Tiwari,NET4,Chetan More; Jayesh Pandey; Ganesh Patil,0.86,Ballistics Report; Phone Records; CCTV Footage,Weak,Robbery,Robbery → Assault
-GRF011,FIR04406,Rakesh Verma,Rakesh Verma; Deepak Yadav; Ratan Das,NET1,Brijesh Tomar; Rahul Sharma; Gopal Rao,0.76,Witness Statement,Moderate,Extortion,Extortion → Murder
-GRF012,FIR02631,Mukesh Singh,Mukesh Singh; Uday Kiran; Jayesh Pandey; Dinesh Reddy,NET3,Kiran Deshpande; Sanjay Rawat; Suresh Nair,0.56,Financial Records; CCTV Footage,Strong,Chain Snatching,Chain Snatching → Robbery
-GRF013,FIR02730,Vishal Thakur,Vishal Thakur,NET2,Sumit Bansal; Uday Kiran; Harish Bose,0.56,Forensics Report,Weak,Cybercrime,Cybercrime
-GRF014,FIR02739,Gopal Rao,Gopal Rao; Pravin Kadam; Hemant Sahu; Vishal Thakur,NET1,Brijesh Tomar; Rahul Sharma; Gopal Rao,0.78,Witness Statement,Strong,Auto Theft,Auto Theft
-GRF015,FIR02760,Harish Bose,Harish Bose,NET1,Mukesh Singh; Salim Khan; Ankit Tiwari,0.53,CCTV Footage; Financial Records,Weak,Murder,Murder
-GRF016,FIR02723,Hemant Sahu,Hemant Sahu; Fayaz Dar; Pradeep Mishra,NET4,Chetan More; Jayesh Pandey; Ganesh Patil,0.67,Ballistics Report; Witness Statement,Moderate,Vandalism,Vandalism
-GRF017,FIR02727,Farrukh Ansari,Farrukh Ansari; Harish Bose,NET2,Mukesh Singh; Salim Khan; Ankit Tiwari,0.61,Witness Statement,Moderate,Chain Snatching,Chain Snatching → Assault
-GRF018,FIR02731,Lokesh Yadav,Lokesh Yadav; Tarun Pillai,NET4,Chetan More; Jayesh Pandey; Ganesh Patil,0.92,Forensics Report,Weak,Assault,Assault → Extortion
-GRF019,FIR02576,Lokesh Yadav,Lokesh Yadav; Wasim Akram; Hemant Sahu,NET3,Brijesh Tomar; Rahul Sharma; Gopal Rao,0.63,Phone Records; CCTV Footage,Moderate,Extortion,Extortion → Murder
-GRF020,FIR02643,Qadir Shaikh,Qadir Shaikh; Jayesh Pandey; Sunil Patel,NET0,Chetan More; Jayesh Pandey; Ganesh Patil,0.64,Forensics Report; Witness Statement,Weak,Murder,Murder
-GRF021,FIR02795,Ankit Tiwari,Ankit Tiwari; Mukesh Singh; Qadir Shaikh; Babu Lal,NET3,Sumit Bansal; Uday Kiran; Harish Bose,0.51,Phone Records; Financial Records,Moderate,Extortion,Extortion → Kidnapping
-GRF022,FIR02919,Rahul Sharma,Rahul Sharma; Irfan Sheikh; Ganesh Patil; Harish Bose,NET4,Mukesh Singh; Salim Khan; Ankit Tiwari,0.72,Forensics Report; Phone Records,Moderate,Assault,Assault → Extortion
-GRF023,FIR03059,Wasim Akram,Wasim Akram; Elamaran V,NET2,Sumit Bansal; Uday Kiran; Harish Bose,0.84,Ballistics Report; Phone Records; Witness Statement,Strong,Chain Snatching,Chain Snatching → Robbery
-GRF024,FIR02970,Aakash Mehta,Aakash Mehta; Brijesh Tomar,NET2,Kiran Deshpande; Sanjay Rawat; Suresh Nair,0.74,Witness Statement; Financial Records,Weak,Chain Snatching,Chain Snatching → Robbery
-GRF025,FIR02762,Suresh Nair,Suresh Nair; Pradeep Mishra; Vijay Dubey; Jayesh Pandey,NET2,Sumit Bansal; Uday Kiran; Harish Bose,0.69,Financial Records; Witness Statement; Phone Records,Weak,Murder,Murder
-GRF026,FIR02798,Imran Qureshi,Imran Qureshi; Yashraj Bhatt; Wasim Akram,NET1,Brijesh Tomar; Rahul Sharma; Gopal Rao,0.98,Forensics Report; Witness Statement,Moderate,Auto Theft,Auto Theft
-GRF027,FIR02692,Elamaran V,Elamaran V; Ankit Tiwari; Harish Bose,NET3,Brijesh Tomar; Rahul Sharma; Gopal Rao,0.63,Ballistics Report,Weak,Murder,Murder
-GRF028,FIR02941,Deepak Yadav,Deepak Yadav; Tarun Pillai; Deepak Yadav; Arjun Singh,NET3,Kiran Deshpande; Sanjay Rawat; Suresh Nair,0.8,Witness Statement,Weak,Theft,Theft → Robbery
-GRF029,FIR02768,Vishal Thakur,Vishal Thakur; Uday Kiran; Elamaran V; Pravin Kadam,NET4,Brijesh Tomar; Rahul Sharma; Gopal Rao,0.66,Phone Records,Weak,Chain Snatching,Chain Snatching → Assault
-GRF030,FIR02972,Chandan Kumar,Chandan Kumar; Ankit Tiwari,NET1,Mukesh Singh; Salim Khan; Ankit Tiwari,0.74,Witness Statement,Strong,Robbery,Robbery → Extortion
+graph_id,case_id,primary_suspect,suspects,network_id,network_members,confidence,missing_evidence,link_strength,crime_type,escalation_path,vehicle_id
+GRF001,FIR01727,Omkar Desai,Omkar Desai; Qadir Shaikh,NET2,Mukesh Singh; Salim Khan; Ankit Tiwari,0.62,Ballistics Report; Phone Records,Strong,Drug Offense,Drug Offense,MH12DE1433
+GRF002,FIR01125,Naresh Jha,Naresh Jha; Vijay Dubey; Jayesh Pandey,NET0,Sumit Bansal; Uday Kiran; Harish Bose,0.74,Phone Records; Forensics Report,Weak,Auto Theft,Auto Theft,KA04MN9988
+GRF003,FIR02557,Omkar Desai,Omkar Desai,NET0,Sumit Bansal; Uday Kiran; Harish Bose,0.67,Ballistics Report,Strong,Kidnapping,Kidnapping,DL01CX4567
+GRF004,FIR00535,Sunil Patel,Sunil Patel; Wasim Akram; Sanjay Rawat,NET3,Mukesh Singh; Salim Khan; Ankit Tiwari,0.76,Forensics Report; Ballistics Report,Strong,Eve Teasing,Eve Teasing,TS09EZ1122
+GRF005,FIR02126,Suresh Nair,Suresh Nair; Yashraj Bhatt; Tarun Pillai,NET0,Sumit Bansal; Uday Kiran; Harish Bose,0.66,Witness Statement,Moderate,Drug Offense,Drug Offense,MH02AW7766
+GRF006,FIR02132,Tarun Pillai,Tarun Pillai; Nitin Chauhan; Elamaran V,NET0,Brijesh Tomar; Rahul Sharma; Gopal Rao,0.84,Witness Statement,Weak,Chain Snatching,Chain Snatching → Assault,
+GRF007,FIR02139,Manish Joshi,Manish Joshi; Sanjay Rawat; Ajay Lakhani,NET0,Mukesh Singh; Salim Khan; Ankit Tiwari,0.91,Forensics Report,Weak,Drug Offense,Drug Offense,
+GRF008,FIR03530,Ganesh Patil,Ganesh Patil; Nitin Chauhan,NET3,Sumit Bansal; Uday Kiran; Harish Bose,0.77,Forensics Report; Witness Statement; Financial Records,Strong,Auto Theft,Auto Theft,
+GRF009,FIR02574,Ratan Das,Ratan Das; Fayaz Dar,NET4,Chetan More; Jayesh Pandey; Ganesh Patil,0.64,Ballistics Report; Witness Statement; Financial Records,Weak,Drug Offense,Drug Offense,
+GRF010,FIR02761,Ankit Tiwari,Ankit Tiwari,NET4,Chetan More; Jayesh Pandey; Ganesh Patil,0.86,Ballistics Report; Phone Records; CCTV Footage,Weak,Robbery,Robbery → Assault,
+GRF011,FIR04406,Rakesh Verma,Rakesh Verma; Deepak Yadav; Ratan Das,NET1,Brijesh Tomar; Rahul Sharma; Gopal Rao,0.76,Witness Statement,Moderate,Extortion,Extortion → Murder,
+GRF012,FIR02631,Mukesh Singh,Mukesh Singh; Uday Kiran; Jayesh Pandey; Dinesh Reddy,NET3,Kiran Deshpande; Sanjay Rawat; Suresh Nair,0.56,Financial Records; CCTV Footage,Strong,Chain Snatching,Chain Snatching → Robbery,
+GRF013,FIR02730,Vishal Thakur,Vishal Thakur,NET2,Sumit Bansal; Uday Kiran; Harish Bose,0.56,Forensics Report,Weak,Cybercrime,Cybercrime,
+GRF014,FIR02739,Gopal Rao,Gopal Rao; Pravin Kadam; Hemant Sahu; Vishal Thakur,NET1,Brijesh Tomar; Rahul Sharma; Gopal Rao,0.78,Witness Statement,Strong,Auto Theft,Auto Theft,
+GRF015,FIR02760,Harish Bose,Harish Bose,NET1,Mukesh Singh; Salim Khan; Ankit Tiwari,0.53,CCTV Footage; Financial Records,Weak,Murder,Murder,
+GRF016,FIR02723,Hemant Sahu,Hemant Sahu; Fayaz Dar; Pradeep Mishra,NET4,Chetan More; Jayesh Pandey; Ganesh Patil,0.67,Ballistics Report; Witness Statement,Moderate,Vandalism,Vandalism,
+GRF017,FIR02727,Farrukh Ansari,Farrukh Ansari; Harish Bose,NET2,Mukesh Singh; Salim Khan; Ankit Tiwari,0.61,Witness Statement,Moderate,Chain Snatching,Chain Snatching → Assault,
+GRF018,FIR02731,Lokesh Yadav,Lokesh Yadav; Tarun Pillai,NET4,Chetan More; Jayesh Pandey; Ganesh Patil,0.92,Forensics Report,Weak,Assault,Assault → Extortion,
+GRF019,FIR02576,Lokesh Yadav,Lokesh Yadav; Wasim Akram; Hemant Sahu,NET3,Brijesh Tomar; Rahul Sharma; Gopal Rao,0.63,Phone Records; CCTV Footage,Moderate,Extortion,Extortion → Murder,
+GRF020,FIR02643,Qadir Shaikh,Qadir Shaikh; Jayesh Pandey; Sunil Patel,NET0,Chetan More; Jayesh Pandey; Ganesh Patil,0.64,Forensics Report; Witness Statement,Weak,Murder,Murder,
+GRF021,FIR02795,Ankit Tiwari,Ankit Tiwari; Mukesh Singh; Qadir Shaikh; Babu Lal,NET3,Sumit Bansal; Uday Kiran; Harish Bose,0.51,Phone Records; Financial Records,Moderate,Extortion,Extortion → Kidnapping,
+GRF022,FIR02919,Rahul Sharma,Rahul Sharma; Irfan Sheikh; Ganesh Patil; Harish Bose,NET4,Mukesh Singh; Salim Khan; Ankit Tiwari,0.72,Forensics Report; Phone Records,Moderate,Assault,Assault → Extortion,
+GRF023,FIR03059,Wasim Akram,Wasim Akram; Elamaran V,NET2,Sumit Bansal; Uday Kiran; Harish Bose,0.84,Ballistics Report; Phone Records; Witness Statement,Strong,Chain Snatching,Chain Snatching → Robbery,
+GRF024,FIR02970,Aakash Mehta,Aakash Mehta; Brijesh Tomar,NET2,Kiran Deshpande; Sanjay Rawat; Suresh Nair,0.74,Witness Statement; Financial Records,Weak,Chain Snatching,Chain Snatching → Robbery,
+GRF025,FIR02762,Suresh Nair,Suresh Nair; Pradeep Mishra; Vijay Dubey; Jayesh Pandey,NET2,Sumit Bansal; Uday Kiran; Harish Bose,0.69,Financial Records; Witness Statement; Phone Records,Weak,Murder,Murder,
+GRF026,FIR02798,Imran Qureshi,Imran Qureshi; Yashraj Bhatt; Wasim Akram,NET1,Brijesh Tomar; Rahul Sharma; Gopal Rao,0.98,Forensics Report; Witness Statement,Moderate,Auto Theft,Auto Theft,
+GRF027,FIR02692,Elamaran V,Elamaran V; Ankit Tiwari; Harish Bose,NET3,Brijesh Tomar; Rahul Sharma; Gopal Rao,0.63,Ballistics Report,Weak,Murder,Murder,
+GRF028,FIR02941,Deepak Yadav,Deepak Yadav; Tarun Pillai; Deepak Yadav; Arjun Singh,NET3,Kiran Deshpande; Sanjay Rawat; Suresh Nair,0.8,Witness Statement,Weak,Theft,Theft → Robbery,
+GRF029,FIR02768,Vishal Thakur,Vishal Thakur; Uday Kiran; Elamaran V; Pravin Kadam,NET4,Brijesh Tomar; Rahul Sharma; Gopal Rao,0.66,Phone Records,Weak,Chain Snatching,Chain Snatching → Assault,
+GRF030,FIR02972,Chandan Kumar,Chandan Kumar; Ankit Tiwari,NET1,Mukesh Singh; Salim Khan; Ankit Tiwari,0.74,Witness Statement,Strong,Robbery,Robbery → Extortion,

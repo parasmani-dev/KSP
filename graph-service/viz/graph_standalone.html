@@ -1076,6 +1076,8 @@
         async function fetchExplanation(nodeId) {
             const aiBlock = document.getElementById('ai-explanation');
             const aiText = document.getElementById('ai-text');
+            aiText.innerText = 'Generating explanation...';
+            aiBlock.className = 'ai-block';
             try {
                 const res = await fetch(`${API_BASE}/graph/explain/${encodeURIComponent(nodeId)}`);
                 if (!res.ok) throw new Error('API Error');

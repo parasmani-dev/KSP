@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.routes import predictions, recommendations
+from api.routes import predictions, recommendations, data
 from engine import sse_stream
 
 app = FastAPI(
@@ -19,6 +19,7 @@ app.add_middleware(
 # Mount the routers for different modules
 app.include_router(predictions.router, prefix="/predictions", tags=["Predictions (Module 4)"])
 app.include_router(recommendations.router, prefix="/recommendations", tags=["Recommendations (Module 6)"])
+app.include_router(data.router, prefix="/data", tags=["Dataset Access (Phase 2)"])
 
 # Feature 7 Branches
 app.include_router(sse_stream.router, tags=["Fusion Layer (Branch B - SSE)"])

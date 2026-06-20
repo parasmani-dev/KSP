@@ -9,6 +9,8 @@ router = APIRouter()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SAVED_DIR = os.path.join(BASE_DIR, "models", "saved")
+ROOT_DIR = os.path.dirname(BASE_DIR)
+DATA_DIR = os.path.join(ROOT_DIR, "Dataset") if os.path.exists(os.path.join(ROOT_DIR, "Dataset")) else os.path.join(BASE_DIR, "Dataset")
 
 # Removed PyTorch models to avoid overlapping with Module 1's architecture.
 
@@ -24,6 +26,32 @@ def get_risk_bucket(score: float) -> str:
     elif score >= 0.31:
         return "Moderate"
     return "Low"
+
+def get_mock_hotspots(days: int):
+    file_path = os.path.join(DATA_DIR, "mock_predictions_sample.csv")
+    if not os.path.exists(file_path):
+        file_path = os.path.join(DATA_DIR, "mock_predictions.csv")
+    try:
+        df = pd.read_csv(file_path)
+    except:
+        return {"hotspots": []}
+    
+    hotspots = []
+    for _, row in df.iterrows():
+        score = row.get('risk_score', 0)
+        hotspots.append({
+            "area": row.get('area', 'Unknown'),
+            "forecast_days": days,
+            "avg_predicted_incidents": row.get('predicted_count_7d', 0),
+            "risk_score": score,
+            "risk_level": get_risk_bucket(score),
+            "reasons": [
+                {"code": "SOURCE", "value": "MOCK_FALLBACK"},
+                {"code": "TREND", "value": row.get('trend', 'Unknown')},
+                {"code": "DOMINANT_CRIME", "value": row.get('dominant_crime', 'Unknown')}
+            ]
+        })
+    return {"hotspots": hotspots[:10]}
 
 def load_models():
     if not models:
@@ -77,7 +105,7 @@ def get_hotspots(days: int = 7):
         
     load_models()
     if 'prophet' not in models:
-        raise HTTPException(status_code=503, detail="Prophet model not available.")
+        return get_mock_hotspots(days)
         
     # First pass: calculate avg counts for all areas in parallel
     area_metrics = {}

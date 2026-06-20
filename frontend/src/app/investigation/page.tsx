@@ -1,20 +1,23 @@
 "use client"
 import { useEffect, useState } from "react"
 import { aiApi } from "@/lib/api"
-import { SearchCode, CheckCircle2, CircleDashed, Loader2, RefreshCw } from "lucide-react"
+import { SearchCode, CheckCircle2, CircleDashed, Loader2, RefreshCw, CarFront } from "lucide-react"
 
 const AGENTS = ['Evidence Agent', 'Crime Pattern Agent', 'Network Agent', 'Risk Agent', 'Report Agent']
 
 export default function InvestigationPage() {
   const [loading, setLoading] = useState(false)
   const [lastReport, setLastReport] = useState<any>(null)
-  const [activeAgents, setActiveAgents] = useState(3)
+  const [activeAgents, setActiveAgents] = useState(0)
 
   // Fetch latest investigation state by calling /predictions endpoint to check backend health
   useEffect(() => {
     // Try to get a sample offender risk to show something real
     aiApi.get('/predictions/offender/Sunil%20Patel?prior_crimes=3&days_since=45&connections=7&escalation=0.7&crime_type=Narcotics&area=Dharavi')
-      .then(res => setLastReport(res.data))
+      .then(res => {
+        setLastReport(res.data)
+        setActiveAgents(5)
+      })
       .catch(() => setLastReport(null))
   }, [])
 
@@ -117,6 +120,72 @@ export default function InvestigationPage() {
             )}
           </div>
         </div>
+      </div>
+
+      {/* Patrol Dispatch Recommendations */}
+      <div className="mt-6">
+        <PatrolDispatch />
+      </div>
+    </div>
+  )
+}
+
+function PatrolDispatch() {
+  const [patrols, setPatrols] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    aiApi.get('/recommendations/patrol')
+      .then(res => setPatrols(res.data.recommendations || []))
+      .catch(() => setPatrols([]))
+      .finally(() => setLoading(false))
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-48 bg-card rounded-xl border border-border">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    )
+  }
+
+  return (
+    <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
+      <div className="flex items-center gap-2 mb-5">
+        <CarFront className="h-5 w-5 text-blue-400" />
+        <h3 className="font-semibold text-lg">Automated Patrol Dispatch</h3>
+        <span className="ml-auto text-xs bg-blue-400/10 text-blue-400 px-2 py-0.5 rounded-full font-medium">
+          Generated from Hotspots & Repeat Offenders
+        </span>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {patrols.length > 0 ? patrols.map((patrol, i) => (
+          <div key={i} className="p-4 rounded-lg border border-border/50 bg-background/50 space-y-3">
+            <div className="flex justify-between items-start">
+              <div>
+                <h4 className="font-semibold text-foreground">{patrol.area}</h4>
+                <p className="text-xs font-medium text-blue-400 mt-0.5">{patrol.action}</p>
+              </div>
+              <span className={`text-xs font-bold px-2 py-0.5 rounded-sm ${patrol.priority === 'Critical' ? 'bg-red-500/20 text-red-500' : 'bg-orange-400/20 text-orange-400'}`}>
+                {patrol.priority} PRIORITY
+              </span>
+            </div>
+            
+            <div className="space-y-1.5 pt-2 border-t border-border/50">
+              {patrol.reasons?.map((r: any, idx: number) => (
+                <div key={idx} className="flex justify-between text-xs">
+                  <span className="text-muted-foreground">{r.code}:</span>
+                  <span className="font-mono text-foreground">{r.value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )) : (
+          <div className="col-span-full py-8 text-center text-sm text-muted-foreground">
+            No critical areas currently require immediate patrol reinforcement.
+          </div>
+        )}
       </div>
     </div>
   )

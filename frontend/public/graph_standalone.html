@@ -895,7 +895,7 @@
                 selector: 'edge',
                 style: {
                     'width': 1,
-                    'line-color': '#1e293b',
+                    'line-color': '#64748b',
                     'curve-style': 'bezier',
                     'opacity': 0.6
                 }
@@ -957,13 +957,13 @@
                 const elements = [];
 
                 if (data.network && data.network.nodes) {
-                    data.network.nodes.forEach(n => elements.push({ data: { ...n } }));
+                    data.network.nodes.forEach(n => elements.push({ data: { ...n, id: String(n.id) } }));
                 }
 
                 if (data.network && data.network.links) {
                     data.network.links.forEach((l, i) => {
                         elements.push({
-                            data: { id: `e${i}`, source: l.source, target: l.target, ...l }
+                            data: { ...l, id: `e${i}`, source: String(l.source), target: String(l.target) }
                         });
                     });
                 }

@@ -91,45 +91,6 @@ export default function MapPage() {
             </div>
           </div>
         </div>
-
-        {/* Right Side Hotspot Index */}
-        <div className="w-80 bg-card border-l border-border/50 flex flex-col z-10">
-          <div className="p-4 border-b border-border/50 bg-background/50">
-            <h2 className="font-semibold text-lg">Active Zones Index</h2>
-            <p className="text-xs text-muted-foreground mt-1">Real-time ranked by risk score</p>
-          </div>
-          <div className="flex-1 overflow-y-auto p-4 space-y-3">
-            {hotspots.map((spot, i) => (
-              <div key={i} className="bg-background/50 border border-border/50 p-3 rounded-lg flex items-center justify-between hover:bg-muted/20 transition-colors cursor-pointer">
-                <div className="flex items-center gap-3">
-                  <div className={`w-2 h-2 rounded-full ${
-                    spot.risk_level?.toLowerCase() === 'critical' ? 'bg-[#ef4444] animate-pulse' :
-                    spot.risk_level?.toLowerCase() === 'high' ? 'bg-[#fb923c]' :
-                    spot.risk_level?.toLowerCase() === 'moderate' ? 'bg-[#fbbf24]' : 'bg-[#34d399]'
-                  }`}></div>
-                  <div>
-                    <p className="font-medium text-sm">{spot.area}</p>
-                    <p className="text-xs text-muted-foreground">{spot.avg_predicted_incidents?.toFixed(1)} incidents/wk</p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <span className={`text-xs font-bold px-2 py-1 rounded-full bg-background border border-border/50 ${
-                    spot.risk_level?.toLowerCase() === 'critical' ? 'text-red-500' :
-                    spot.risk_level?.toLowerCase() === 'high' ? 'text-orange-400' :
-                    spot.risk_level?.toLowerCase() === 'moderate' ? 'text-amber-400' : 'text-emerald-400'
-                  }`}>
-                    {Math.round((spot.risk_score || 0) * 100)}%
-                  </span>
-                </div>
-              </div>
-            ))}
-            {hotspots.length === 0 && !loading && (
-              <div className="text-sm text-muted-foreground text-center py-8">
-                No active zones to index.
-              </div>
-            )}
-          </div>
-        </div>
       </div>
     </div>
   )

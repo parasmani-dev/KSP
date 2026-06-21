@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { aiApi, graphApi } from "@/lib/api"
 import { Loader2, TrendingUp, AlertOctagon, Activity, BarChart2, ShieldAlert, Navigation, Map } from "lucide-react"
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 
 const LiveMap = dynamic(() => import('./LiveMap'), {
   ssr: false,
@@ -76,9 +77,11 @@ export function PredictionDashboard() {
         {/* Mock Map Visualization */}
         <div className="bg-card rounded-xl border border-border overflow-hidden shadow-sm relative h-80 flex flex-col">
           <div className="p-4 border-b border-border/50 bg-background/50 flex items-center justify-between z-10 shrink-0">
-            <h3 className="font-semibold text-lg flex items-center gap-2">
-              <Map className="w-5 h-5 text-primary" /> Live Area Map
-            </h3>
+            <Link href="/map" className="font-semibold text-lg flex items-center gap-2 hover:text-primary transition-colors cursor-pointer group">
+              <Map className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" /> 
+              Live Area Map
+              <span className="text-xs font-normal text-muted-foreground ml-2 opacity-0 group-hover:opacity-100 transition-opacity">View full screen &rarr;</span>
+            </Link>
             <div className="flex items-center gap-2">
               <span className="flex h-2 w-2 relative">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75"></span>

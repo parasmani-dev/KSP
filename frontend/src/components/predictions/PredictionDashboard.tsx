@@ -54,7 +54,7 @@ export function PredictionDashboard() {
       setHotspots(sortedHotspots)
       
       const allEscalating = escalationRes.data.escalating_areas || []
-      const sortedEscalating = allEscalating.sort((a: any, b: any) => (b.escalation_percentage || 0) - (a.escalation_percentage || 0))
+      const sortedEscalating = allEscalating.sort((a: any, b: any) => (b.growth_rate_percentage || 0) - (a.growth_rate_percentage || 0))
       setEscalating(sortedEscalating)
       setGraphStats(centralityRes.data || { degree: [], betweenness: [] })
       setLoading(false)

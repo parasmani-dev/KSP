@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import { aiApi } from "@/lib/api"
-import { Upload, FileText, Send, CheckCircle2, Loader2, SearchCode, ShieldAlert, Network, BrainCircuit, FileSearch, ArrowRight, Activity } from "lucide-react"
+import { Upload, FileText, Send, CheckCircle2, Loader2, SearchCode, ShieldAlert, Network, BrainCircuit, FileSearch, ArrowRight, Activity, CarFront } from "lucide-react"
 
 const AGENTS = [
   { id: 'evidence', name: 'Evidence Agent', icon: FileSearch, desc: 'Extracts entities & relations' },
@@ -109,8 +109,30 @@ export default function MultiAgentPage() {
         
         {/* INPUT SECTION */}
         <div className="lg:col-span-4 flex flex-col gap-4">
+          
+          <div 
+            className="bg-card rounded-xl border border-border p-6 shadow-sm flex flex-col items-center justify-center text-center border-dashed border-2 hover:border-primary/50 transition-colors cursor-pointer group"
+            onClick={() => document.getElementById('evidence-upload-agent')?.click()}
+          >
+             <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+               <Upload className="w-6 h-6 text-primary" />
+             </div>
+             <h3 className="font-semibold text-foreground">Upload Case Files</h3>
+             <p className="text-xs text-muted-foreground mt-1 max-w-sm">Drop FIR PDFs or images</p>
+             <input 
+               type="file" 
+               id="evidence-upload-agent" 
+               className="hidden" 
+               onChange={(e) => {
+                 if (e.target.files && e.target.files.length > 0) {
+                   handleLaunch(); 
+                 }
+               }} 
+             />
+          </div>
+
           <div className="bg-card rounded-xl border border-border p-6 shadow-sm flex flex-col flex-1">
-            <h3 className="font-semibold text-lg mb-4 flex items-center gap-2"><Upload className="w-5 h-5 text-primary"/> Input Case File</h3>
+            <h3 className="font-semibold text-lg mb-4 flex items-center gap-2"><FileText className="w-5 h-5 text-primary"/> Manual FIR Input</h3>
             <div className="flex-1 flex flex-col space-y-4">
               <div className="flex-1">
                 <label className="block text-xs font-medium text-muted-foreground mb-1 uppercase tracking-wider">Raw FIR Text</label>
@@ -281,8 +303,74 @@ export default function MultiAgentPage() {
         </div>
       )}
       
+      {/* Patrol Dispatch Recommendations (from old investigation page) */}
+      <div className="mt-6 mb-8">
+        <PatrolDispatch />
+      </div>
+
       {/* Spacer for scrolling */}
       <div className="h-10 shrink-0"></div>
+    </div>
+  )
+}
+
+function PatrolDispatch() {
+  const [patrols, setPatrols] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    aiApi.get('/recommendations/patrol')
+      .then(res => setPatrols(res.data.recommendations || []))
+      .catch(() => setPatrols([]))
+      .finally(() => setLoading(false))
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-48 bg-card rounded-xl border border-border">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    )
+  }
+
+  return (
+    <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
+      <div className="flex items-center gap-2 mb-5">
+        <CarFront className="h-5 w-5 text-primary" />
+        <h3 className="font-semibold text-lg">Automated Patrol Dispatch</h3>
+        <span className="ml-auto text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium hidden sm:block">
+          Generated from Hotspots & Repeat Offenders
+        </span>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {patrols.length > 0 ? patrols.map((patrol, i) => (
+          <div key={i} className="p-4 rounded-lg border border-border/50 bg-background/50 space-y-3">
+            <div className="flex justify-between items-start">
+              <div>
+                <h4 className="font-semibold text-foreground">{patrol.area}</h4>
+                <p className="text-xs font-medium text-primary mt-0.5">{patrol.action}</p>
+              </div>
+              <span className={`text-xs font-bold px-2 py-0.5 rounded-sm ${patrol.priority === 'Critical' ? 'bg-destructive/20 text-destructive' : 'bg-warning/20 text-warning'}`}>
+                {patrol.priority} PRIORITY
+              </span>
+            </div>
+            
+            <div className="space-y-1.5 pt-2 border-t border-border/50">
+              {patrol.reasons?.map((r: any, idx: number) => (
+                <div key={idx} className="flex justify-between text-xs">
+                  <span className="text-muted-foreground">{r.code}:</span>
+                  <span className="font-mono text-foreground">{r.value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )) : (
+          <div className="col-span-full py-8 text-center text-sm text-muted-foreground">
+            No critical areas currently require immediate patrol reinforcement.
+          </div>
+        )}
+      </div>
     </div>
   )
 }

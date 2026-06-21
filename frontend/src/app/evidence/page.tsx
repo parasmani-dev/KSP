@@ -54,13 +54,26 @@ export default function EvidenceAnalyzerPage() {
         {/* LEFT PANEL: UPLOAD & SIMULATOR */}
         <div className="flex flex-col gap-6 overflow-y-auto pr-2">
           
-          <div className="bg-card rounded-xl border border-border p-8 shadow-sm flex flex-col items-center justify-center text-center border-dashed border-2 hover:border-primary/50 transition-colors cursor-pointer group">
+          <div 
+            className="bg-card rounded-xl border border-border p-8 shadow-sm flex flex-col items-center justify-center text-center border-dashed border-2 hover:border-primary/50 transition-colors cursor-pointer group"
+            onClick={() => document.getElementById('evidence-upload')?.click()}
+          >
              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                <Upload className="w-8 h-8 text-primary" />
              </div>
              <h3 className="font-semibold text-lg text-foreground">Upload Case Files</h3>
              <p className="text-sm text-muted-foreground mt-2 max-w-sm">Drag and drop FIR PDFs, raw text files, or image evidence here for automated intelligence extraction.</p>
              <button className="mt-6 px-4 py-2 bg-secondary text-secondary-foreground rounded-md text-sm font-medium hover:bg-secondary/80">Browse Files</button>
+             <input 
+               type="file" 
+               id="evidence-upload" 
+               className="hidden" 
+               onChange={(e) => {
+                 if (e.target.files && e.target.files.length > 0) {
+                   handleSubmit(); // Trigger the exact same extraction simulation as manual FIR
+                 }
+               }} 
+             />
           </div>
 
           <div className="bg-card rounded-xl border border-border p-6 shadow-sm">

@@ -30,8 +30,11 @@ async def broadcast(event: dict):
     for q in _subscribers:
         await q.put(event)
 
+from fastapi import APIRouter, BackgroundTasks, Request
+
 @router.post("/fusion/simulate-fir")
-async def simulate_fir(body: dict):
+async def simulate_fir(request: Request):
+    body = await request.json()
     # Call alert_manager.get_incremental_hotspot_update(body) first
     updated_hotspot = get_incremental_hotspot_update(body)
     

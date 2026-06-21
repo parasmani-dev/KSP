@@ -48,11 +48,14 @@ export function PredictionDashboard() {
     ]).then(([hotspotsRes, escalationRes, centralityRes]) => {
       const allHotspots = hotspotsRes.data.hotspots || []
       // Sort by risk_score descending and only show real data (not unknown)
-      const sorted = allHotspots
+      const sortedHotspots = allHotspots
         .filter((h: any) => !h.insufficient_data && h.risk_score != null)
-        .sort((a: any, b: any) => b.risk_score - a.risk_score)
-      setHotspots(sorted)
-      setEscalating(escalationRes.data.escalating_areas || [])
+        .sort((a: any, b: any) => (b.avg_predicted_incidents || 0) - (a.avg_predicted_incidents || 0))
+      setHotspots(sortedHotspots)
+      
+      const allEscalating = escalationRes.data.escalating_areas || []
+      const sortedEscalating = allEscalating.sort((a: any, b: any) => (b.escalation_percentage || 0) - (a.escalation_percentage || 0))
+      setEscalating(sortedEscalating)
       setGraphStats(centralityRes.data || { degree: [], betweenness: [] })
       setLoading(false)
     })

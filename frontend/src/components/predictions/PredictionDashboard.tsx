@@ -176,7 +176,7 @@ export function PredictionDashboard() {
                     #{i + 1}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="font-medium text-sm truncate">{item.node}</p>
+                    <p className="font-medium text-sm leading-tight mb-1">{item.node}</p>
                     <p className="text-xs text-muted-foreground">Centrality score: {(item.score * 100).toFixed(1)}%</p>
                   </div>
                   <div className="text-xs font-bold text-primary shrink-0">

@@ -1,6 +1,16 @@
+"use client"
 import { Bell, Search, UserCircle, Activity } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 export default function TopNav() {
+  const router = useRouter()
+
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && e.currentTarget.value.trim()) {
+      router.push(`/network?search=${encodeURIComponent(e.currentTarget.value.trim())}`)
+    }
+  }
+
   return (
     <header className="h-16 w-full bg-card border-b border-border flex items-center justify-between px-6 shrink-0 z-10">
       <div className="flex items-center gap-6">
@@ -14,6 +24,7 @@ export default function TopNav() {
             type="text" 
             placeholder="Search citizen, vehicle, case..." 
             className="bg-transparent border-none outline-none text-sm w-full placeholder:text-muted-foreground"
+            onKeyDown={handleSearch}
           />
         </div>
       </div>

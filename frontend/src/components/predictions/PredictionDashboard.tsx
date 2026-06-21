@@ -124,7 +124,7 @@ export function PredictionDashboard() {
                   <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
                     <div
                       className={`h-full rounded-full ${getRiskBarColor(spot.risk_level)}`}
-                      style={{ width: `${Math.round((spot.risk_score ?? 0) * 100)}%` }}
+                      style={{ width: `${Math.min(100, Math.max(5, Math.round(((spot.avg_predicted_incidents || 0) / (hotspots[0]?.avg_predicted_incidents || 1)) * 100)))}%` }}
                     />
                   </div>
                 </div>

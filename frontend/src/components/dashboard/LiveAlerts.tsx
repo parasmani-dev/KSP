@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react"
 import { useSSE } from "@/hooks/useSSE"
-import { AlertTriangle, Info, ShieldAlert, WifiOff, Play, Square, Clock } from "lucide-react"
+import { AlertTriangle, Info, ShieldAlert, WifiOff, Play, Square, Clock, Activity } from "lucide-react"
 import { aiApi } from "@/lib/api"
 
 export function LiveAlerts() {
@@ -24,15 +24,27 @@ export function LiveAlerts() {
     }
   }, [activeTab, history.length])
 
-  const toggleSimulation = async () => {
-    if (simulating) {
-      await aiApi.post('/fusion/stop-simulation')
-      setSimulating(false)
-    } else {
-      await aiApi.post('/fusion/start-simulation')
-      setSimulating(true)
+  // Auto-start the live event stream when the dashboard loads
+  useEffect(() => {
+    let mounted = true
+    const startStream = async () => {
+      try {
+        if (!simulating) {
+          await aiApi.post('/fusion/start-simulation')
+          if (mounted) setSimulating(true)
+        }
+      } catch (err) {
+        console.error("Failed to start auto-stream:", err)
+      }
     }
-  }
+    startStream()
+
+    return () => {
+      mounted = false
+      // Clean up simulation when leaving dashboard to prevent memory leaks
+      aiApi.post('/fusion/stop-simulation').catch(() => {})
+    }
+  }, [])
 
   const formatAlert = (alert: any): string => {
     if (alert.alert_type) {
@@ -79,20 +91,17 @@ export function LiveAlerts() {
         {activeTab === 'live' ? (
           <div className="space-y-4 h-full flex flex-col">
             <div className="flex items-center justify-between">
-               <button 
-                onClick={toggleSimulation} 
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${simulating ? 'bg-red-500/10 text-red-500 hover:bg-red-500/20' : 'bg-primary/10 text-primary hover:bg-primary/20'}`}
-               >
-                 {simulating ? <Square className="w-3 h-3 fill-current" /> : <Play className="w-3 h-3 fill-current" />}
-                 {simulating ? 'Stop Simulation' : 'Start Simulation'}
-               </button>
+               <div className="flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium bg-primary/10 text-primary">
+                 <Activity className="w-3 h-3 animate-pulse" />
+                 Listening for incoming events...
+               </div>
                {error ? (
                   <span className="text-xs text-muted-foreground flex items-center gap-1">
                     <WifiOff className="w-3 h-3 text-red-400" /> Disconnected
                   </span>
                 ) : (
                   <span className="text-xs text-emerald-500 flex items-center gap-1">
-                    <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" /> Live
+                    <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" /> Live Stream
                   </span>
                 )}
             </div>

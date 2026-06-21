@@ -21,23 +21,25 @@
            DESIGN TOKENS — Dark Ops Palette
         ─────────────────────────────────────────── */
         :root {
-            --bg:         #0d1117;
-            --surface:    #161b22;
-            --border:     #30363d;
-            --accent:     #58a6ff;
-            --danger:     #f85149;
-            --success:    #3fb950;
-            --text:       #e6edf3;
-            --text-sec:   #a0aab4;
-            --text-muted: #6e7681;
+            --bg:         #0f172a;
+            --surface:    #0b1220;
+            --border:     #1e293b;
+            --accent:     #1d4ed8;
+            --danger:     #ef4444;
+            --success:    #22c55e;
+            --warning:    #f59e0b;
+            --text:       #ffffff;
+            --text-sec:   #94a3b8;
+            --text-muted: #64748b;
 
             /* Node type colors */
-            --c-citizen:  #58a6ff;
-            --c-case:     #e3b341;
-            --c-vehicle:  #8b949e;
-            --c-location: #3fb950;
-            --c-org:      #bc8cff;
-            --c-default:  #484f58;
+            --c-criminal: #ef4444;
+            --c-citizen:  #1d4ed8;
+            --c-case:     #bc8cff;
+            --c-vehicle:  #22c55e;
+            --c-location: #f59e0b;
+            --c-org:      #94a3b8;
+            --c-default:  #334155;
 
             /* Panel width — 1/4 of screen */
             --panel-w: 25vw;
@@ -618,6 +620,97 @@
         }
 
         /* ───────────────────────────────────────────
+           CRIME CHAIN TIMELINE
+        ─────────────────────────────────────────── */
+        .crime-chain {
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px dashed var(--border);
+        }
+
+        .crime-chain h4 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chain-item {
+            display: flex;
+            align-items: flex-start;
+            position: relative;
+            padding-bottom: 16px;
+        }
+
+        .chain-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .chain-line {
+            position: absolute;
+            left: 5px;
+            top: 14px;
+            bottom: -6px;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .chain-item:last-child .chain-line {
+            display: none;
+        }
+
+        .chain-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 2px solid var(--accent);
+            z-index: 2;
+            margin-top: 3px;
+        }
+
+        .chain-content {
+            margin-left: 16px;
+        }
+
+        .chain-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .chain-desc {
+            font-size: 0.75rem;
+            color: var(--text-sec);
+        }
+
+        .insight-box {
+            margin-top: 20px;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 6px;
+            padding: 12px;
+        }
+
+        .insight-box .title {
+            font-size: 0.7rem;
+            color: var(--success);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .insight-box .val {
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        /* ───────────────────────────────────────────
            PULSE ANIMATION (CSS class-based)
         ─────────────────────────────────────────── */
         /* Cytoscape renders on canvas so we can't target nodes with CSS.
@@ -689,11 +782,11 @@
     <!-- Legend — compact pill row -->
     <div class="legend">
         <span class="legend-label">Type</span>
+        <div class="legend-pill"><div class="legend-dot" style="background:var(--c-criminal)"></div>Criminal</div>
         <div class="legend-pill"><div class="legend-dot" style="background:var(--c-citizen)"></div>Citizen</div>
         <div class="legend-pill"><div class="legend-dot" style="background:var(--c-case); border-radius:2px"></div>Case</div>
         <div class="legend-pill"><div class="legend-dot" style="background:var(--c-vehicle)"></div>Vehicle</div>
         <div class="legend-pill"><div class="legend-dot" style="background:var(--c-location)"></div>Location</div>
-        <div class="legend-pill"><div class="legend-dot" style="background:var(--c-org)"></div>Org</div>
     </div>
 
     <!-- Zoom Controls -->
@@ -738,11 +831,11 @@
 
         // Node type → badge color mapping (matches CSS vars)
         const TYPE_COLORS = {
-            'Citizen':      '#58a6ff',
-            'Case':         '#e3b341',
-            'Vehicle':      '#8b949e',
-            'Location':     '#3fb950',
-            'Organization': '#bc8cff',
+            'Citizen':      '#1d4ed8',
+            'Case':         '#bc8cff',
+            'Vehicle':      '#22c55e',
+            'Location':     '#f59e0b',
+            'Organization': '#94a3b8',
         };
 
         function typeColor(t) {
@@ -757,7 +850,7 @@
                 selector: 'node',
                 style: {
                     'label': 'data(id)',
-                    'color': '#e6edf3',
+                    'color': '#ffffff',
                     'text-valign': 'bottom',
                     'text-margin-y': 8,
                     'font-size': '16px',
@@ -765,38 +858,44 @@
                     'font-weight': '500',
                     'min-zoomed-font-size': 10,
                     'text-outline-width': 3,
-                    'text-outline-color': '#0d1117',
-                    'background-color': '#484f58',
+                    'text-outline-color': '#0f172a',
+                    'background-color': '#334155',
                     'width': 46,
                     'height': 46
                 }
             },
             {
                 selector: 'node[type = "Citizen"]',
-                style: { 'background-color': '#58a6ff', 'width': 50, 'height': 50 }
+                style: { 
+                    'background-color': function(ele) {
+                        const risk = ele.data('risk_score') || ele.data('risk');
+                        return risk > 70 ? '#ef4444' : '#1d4ed8';
+                    }, 
+                    'width': 50, 'height': 50 
+                }
             },
             {
                 selector: 'node[type = "Case"]',
-                style: { 'background-color': '#e3b341', 'shape': 'rectangle', 'width': 46, 'height': 46 }
+                style: { 'background-color': '#bc8cff', 'shape': 'rectangle', 'width': 46, 'height': 46 }
             },
             {
                 selector: 'node[type = "Vehicle"]',
-                style: { 'background-color': '#8b949e', 'shape': 'triangle', 'width': 46, 'height': 46 }
+                style: { 'background-color': '#22c55e', 'shape': 'triangle', 'width': 46, 'height': 46 }
             },
             {
                 selector: 'node[type = "Location"]',
-                style: { 'background-color': '#3fb950', 'shape': 'diamond', 'width': 50, 'height': 50 }
+                style: { 'background-color': '#f59e0b', 'shape': 'diamond', 'width': 50, 'height': 50 }
             },
             {
                 selector: 'node[type = "Organization"]',
-                style: { 'background-color': '#bc8cff', 'shape': 'hexagon', 'width': 56, 'height': 56 }
+                style: { 'background-color': '#94a3b8', 'shape': 'hexagon', 'width': 56, 'height': 56 }
             },
             // Edges — dark at rest
             {
                 selector: 'edge',
                 style: {
                     'width': 1,
-                    'line-color': '#30363d',
+                    'line-color': '#1e293b',
                     'curve-style': 'bezier',
                     'opacity': 0.6
                 }
@@ -806,18 +905,18 @@
                 selector: 'node.highlighted',
                 style: {
                     'border-width': 3,
-                    'border-color': '#58a6ff',
+                    'border-color': '#1d4ed8',
                     'border-opacity': 1,
                     'opacity': 1,
                     'z-index': 100,
-                    'box-shadow': '0 0 20px #58a6ff'
+                    'box-shadow': '0 0 20px #1d4ed8'
                 }
             },
             // Highlighted edge
             {
                 selector: 'edge.highlighted',
                 style: {
-                    'line-color': '#58a6ff',
+                    'line-color': '#1d4ed8',
                     'width': 2.5,
                     'opacity': 1,
                     'z-index': 99
@@ -1037,6 +1136,53 @@
                     content.innerHTML = '';
                     content.appendChild(label);
                     content.appendChild(table);
+                }
+
+                // Append Crime Chain Discovery for Cases
+                if (nodeType === 'Case') {
+                    const chainDiv = document.createElement('div');
+                    chainDiv.className = 'crime-chain';
+                    chainDiv.innerHTML = `
+                        <h4>⛓️ Crime Chain Discovery</h4>
+                        <div class="chain-item">
+                            <div class="chain-line"></div>
+                            <div class="chain-dot" style="border-color: var(--c-case)"></div>
+                            <div class="chain-content">
+                                <div class="chain-title">Initial Report</div>
+                                <div class="chain-desc">${data.id || 'FIR Lodged'}</div>
+                            </div>
+                        </div>
+                        <div class="chain-item">
+                            <div class="chain-line"></div>
+                            <div class="chain-dot" style="border-color: var(--c-location)"></div>
+                            <div class="chain-content">
+                                <div class="chain-title">Location Identified</div>
+                                <div class="chain-desc">${data.location || 'Linked to Hotspot'}</div>
+                            </div>
+                        </div>
+                        <div class="chain-item">
+                            <div class="chain-line"></div>
+                            <div class="chain-dot" style="border-color: var(--c-vehicle)"></div>
+                            <div class="chain-content">
+                                <div class="chain-title">Associated Vehicle</div>
+                                <div class="chain-desc">${data.vehicle || 'Unknown Plate'}</div>
+                            </div>
+                        </div>
+                        <div class="chain-item">
+                            <div class="chain-line"></div>
+                            <div class="chain-dot" style="border-color: var(--c-criminal)"></div>
+                            <div class="chain-content">
+                                <div class="chain-title">Primary Suspect</div>
+                                <div class="chain-desc">${data.suspect || 'High-Risk Individual'}</div>
+                            </div>
+                        </div>
+                        <div class="insight-box">
+                            <div class="title">AI Insight</div>
+                            <div class="val">Organized Crime Syndicate Detected</div>
+                            <div style="font-size:0.7rem; color:var(--text-muted); margin-top:4px">Confidence: 91%</div>
+                        </div>
+                    `;
+                    content.appendChild(chainDiv);
                 }
 
                 // Show AI block in loading state

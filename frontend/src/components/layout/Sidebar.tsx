@@ -16,22 +16,18 @@ import { cn } from "@/lib/utils"
 
 const navigation = [
   { name: 'Command Center', href: '/', icon: LayoutDashboard },
+  { name: 'Investigation Center', href: '/investigation', icon: SearchCode },
+  { name: 'Crime Network', href: '/network', icon: Network },
   { name: 'Predictions', href: '/predictions', icon: MapIcon },
-  { name: 'Network Graph', href: '/network', icon: Network },
   { name: 'Evidence Analyzer', href: '/evidence', icon: FileText },
   { name: 'Citizen Risk', href: '/citizens', icon: Users },
-  { name: 'AI Investigation', href: '/investigation', icon: SearchCode },
 ]
 
 export default function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <div className="flex h-full w-64 flex-col bg-card border-r border-border/50">
-      <div className="flex h-16 items-center gap-2 px-6 border-b border-border/50">
-        <ShieldAlert className="h-6 w-6 text-primary" />
-        <span className="text-lg font-bold tracking-tight text-foreground">CIOS</span>
-      </div>
+    <div className="flex h-full w-64 flex-col bg-card border-r border-border/50 shrink-0">
       <nav className="flex-1 space-y-1 px-3 py-4">
         {navigation.map((item) => {
           const isActive = pathname === item.href

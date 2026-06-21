@@ -70,14 +70,14 @@ export default function InvestigationPage() {
                 <div key={i} className="flex items-center justify-between p-3 rounded-lg border border-border/50 bg-background/50">
                   <div className="flex items-center gap-3">
                     {done
-                      ? <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
+                      ? <CheckCircle2 className="w-5 h-5 text-success shrink-0" />
                       : running
                         ? <Loader2 className="w-5 h-5 text-primary animate-spin shrink-0" />
                         : <CircleDashed className="w-5 h-5 text-muted-foreground shrink-0" />
                     }
                     <span className="font-medium text-sm">{agent}</span>
                   </div>
-                  <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${done ? 'bg-emerald-500/10 text-emerald-500' : running ? 'bg-primary/10 text-primary' : 'bg-muted text-muted-foreground'}`}>
+                  <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${done ? 'bg-success/10 text-success' : running ? 'bg-primary/10 text-primary' : 'bg-muted text-muted-foreground'}`}>
                     {done ? 'Completed' : running ? 'Running...' : 'Standby'}
                   </span>
                 </div>
@@ -90,21 +90,21 @@ export default function InvestigationPage() {
         <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
           <h3 className="font-semibold text-lg mb-4">Latest Investigation Report</h3>
           <div className="bg-background/50 border border-border/50 rounded-lg p-4 font-mono text-xs text-muted-foreground h-64 overflow-y-auto space-y-1">
-            <p className="text-emerald-400">[SYSTEM] Multi-Agent Investigation Pipeline Active</p>
+            <p className="text-success">[SYSTEM] Multi-Agent Investigation Pipeline Active</p>
             <p></p>
             {lastReport ? (
               <>
-                <p className="text-blue-400">RISK ASSESSMENT — {lastReport.citizen_id}</p>
+                <p className="text-primary">RISK ASSESSMENT — {lastReport.citizen_id}</p>
                 <p>─────────────────────────────</p>
-                <p>Reoffend Probability: <span className="text-amber-400 font-bold">{lastReport.reoffend_probability}%</span></p>
-                <p>Risk Level: <span className={lastReport.risk_level === 'Critical' ? 'text-red-400' : lastReport.risk_level === 'High' ? 'text-orange-400' : 'text-yellow-400'}>{lastReport.risk_level}</span></p>
+                <p>Reoffend Probability: <span className="text-warning font-bold">{lastReport.reoffend_probability}%</span></p>
+                <p>Risk Level: <span className={lastReport.risk_level === 'Critical' ? 'text-destructive' : lastReport.risk_level === 'High' ? 'text-warning' : 'text-success'}>{lastReport.risk_level}</span></p>
                 <p></p>
-                <p className="text-blue-400">XAI FACTORS:</p>
+                <p className="text-primary">XAI FACTORS:</p>
                 {(lastReport.reasons || []).map((r: any, i: number) => (
                   <p key={i}>  · {r.code?.replace(/_/g, ' ')}: {String(r.value)}</p>
                 ))}
                 <p></p>
-                <p className="text-emerald-400">[REPORT AGENT] Summary compiled successfully.</p>
+                <p className="text-success">[REPORT AGENT] Summary compiled successfully.</p>
               </>
             ) : (
               <>
@@ -114,7 +114,7 @@ export default function InvestigationPage() {
                 <p>  - Graph updated via Network Agent.</p>
                 <p>  - Risk profile escalated in Koramangala sector.</p>
                 <p></p>
-                <p className="text-amber-400">WAITING FOR RISK ASSESSMENT...</p>
+                <p className="text-warning">WAITING FOR RISK ASSESSMENT...</p>
                 <p className="text-muted-foreground/50 text-[10px]">Click "Run All Agents" to generate a live report</p>
               </>
             )}
@@ -152,9 +152,9 @@ function PatrolDispatch() {
   return (
     <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
       <div className="flex items-center gap-2 mb-5">
-        <CarFront className="h-5 w-5 text-blue-400" />
+        <CarFront className="h-5 w-5 text-primary" />
         <h3 className="font-semibold text-lg">Automated Patrol Dispatch</h3>
-        <span className="ml-auto text-xs bg-blue-400/10 text-blue-400 px-2 py-0.5 rounded-full font-medium">
+        <span className="ml-auto text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium">
           Generated from Hotspots & Repeat Offenders
         </span>
       </div>
@@ -165,9 +165,9 @@ function PatrolDispatch() {
             <div className="flex justify-between items-start">
               <div>
                 <h4 className="font-semibold text-foreground">{patrol.area}</h4>
-                <p className="text-xs font-medium text-blue-400 mt-0.5">{patrol.action}</p>
+                <p className="text-xs font-medium text-primary mt-0.5">{patrol.action}</p>
               </div>
-              <span className={`text-xs font-bold px-2 py-0.5 rounded-sm ${patrol.priority === 'Critical' ? 'bg-red-500/20 text-red-500' : 'bg-orange-400/20 text-orange-400'}`}>
+              <span className={`text-xs font-bold px-2 py-0.5 rounded-sm ${patrol.priority === 'Critical' ? 'bg-destructive/20 text-destructive' : 'bg-warning/20 text-warning'}`}>
                 {patrol.priority} PRIORITY
               </span>
             </div>

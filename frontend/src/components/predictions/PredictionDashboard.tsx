@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { aiApi, graphApi } from "@/lib/api"
-import { Loader2, TrendingUp, AlertOctagon, Activity, BarChart2, ShieldAlert, Navigation } from "lucide-react"
+import { Loader2, TrendingUp, AlertOctagon, Activity, BarChart2, ShieldAlert, Navigation, Map } from "lucide-react"
 
 function getRiskColor(level: string) {
   switch (level?.toLowerCase()) {
@@ -46,6 +46,8 @@ export function PredictionDashboard() {
     })
   }, [])
 
+  const [activeTab, setActiveTab] = useState<'anomalies' | 'patrol'>('anomalies')
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64 bg-card rounded-xl border border-border">
@@ -55,105 +57,160 @@ export function PredictionDashboard() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Hotspots Card */}
-        <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
-          <div className="flex items-center gap-2 mb-5">
-            <AlertOctagon className="h-5 w-5 text-destructive" />
-            <h3 className="font-semibold text-lg text-foreground">Critical Hotspots</h3>
-            <span className="ml-auto text-xs bg-destructive/10 text-destructive px-2 py-0.5 rounded-full font-medium">
-              {hotspots.filter(h => h.risk_level === 'Critical').length} Critical
-            </span>
+    <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+      
+      {/* LEFT COLUMN: Map & Core Stats */}
+      <div className="xl:col-span-2 space-y-6">
+        
+        {/* Mock Map Visualization */}
+        <div className="bg-card rounded-xl border border-border overflow-hidden shadow-sm relative h-80 flex flex-col">
+          <div className="p-4 border-b border-border/50 bg-background/50 flex items-center justify-between z-10 shrink-0">
+            <h3 className="font-semibold text-lg flex items-center gap-2">
+              <Map className="w-5 h-5 text-primary" /> Live Area Map
+            </h3>
+            <div className="flex items-center gap-2">
+              <span className="flex h-2 w-2 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-destructive"></span>
+              </span>
+              <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Live Stream</span>
+            </div>
           </div>
-          <div className="space-y-3">
-            {hotspots.length > 0 ? hotspots.slice(0, 6).map((spot, i) => (
-              <div key={i} className="space-y-1">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <p className="font-medium text-sm">{spot.area}</p>
-                    <p className={`text-xs font-semibold ${getRiskColor(spot.risk_level)}`}>{spot.risk_level}</p>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm font-bold">{spot.avg_predicted_incidents?.toFixed(1) ?? 0}</div>
-                    <div className="text-[10px] uppercase text-muted-foreground">incidents/wk</div>
-                  </div>
-                </div>
-                <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
-                  <div
-                    className={`h-full rounded-full ${getRiskBarColor(spot.risk_level)}`}
-                    style={{ width: `${Math.round((spot.risk_score ?? 0) * 100)}%` }}
-                  />
-                </div>
-              </div>
-            )) : (
-              <div className="text-sm text-muted-foreground text-center py-6">
-                No hotspot data. Ensure AI Service is running on port 8000.
-              </div>
-            )}
+          <div className="flex-1 relative bg-[#0B1220] flex items-center justify-center overflow-hidden">
+             {/* Map grid overlay */}
+             <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle, #1e293b 1px, transparent 1px)', backgroundSize: '30px 30px', opacity: 0.3 }}></div>
+             <div className="text-center z-10 p-6 bg-background/80 backdrop-blur-sm border border-border rounded-lg max-w-sm animate-in fade-in zoom-in duration-500">
+                <Map className="w-12 h-12 text-muted-foreground mx-auto mb-3 opacity-50" />
+                <p className="text-sm font-medium text-foreground">Interactive Map Module</p>
+                <p className="text-xs text-muted-foreground mt-1">Geospatial engine integration required for live rendering.</p>
+             </div>
+             
+             {/* Fake map pings */}
+             <div className="absolute top-1/4 left-1/3 w-32 h-32 bg-destructive/20 rounded-full blur-xl animate-pulse"></div>
+             <div className="absolute bottom-1/3 right-1/4 w-40 h-40 bg-warning/20 rounded-full blur-xl animate-pulse" style={{ animationDelay: '1s' }}></div>
           </div>
         </div>
 
-        {/* Escalation Card */}
-        <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
-          <div className="flex items-center gap-2 mb-5">
-            <TrendingUp className="h-5 w-5 text-amber-400" />
-            <h3 className="font-semibold text-lg text-foreground">Escalating Areas</h3>
-            <span className="ml-auto text-xs bg-amber-400/10 text-amber-400 px-2 py-0.5 rounded-full font-medium">
-              {escalating.length} Flagged
-            </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Hotspots Card */}
+          <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
+            <div className="flex items-center gap-2 mb-5">
+              <AlertOctagon className="h-5 w-5 text-destructive" />
+              <h3 className="font-semibold text-lg text-foreground">Critical Hotspots</h3>
+              <span className="ml-auto text-xs bg-destructive/10 text-destructive px-2 py-0.5 rounded-full font-medium">
+                {hotspots.filter(h => h.risk_level === 'Critical').length} Critical
+              </span>
+            </div>
+            <div className="space-y-3">
+              {hotspots.length > 0 ? hotspots.slice(0, 6).map((spot, i) => (
+                <div key={i} className="space-y-1">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="font-medium text-sm">{spot.area}</p>
+                      <p className={`text-xs font-semibold ${getRiskColor(spot.risk_level)}`}>{spot.risk_level}</p>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm font-bold">{spot.avg_predicted_incidents?.toFixed(1) ?? 0}</div>
+                      <div className="text-[10px] uppercase text-muted-foreground">incidents/wk</div>
+                    </div>
+                  </div>
+                  <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full ${getRiskBarColor(spot.risk_level)}`}
+                      style={{ width: `${Math.round((spot.risk_score ?? 0) * 100)}%` }}
+                    />
+                  </div>
+                </div>
+              )) : (
+                <div className="text-sm text-muted-foreground text-center py-6">
+                  No hotspot data. Ensure AI Service is running on port 8000.
+                </div>
+              )}
+            </div>
           </div>
-          <div className="space-y-3">
-            {escalating.length > 0 ? escalating.slice(0, 6).map((area, i) => (
-              <div key={i} className="flex justify-between items-center border-b border-border/50 pb-2.5 last:border-0 last:pb-0">
-                <div>
-                  <p className="font-medium text-sm">{area.area}</p>
-                  <p className="text-xs text-muted-foreground">{area.status}</p>
+
+          {/* Escalation Card */}
+          <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
+            <div className="flex items-center gap-2 mb-5">
+              <TrendingUp className="h-5 w-5 text-warning" />
+              <h3 className="font-semibold text-lg text-foreground">Escalating Areas</h3>
+              <span className="ml-auto text-xs bg-warning/10 text-warning px-2 py-0.5 rounded-full font-medium">
+                {escalating.length} Flagged
+              </span>
+            </div>
+            <div className="space-y-3">
+              {escalating.length > 0 ? escalating.slice(0, 6).map((area, i) => (
+                <div key={i} className="flex justify-between items-center border-b border-border/50 pb-2.5 last:border-0 last:pb-0">
+                  <div>
+                    <p className="font-medium text-sm">{area.area}</p>
+                    <p className="text-xs text-muted-foreground">{area.status}</p>
+                  </div>
+                  <div className="text-right text-warning font-bold text-sm">
+                    +{area.growth_rate_percentage?.toFixed(1) ?? 0}%
+                  </div>
                 </div>
-                <div className="text-right text-amber-400 font-bold text-sm">
-                  +{area.growth_rate_percentage?.toFixed(1) ?? 0}%
+              )) : (
+                <div className="text-sm text-muted-foreground text-center py-6">
+                  No escalating areas detected at this time.
                 </div>
-              </div>
-            )) : (
-              <div className="text-sm text-muted-foreground text-center py-6">
-                No escalating areas detected at this time.
-              </div>
-            )}
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Graph Centrality Stats */}
+        {graphStats && (
+          <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
+            <div className="flex items-center gap-2 mb-5">
+              <BarChart2 className="h-5 w-5 text-primary" />
+              <h3 className="font-semibold text-lg">Most Influential Suspects (Graph Centrality)</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {(graphStats.degree || []).slice(0, 6).map((item: any, i: number) => (
+                <div key={i} className="flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-background/50">
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-bold text-sm shrink-0">
+                    #{i + 1}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-medium text-sm truncate">{item.node}</p>
+                    <p className="text-xs text-muted-foreground">Centrality score: {(item.score * 100).toFixed(1)}%</p>
+                  </div>
+                  <div className="text-xs font-bold text-primary shrink-0">
+                    {Math.round(item.score * 43)} links
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* RIGHT COLUMN: TABS */}
+      <div className="xl:col-span-1 space-y-6">
+        <div className="bg-card rounded-xl border border-border overflow-hidden shadow-sm flex flex-col h-full min-h-[600px]">
+          {/* Tabs Header */}
+          <div className="flex border-b border-border bg-background/50 shrink-0">
+            <button 
+              className={`flex-1 py-3 px-4 text-sm font-medium transition-colors border-b-2 ${activeTab === 'anomalies' ? 'border-primary text-foreground' : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-muted/30'}`}
+              onClick={() => setActiveTab('anomalies')}
+            >
+              Real-time Anomalies
+            </button>
+            <button 
+              className={`flex-1 py-3 px-4 text-sm font-medium transition-colors border-b-2 ${activeTab === 'patrol' ? 'border-primary text-foreground' : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-muted/30'}`}
+              onClick={() => setActiveTab('patrol')}
+            >
+              Patrol Analysis
+            </button>
+          </div>
+          
+          {/* Tab Content */}
+          <div className="flex-1 p-6 overflow-y-auto">
+            {activeTab === 'anomalies' ? <AnomalyScanner /> : <PatrolAnalysis />}
           </div>
         </div>
       </div>
 
-      {/* Graph Centrality Stats */}
-      {graphStats && (
-        <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
-          <div className="flex items-center gap-2 mb-5">
-            <BarChart2 className="h-5 w-5 text-primary" />
-            <h3 className="font-semibold text-lg">Most Influential Suspects (Graph Centrality)</h3>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {(graphStats.degree || []).slice(0, 6).map((item: any, i: number) => (
-              <div key={i} className="flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-background/50">
-                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-bold text-sm shrink-0">
-                  #{i + 1}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="font-medium text-sm truncate">{item.node}</p>
-                  <p className="text-xs text-muted-foreground">Centrality score: {(item.score * 100).toFixed(1)}%</p>
-                </div>
-                <div className="text-xs font-bold text-primary shrink-0">
-                  {Math.round(item.score * 43)} links
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Anomaly Scanner */}
-      <AnomalyScanner />
-
-      {/* Historical Patrol Analysis */}
-      <PatrolAnalysis />
     </div>
   )
 }
@@ -178,16 +235,13 @@ function PatrolAnalysis() {
   }
 
   return (
-    <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
-      <div className="flex items-center gap-2 mb-5">
-        <Navigation className="h-5 w-5 text-blue-400" />
-        <h3 className="font-semibold text-lg">Historical Patrol Analysis</h3>
-        <span className="ml-auto text-xs bg-blue-400/10 text-blue-400 px-2 py-0.5 rounded-full font-medium">
-          Logged Routes
-        </span>
+    <div className="space-y-4">
+      <div className="flex items-center gap-2 mb-2">
+        <Navigation className="h-5 w-5 text-primary" />
+        <h3 className="font-semibold text-lg">Patrol Routes</h3>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto rounded-lg border border-border">
         <table className="w-full text-sm text-left">
           <thead className="text-xs text-muted-foreground uppercase bg-muted/50">
             <tr>
@@ -205,15 +259,15 @@ function PatrolAnalysis() {
                 <td className="px-4 py-3 font-medium">{p.area}</td>
                 <td className="px-4 py-3 text-muted-foreground">{p.date} • {p.time_start} - {p.time_end}</td>
                 <td className="px-4 py-3 text-center">{p.officer_count}</td>
-                <td className="px-4 py-3 text-center text-amber-400">{p.days_without_patrol}</td>
+                <td className="px-4 py-3 text-center text-warning">{p.days_without_patrol}</td>
                 <td className="px-4 py-3 text-center">
-                  <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${p.incidents_during_patrol > 0 ? 'bg-red-500/10 text-red-500' : 'bg-emerald-500/10 text-emerald-500'}`}>
+                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${p.incidents_during_patrol > 0 ? 'bg-destructive/10 text-destructive' : 'bg-success/10 text-success'}`}>
                     {p.incidents_during_patrol}
                   </span>
                 </td>
                 <td className="px-4 py-3 text-right">
                   {p.is_hotspot_area == 1 ? (
-                    <span className="text-emerald-500 font-medium text-xs">Covered</span>
+                    <span className="text-success font-medium text-xs">Covered</span>
                   ) : (
                     <span className="text-muted-foreground font-medium text-xs">Standard</span>
                   )}
@@ -259,16 +313,13 @@ function AnomalyScanner() {
   }
 
   return (
-    <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
-      <div className="flex items-center gap-2 mb-5">
-        <ShieldAlert className="h-5 w-5 text-purple-400" />
-        <h3 className="font-semibold text-lg">Emerging Threats (Anomaly Scanner)</h3>
-        <span className="ml-auto text-xs bg-purple-400/10 text-purple-400 px-2 py-0.5 rounded-full font-medium">
-          Isolation Forest ML
-        </span>
+    <div className="space-y-4">
+      <div className="flex items-center gap-2 mb-2">
+        <ShieldAlert className="h-5 w-5 text-primary" />
+        <h3 className="font-semibold text-lg">Emerging Threats</h3>
       </div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="flex flex-col gap-6">
         <div className="space-y-4">
           <p className="text-sm text-muted-foreground">
             Scan specific conditions to detect novel crime spikes or anomalies.
@@ -333,20 +384,20 @@ function AnomalyScanner() {
           </button>
         </div>
         
-        <div className="bg-background rounded-lg border border-border p-4 h-full min-h-[200px]">
-          {result ? (
-            result.error ? (
-              <div className="text-red-500 text-sm h-full flex items-center justify-center">{result.error}</div>
-            ) : (
-              <div className="space-y-4">
-                <div className={`p-3 rounded-md flex items-start gap-3 ${result.is_anomaly ? 'bg-red-500/10 border border-red-500/20' : 'bg-emerald-500/10 border border-emerald-500/20'}`}>
-                  <div className={`mt-0.5 rounded-full p-1 ${result.is_anomaly ? 'bg-red-500/20 text-red-500' : 'bg-emerald-500/20 text-emerald-500'}`}>
-                    <Activity className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <h4 className={`font-semibold ${result.is_anomaly ? 'text-red-500' : 'text-emerald-500'}`}>
-                      {result.is_anomaly ? 'Anomaly Detected!' : 'Normal Pattern'}
-                    </h4>
+          <div className="bg-background rounded-lg border border-border p-4 min-h-[200px]">
+            {result ? (
+              result.error ? (
+                <div className="text-destructive text-sm h-full flex items-center justify-center">{result.error}</div>
+              ) : (
+                <div className="space-y-4">
+                  <div className={`p-3 rounded-md flex items-start gap-3 ${result.is_anomaly ? 'bg-destructive/10 border border-destructive/20' : 'bg-success/10 border border-success/20'}`}>
+                    <div className={`mt-0.5 rounded-full p-1 ${result.is_anomaly ? 'bg-destructive/20 text-destructive' : 'bg-success/20 text-success'}`}>
+                      <Activity className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <h4 className={`font-semibold text-sm ${result.is_anomaly ? 'text-destructive' : 'text-success'}`}>
+                        {result.is_anomaly ? 'Anomaly Detected!' : 'Normal Pattern'}
+                      </h4>
                     <p className="text-sm text-foreground mt-1">
                       {result.is_anomaly ? result.alerts?.[0] : `No unusual spikes or novel patterns detected for ${result.area}.`}
                     </p>

@@ -13,10 +13,41 @@ export default function CitizensPage() {
     if(!search) return
     setLoading(true)
     try {
-      // Fetch risk prediction
-      const res = await aiApi.get(`/predictions/offender/${search}`).catch(() => null)
-      // Fetch accomplices
-      const accRes = await graphApi.get(`/predict/accomplices/${search}`).catch(() => null)
+      // 1. Fetch real graph data for this citizen
+      const graphRes = await graphApi.get(`/graph/search?name=${encodeURIComponent(search)}`).catch(() => null)
+      
+      let priorCrimes = 0;
+      let connections = 0;
+      let realId = search;
+
+      if (graphRes?.data?.network) {
+        const { nodes, links } = graphRes.data.network;
+        const citizenNode = nodes.find((n: any) => String(n.id).toLowerCase() === search.toLowerCase());
+        
+        if (citizenNode) {
+          realId = citizenNode.id;
+          const citizenLinks = links.filter((l: any) => {
+            const srcId = typeof l.source === 'object' ? l.source.id : l.source;
+            const tgtId = typeof l.target === 'object' ? l.target.id : l.target;
+            return srcId === realId || tgtId === realId;
+          });
+          connections = citizenLinks.length;
+          
+          const linkedNodeIds = citizenLinks.map((l: any) => {
+            const srcId = typeof l.source === 'object' ? l.source.id : l.source;
+            const tgtId = typeof l.target === 'object' ? l.target.id : l.target;
+            return srcId === realId ? tgtId : srcId;
+          });
+          
+          priorCrimes = nodes.filter((n: any) => linkedNodeIds.includes(n.id) && n.type === 'Case').length;
+        }
+      }
+
+      // 2. Fetch risk prediction with REAL metrics
+      const res = await aiApi.get(`/predictions/offender/${encodeURIComponent(realId)}?prior_crimes=${priorCrimes}&connections=${connections}`).catch(() => null)
+      
+      // 3. Fetch accomplices
+      const accRes = await graphApi.get(`/predict/accomplices/${encodeURIComponent(realId)}`).catch(() => null)
       
       if(res?.data) {
         setResult({

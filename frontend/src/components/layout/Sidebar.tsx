@@ -11,17 +11,17 @@ import {
   Settings,
   FileText,
   SearchCode,
-  TrendingUp
+  TrendingUp,
+  BrainCircuit
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navigation = [
   { name: 'Command Center', href: '/', icon: LayoutDashboard },
-  { name: 'Investigation Center', href: '/investigation', icon: SearchCode },
+  { name: 'Agent Swarm', href: '/multi-agent', icon: BrainCircuit },
   { name: 'Crime Network', href: '/network', icon: Network },
   { name: 'Live Map', href: '/map', icon: MapIcon },
   { name: 'Predictions', href: '/predictions', icon: TrendingUp },
-  { name: 'Evidence Analyzer', href: '/evidence', icon: FileText },
   { name: 'Citizen Risk', href: '/citizens', icon: Users },
 ]
 

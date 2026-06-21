@@ -10,7 +10,8 @@ import {
   Users,
   Settings,
   FileText,
-  SearchCode
+  SearchCode,
+  TrendingUp
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -18,7 +19,8 @@ const navigation = [
   { name: 'Command Center', href: '/', icon: LayoutDashboard },
   { name: 'Investigation Center', href: '/investigation', icon: SearchCode },
   { name: 'Crime Network', href: '/network', icon: Network },
-  { name: 'Predictions', href: '/predictions', icon: MapIcon },
+  { name: 'Live Map', href: '/map', icon: MapIcon },
+  { name: 'Predictions', href: '/predictions', icon: TrendingUp },
   { name: 'Evidence Analyzer', href: '/evidence', icon: FileText },
   { name: 'Citizen Risk', href: '/citizens', icon: Users },
 ]

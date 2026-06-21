@@ -998,7 +998,19 @@
             });
 
             cy.ready(() => {
-                setTimeout(() => { cy.zoom(0.15); cy.center(); }, 100);
+                setTimeout(() => { 
+                    cy.zoom(0.15); 
+                    cy.center(); 
+                    
+                    const params = new URLSearchParams(window.location.search);
+                    if (params.has('search')) {
+                        const input = document.getElementById('search-input');
+                        if (input) {
+                            input.value = params.get('search');
+                            performSearch();
+                        }
+                    }
+                }, 100);
             });
 
             bindEvents();

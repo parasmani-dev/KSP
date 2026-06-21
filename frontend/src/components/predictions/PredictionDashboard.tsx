@@ -3,6 +3,17 @@
 import { useEffect, useState } from "react"
 import { aiApi, graphApi } from "@/lib/api"
 import { Loader2, TrendingUp, AlertOctagon, Activity, BarChart2, ShieldAlert, Navigation, Map } from "lucide-react"
+import dynamic from 'next/dynamic'
+
+const LiveMap = dynamic(() => import('./LiveMap'), {
+  ssr: false,
+  loading: () => (
+    <div className="h-full flex flex-col items-center justify-center text-muted-foreground bg-[#0f172a]">
+      <Loader2 className="h-8 w-8 animate-spin mb-2 opacity-50" />
+      <p className="text-sm">Initializing Geospatial Engine...</p>
+    </div>
+  )
+})
 
 function getRiskColor(level: string) {
   switch (level?.toLowerCase()) {
@@ -76,18 +87,8 @@ export function PredictionDashboard() {
               <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Live Stream</span>
             </div>
           </div>
-          <div className="flex-1 relative bg-[#0B1220] flex items-center justify-center overflow-hidden">
-             {/* Map grid overlay */}
-             <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle, #1e293b 1px, transparent 1px)', backgroundSize: '30px 30px', opacity: 0.3 }}></div>
-             <div className="text-center z-10 p-6 bg-background/80 backdrop-blur-sm border border-border rounded-lg max-w-sm animate-in fade-in zoom-in duration-500">
-                <Map className="w-12 h-12 text-muted-foreground mx-auto mb-3 opacity-50" />
-                <p className="text-sm font-medium text-foreground">Interactive Map Module</p>
-                <p className="text-xs text-muted-foreground mt-1">Geospatial engine integration required for live rendering.</p>
-             </div>
-             
-             {/* Fake map pings */}
-             <div className="absolute top-1/4 left-1/3 w-32 h-32 bg-destructive/20 rounded-full blur-xl animate-pulse"></div>
-             <div className="absolute bottom-1/3 right-1/4 w-40 h-40 bg-warning/20 rounded-full blur-xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="flex-1 relative z-0">
+            <LiveMap hotspots={hotspots} />
           </div>
         </div>
 
@@ -187,7 +188,7 @@ export function PredictionDashboard() {
 
       {/* RIGHT COLUMN: TABS */}
       <div className="xl:col-span-1 space-y-6">
-        <div className="bg-card rounded-xl border border-border overflow-hidden shadow-sm flex flex-col h-full min-h-[600px]">
+        <div className="bg-card rounded-xl border border-border overflow-hidden shadow-sm flex flex-col">
           {/* Tabs Header */}
           <div className="flex border-b border-border bg-background/50 shrink-0">
             <button 
@@ -205,7 +206,7 @@ export function PredictionDashboard() {
           </div>
           
           {/* Tab Content */}
-          <div className="flex-1 p-6 overflow-y-auto">
+          <div className="p-6">
             {activeTab === 'anomalies' ? <AnomalyScanner /> : <PatrolAnalysis />}
           </div>
         </div>

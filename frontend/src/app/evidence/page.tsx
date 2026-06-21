@@ -148,7 +148,7 @@ export default function EvidenceAnalyzerPage() {
                 </div>
                 <div className="mt-8 pt-4 border-t border-border/50 text-xs text-muted-foreground flex items-center justify-between">
                   <span>Graph Node IDs generated: {extractedData.entities.length}</span>
-                  <Link href="/network" className="text-primary hover:underline">View in Crime Network →</Link>
+                  <Link href={`/network?search=${encodeURIComponent(extractedData.entities[0].value)}`} className="text-primary hover:underline">View in Crime Network →</Link>
                 </div>
               </div>
             ) : (

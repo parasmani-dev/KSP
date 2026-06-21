@@ -180,7 +180,7 @@ export function PredictionDashboard() {
                     <p className="text-xs text-muted-foreground">Centrality score: {(item.score * 100).toFixed(1)}%</p>
                   </div>
                   <div className="text-xs font-bold text-primary shrink-0">
-                    {Math.round(item.score * 43)} links
+                    {item.links || 0} links
                   </div>
                 </div>
               ))}

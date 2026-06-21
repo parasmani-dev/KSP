@@ -73,6 +73,7 @@ export default function LiveMap({ hotspots }: { hotspots: any[] }) {
       zoom={5} 
       style={{ height: '100%', width: '100%', background: '#0f172a', zIndex: 0 }}
       zoomControl={false}
+      attributionControl={false}
     >
       <TileLayer
         url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"

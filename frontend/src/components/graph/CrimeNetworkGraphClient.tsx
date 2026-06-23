@@ -86,7 +86,6 @@ const MAX_NODES = 200;
 
 interface CrimeNetworkGraphClientProps {
   searchQuery?: string;
-  onNodeSelected?: (nodeData: any) => void;
   onStatsLoaded?: (stats: any) => void;
 }
 
@@ -94,13 +93,16 @@ export default function CrimeNetworkGraphClient({ searchQuery, onNodeSelected, o
   const [elements, setElements] = useState<cytoscape.ElementDefinition[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const cyRef = useRef<cytoscape.Core | null>(null);
+  const [cyInstance, setCyInstance] = useState<cytoscape.Core | null>(null);
   const initializedRef = useRef(false); // prevent re-attaching on re-renders
   const onNodeSelectedRef = useRef(onNodeSelected);
   const onStatsLoadedRef = useRef(onStatsLoaded);
 
   useEffect(() => { onNodeSelectedRef.current = onNodeSelected; }, [onNodeSelected]);
   useEffect(() => { onStatsLoadedRef.current = onStatsLoaded; }, [onStatsLoaded]);
+
+  const rawNodesRef = useRef<any[]>([]);
+  const rawLinksRef = useRef<any[]>([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -113,6 +115,8 @@ export default function CrimeNetworkGraphClient({ searchQuery, onNodeSelected, o
 
         const rawNodes: Record<string, unknown>[] = data?.network?.nodes ?? [];
         const rawLinks: Record<string, unknown>[] = data?.network?.links ?? [];
+        rawNodesRef.current = rawNodes;
+        rawLinksRef.current = rawLinks;
 
         // Count degree for each node
         const degreeMap: Record<string, number> = {};
@@ -124,9 +128,22 @@ export default function CrimeNetworkGraphClient({ searchQuery, onNodeSelected, o
         });
 
         // Take top MAX_NODES by degree
-        const topNodes = [...rawNodes]
+        let topNodes = [...rawNodes]
           .sort((a, b) => (degreeMap[String(b.id)] ?? 0) - (degreeMap[String(a.id)] ?? 0))
           .slice(0, MAX_NODES);
+
+        // If there's a search query, ensure the searched node is included in the rendered graph
+        if (searchQuery) {
+          const sq = searchQuery.toLowerCase();
+          const match = rawNodes.find(n => 
+            String(n.id || '').toLowerCase().includes(sq) || 
+            String(n.name || '').toLowerCase().includes(sq)
+          );
+          if (match && !topNodes.find(n => n.id === match.id)) {
+            topNodes.pop(); // Remove the lowest degree node to keep size at MAX_NODES
+            topNodes.unshift(match); // Inject searched node at the top
+          }
+        }
 
         const topNodeIds = new Set(topNodes.map((n) => String(n.id)));
 
@@ -207,8 +224,10 @@ export default function CrimeNetworkGraphClient({ searchQuery, onNodeSelected, o
             areas: sortTop(areaCounts, 7),
             officers: sortTop(officerCounts, 5),
             riskBins: riskBins,
-            allNodes: topNodes,
-            allLinks: topLinks
+            allNodes: rawNodes,
+            allLinks: rawLinks,
+            degreeMap: degreeMap,
+            maxDegree: Math.max(...Object.values(degreeMap), 1)
         });
       } catch (err) {
         if (!isMounted) return;
@@ -224,15 +243,17 @@ export default function CrimeNetworkGraphClient({ searchQuery, onNodeSelected, o
 
   // useCallback ensures this function reference is stable across re-renders
   const handleCy = useCallback((cy: cytoscape.Core) => {
-    cyRef.current = cy;
+    setCyInstance(cy);
 
     // Only attach events and layout ONCE
     if (initializedRef.current) return;
     initializedRef.current = true;
 
-    // After layout finishes, fit the viewport to show all nodes
+    // After layout finishes, fit the viewport to show all nodes (unless we're searching and zooming to a node)
     cy.one('layoutstop', () => {
-      cy.fit(undefined, 40);
+      if (!searchQuery) {
+        cy.fit(undefined, 40);
+      }
     });
 
     // Click node: highlight neighbourhood
@@ -258,21 +279,59 @@ export default function CrimeNetworkGraphClient({ searchQuery, onNodeSelected, o
 
   // Search Query Effect
   useEffect(() => {
-    if (!cyRef.current || !searchQuery) return;
-    const cy = cyRef.current;
-    const match = cy.nodes().filter((n: cytoscape.NodeSingular) => {
+    if (!cyInstance || !searchQuery) return;
+    const cy = cyInstance;
+    let match = cy.nodes().filter((n: cytoscape.NodeSingular) => {
       const d = n.data();
       const sq = searchQuery.toLowerCase();
       return String(d.id || '').toLowerCase().includes(sq) || String(d.name || '').toLowerCase().includes(sq);
     });
 
-    if (match.length > 0) {
-      const node = match[0];
-      cy.animate({ center: { eles: node }, zoom: 2.5 }, { duration: 500 });
-      // Emit tap to select and highlight
-      node.emit('tap');
+    if (match.length === 0) {
+      // Look in the full dataset
+      const sq = searchQuery.toLowerCase();
+      const globalMatch = rawNodesRef.current.find(n => 
+        String(n.id || '').toLowerCase().includes(sq) || String(n.name || '').toLowerCase().includes(sq)
+      );
+      
+      if (globalMatch && !cy.getElementById(String(globalMatch.id)).length) {
+        // Dynamically add node to graph
+        cy.add({ data: { ...globalMatch, id: String(globalMatch.id) }, position: { x: cy.width()/2, y: cy.height()/2 } });
+        
+        // Add its connections to other existing nodes
+        const existingNodeIds = new Set(cy.nodes().map(n => n.id()));
+        const newEdges = rawLinksRef.current.filter(l => 
+          (String(l.source) === String(globalMatch.id) && existingNodeIds.has(String(l.target))) ||
+          (String(l.target) === String(globalMatch.id) && existingNodeIds.has(String(l.source)))
+        );
+        
+        newEdges.forEach((l, i) => {
+          cy.add({ data: { ...l, id: `e_dynamic_${globalMatch.id}_${i}`, source: String(l.source), target: String(l.target) }});
+        });
+        
+        match = cy.getElementById(String(globalMatch.id));
+      }
     }
-  }, [searchQuery]);
+
+    if (match.length > 0) {
+      const node = match.first ? match.first() : match[0] ? match[0] : match;
+      
+      // Zoom to node
+      cy.animate({
+        zoom: 1.5,
+        center: { ele: node }
+      }, { duration: 500 });
+      
+      // Manually apply highlight logic instead of relying on emit('tap')
+      cy.elements().removeClass('highlighted dimmed');
+      node.addClass('highlighted');
+      const neighborhood = node.neighborhood().add(node);
+      neighborhood.addClass('highlighted');
+      cy.elements().difference(neighborhood).addClass('dimmed');
+      
+      onNodeSelectedRef.current?.(node.data());
+    }
+  }, [searchQuery, cyInstance]);
 
   if (loading) {
     return (

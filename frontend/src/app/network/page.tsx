@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Network, Maximize, Search, ChevronDown, 
   MapPin, User, FileText, CarFront, Building2, Eye, ShieldAlert,
@@ -15,6 +15,12 @@ export default function CrimeNetworkPage() {
   const [pendingNode, setPendingNode] = useState<any>(null);     // node clicked but not yet analyzed
   const [graphStats, setGraphStats] = useState({ nodes: 0, edges: 0 });
   const [activeTab, setActiveTab] = useState<'overview'|'connections'|'history'|'ai'>('overview');
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get('search');
+    if (q) setSearchQuery(q);
+  }, []);
 
   return (
     <div className="p-6 h-full flex flex-col bg-[#020817] text-slate-200 overflow-y-auto overflow-x-hidden min-h-screen custom-scrollbar">
@@ -341,17 +347,25 @@ export default function CrimeNetworkPage() {
                  nodes.forEach((n: any) => { nodeMap[String(n.id)] = n; });
 
                  const neighbors = links
-                   .filter((l: any) => String(l.source) === nodeId || String(l.target) === nodeId)
-                   .map((l: any) => ({
-                     relationship: l.relationship || 'Connected',
-                     node: nodeMap[String(l.source) === nodeId ? l.target : l.source]
-                   }))
+                   .filter((l: any) => {
+                     const sId = String(l.source?.id || l.source);
+                     const tId = String(l.target?.id || l.target);
+                     return sId === nodeId || tId === nodeId;
+                   })
+                   .map((l: any) => {
+                     const sId = String(l.source?.id || l.source);
+                     const tId = String(l.target?.id || l.target);
+                     return {
+                       relationship: l.relationship || 'Connected',
+                       node: nodeMap[sId === nodeId ? tId : sId]
+                     };
+                   })
                    .filter((c: any) => c.node)
-                   .slice(0, 10);
+                   .slice(0, 50);
 
                  return (
-                   <div className="flex flex-col gap-3">
-                     <p className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider mb-1">{neighbors.length} Direct Connection{neighbors.length !== 1 ? 's' : ''}</p>
+                   <div className="flex flex-col gap-3 max-h-[400px] overflow-y-auto custom-scrollbar pr-2">
+                     <p className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider mb-1 flex-shrink-0">{neighbors.length} Direct Connection{neighbors.length !== 1 ? 's' : ''}</p>
                      {neighbors.length === 0 && (
                        <p className="text-xs text-slate-500 italic">No connections found in the current rendered graph for this node.</p>
                      )}

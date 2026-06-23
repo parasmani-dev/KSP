@@ -827,7 +827,7 @@
         // CONFIGURATION
         // ─────────────────────────────────────────────────────
         const API_BASE = `http://${window.location.hostname}:8001`;
-        const AI_BASE = `http://${window.location.hostname}:8000`;
+        const AI_BASE = `http://${window.location.hostname}:8001`;
 
         // Node type → badge color mapping (matches CSS vars)
         const TYPE_COLORS = {
@@ -974,7 +974,7 @@
             } catch (err) {
                 console.error("Failed to load graph:", err);
                 const loaderText = document.getElementById('loading-text');
-                loaderText.innerText = "⚠ Could not connect to API server. Ensure FastAPI is running on port 8000.";
+                loaderText.innerText = "⚠ Could not connect to API server. Ensure FastAPI is running on port 8001.";
                 loaderText.style.color = "var(--danger)";
                 document.querySelector('.spinner').style.display = 'none';
             }

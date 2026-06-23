@@ -19,15 +19,15 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${inter.className} antialiased`}>
-        <div className="flex flex-col min-h-screen bg-background">
-          <div className="sticky top-0 z-50">
-            <TopNav />
+        <div className="flex min-h-screen bg-background">
+          <div className="sticky top-0 h-screen z-40 flex-shrink-0">
+            <Sidebar />
           </div>
-          <div className="flex flex-1">
-            <div className="sticky top-16 h-[calc(100vh-4rem)] z-40">
-              <Sidebar />
+          <div className="flex flex-col flex-1 min-w-0">
+            <div className="sticky top-0 z-50">
+              <TopNav />
             </div>
-            <main className="flex-1">
+            <main className="flex-1 overflow-y-auto">
               {children}
             </main>
           </div>

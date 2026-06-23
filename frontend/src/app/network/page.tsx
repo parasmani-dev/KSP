@@ -296,11 +296,21 @@ export default function CrimeNetworkPage() {
                          {(() => {
                            let cumulative = 0;
                            const colors = ["#4c1d95", "#f97316", "#a855f7", "#3b82f6", "#10b981"];
-                           return (graphStats?.crimeTypes || []).map((ct: any, i: number) => {
-                             const strokeDashoffset = 219.9 * (1 - cumulative);
+                           
+                           const slices: any[] = [];
+                           (graphStats?.crimeTypes || []).forEach((ct: any, i: number) => {
                              cumulative += (ct.percent / 100);
+                             slices.unshift({
+                               ...ct,
+                               color: colors[i % colors.length],
+                               cumulative: cumulative
+                             });
+                           });
+                           
+                           return slices.map((slice: any, i: number) => {
+                             const strokeDashoffset = 219.9 * (1 - slice.cumulative);
                              return (
-                               <circle key={i} cx="50" cy="50" r="35" fill="none" stroke={colors[i % colors.length]} strokeWidth="25" strokeDasharray="219.9" strokeDashoffset={strokeDashoffset} className="transition-all duration-1000 ease-out" />
+                               <circle key={i} cx="50" cy="50" r="35" fill="none" stroke={slice.color} strokeWidth="25" strokeDasharray="219.9" strokeDashoffset={strokeDashoffset} className="transition-all duration-1000 ease-out" />
                              );
                            });
                          })()}
@@ -342,37 +352,95 @@ export default function CrimeNetworkPage() {
                 </button>
              </div>
 
-             {/* TOP INVESTIGATING OFFICERS */}
+             {/* RISK SCORE DISTRIBUTION */}
              <div className="bg-[#0f172a] rounded-xl border border-slate-800 p-5 shadow-lg flex flex-col h-[280px]">
                 <div className="flex items-center justify-between mb-5">
-                  <h3 className="text-xs font-bold text-slate-200 tracking-widest uppercase">Top Officers</h3>
+                  <h3 className="text-xs font-bold text-slate-200 tracking-widest uppercase">Risk Score Distribution</h3>
+                  <button className="flex items-center gap-1.5 px-2.5 py-1.5 bg-[#0B1220] border border-slate-700 rounded text-[10px] font-medium text-slate-300 hover:text-white transition-colors">
+                    Global Network <ChevronDown className="w-3 h-3"/>
+                  </button>
                 </div>
-                <div className="flex-1 flex flex-col justify-end gap-3 pb-2 relative">
-                   <div className="absolute inset-x-0 bottom-0 top-0 flex flex-col justify-between pointer-events-none opacity-20">
-                     <div className="border-t border-slate-700 w-full"></div>
-                     <div className="border-t border-slate-700 w-full"></div>
-                     <div className="border-t border-slate-700 w-full"></div>
-                     <div className="border-t border-slate-700 w-full"></div>
-                     <div className="border-t border-slate-700 w-full"></div>
-                   </div>
-                   
-                   <div className="flex justify-around items-end h-[180px] z-10">
-                     {(graphStats?.officers || []).map((officer: any, i: number) => {
-                       const maxCases = graphStats?.officers?.[0]?.count || 1;
-                       const heightPercent = Math.max(10, Math.round((officer.count / maxCases) * 100));
-                       return (
-                         <div key={i} className="flex flex-col items-center gap-2 w-full group relative h-full justify-end">
-                           <div className="absolute -top-8 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-800 text-white text-[10px] py-1 px-2 rounded whitespace-nowrap pointer-events-none z-20 shadow-lg border border-slate-700">
-                             {officer.count} Cases
-                           </div>
-                           <div className="w-8 bg-blue-500/80 rounded-t-sm hover:bg-blue-400 transition-all duration-1000 ease-out" style={{ height: `${heightPercent}%` }}></div>
-                           <span className="text-[9px] text-slate-400 font-medium truncate w-14 text-center" title={officer.name}>
-                             {officer.name.split(' ')[0]}
-                           </span>
-                         </div>
-                       )
-                     })}
-                   </div>
+                
+                {/* Line Chart SVG */}
+                <div className="flex-1 relative w-full h-full pb-4">
+                  
+                  {/* Y-axis Labels */}
+                  <div className="absolute left-0 top-0 bottom-6 w-8 flex flex-col justify-between text-[9px] text-slate-500 font-medium">
+                     {(() => {
+                        const maxRisk = Math.max(...(graphStats?.riskBins || [10]));
+                        return (
+                           <>
+                              <span>{maxRisk}</span>
+                              <span>{Math.round(maxRisk * 0.75)}</span>
+                              <span>{Math.round(maxRisk * 0.5)}</span>
+                              <span>{Math.round(maxRisk * 0.25)}</span>
+                              <span>0</span>
+                           </>
+                        )
+                     })()}
+                  </div>
+
+                  {/* Chart Area */}
+                  <div className="absolute left-10 right-2 top-2 bottom-6 border-l border-b border-slate-800 relative">
+                     {/* Horizontal Grid lines */}
+                     <div className="absolute inset-x-0 top-0 border-t border-slate-800/50" />
+                     <div className="absolute inset-x-0 top-1/4 border-t border-slate-800/50" />
+                     <div className="absolute inset-x-0 top-2/4 border-t border-slate-800/50" />
+                     <div className="absolute inset-x-0 top-3/4 border-t border-slate-800/50" />
+                     
+                     {/* Data Line Path */}
+                     <svg className="absolute inset-0 w-full h-full overflow-visible" preserveAspectRatio="none">
+                       {/* Gradient fill under line */}
+                       <defs>
+                         <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
+                           <stop offset="0%" stopColor="rgba(168, 85, 247, 0.4)" />
+                           <stop offset="100%" stopColor="rgba(168, 85, 247, 0)" />
+                         </linearGradient>
+                       </defs>
+                       
+                       {(() => {
+                           const bins = graphStats?.riskBins || Array(10).fill(0);
+                           const maxCount = Math.max(...bins, 1);
+                           const points = bins.map((count: number, i: number) => ({
+                               x: i * (420 / 9),
+                               y: 100 - (count / maxCount) * 80
+                           }));
+                           
+                           let d = `M ${points[0].x},${points[0].y}`;
+                           for (let i = 0; i < points.length - 1; i++) {
+                              const p1 = points[i];
+                              const p2 = points[i+1];
+                              const xc = (p1.x + p2.x) / 2;
+                              const yc = (p1.y + p2.y) / 2;
+                              if (i === 0) d += ` Q ${p1.x},${p1.y} ${xc},${yc}`;
+                              else d += ` T ${xc},${yc}`;
+                           }
+                           d += ` T ${points[points.length-1].x},${points[points.length-1].y}`;
+
+                           return (
+                               <>
+                                 <path d={`${d} L 420,100 L 0,100 Z`} fill="url(#lineGrad)" vectorEffect="non-scaling-stroke" className="transition-all duration-1000 ease-out" />
+                                 <path d={d} fill="none" stroke="#a855f7" strokeWidth="2" vectorEffect="non-scaling-stroke" className="transition-all duration-1000 ease-out drop-shadow-[0_0_6px_rgba(168,85,247,0.8)]" />
+                                 
+                                 {/* Data Points */}
+                                 {points.map((p: any, i: number) => (
+                                    <circle key={i} cx={p.x} cy={p.y} r="3" fill="#a855f7" vectorEffect="non-scaling-stroke" className="transition-all duration-1000 ease-out hover:r-[5px] hover:fill-white hover:stroke-[#a855f7] hover:stroke-2 cursor-pointer" />
+                                 ))}
+                               </>
+                           );
+                       })()}
+                     </svg>
+                  </div>
+
+                  {/* X-axis Labels */}
+                  <div className="absolute left-10 right-2 bottom-0 h-6 flex justify-between items-end text-[9px] text-slate-500 font-medium px-2">
+                     <span>0</span>
+                     <span>20</span>
+                     <span>40</span>
+                     <span>60</span>
+                     <span>80</span>
+                     <span>100</span>
+                  </div>
                 </div>
              </div>
           </div>

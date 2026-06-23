@@ -192,13 +192,23 @@ export default function CrimeNetworkGraphClient({ searchQuery, onNodeSelected, o
             riskBins[binIndex]++;
         });
 
+        // Compute live Clusters (distinct areas) and Network Density
+        const clusters = Object.keys(areaCounts).length;
+        const n = topNodes.length;
+        const density = n > 1 ? parseFloat(((2 * topLinks.length) / (n * (n - 1))).toFixed(4)) : 0;
+
         onStatsLoadedRef.current?.({ 
-            nodes: topNodes.length, 
+            nodes: topNodes.length,
+            totalNodes: rawNodes.length,
             edges: topLinks.length,
+            clusters,
+            density,
             crimeTypes: topCrimeTypes,
-            areas: sortTop(areaCounts, 4),
+            areas: sortTop(areaCounts, 7),
             officers: sortTop(officerCounts, 5),
-            riskBins: riskBins
+            riskBins: riskBins,
+            allNodes: topNodes,
+            allLinks: topLinks
         });
       } catch (err) {
         if (!isMounted) return;

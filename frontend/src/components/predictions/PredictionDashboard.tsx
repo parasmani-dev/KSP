@@ -218,7 +218,7 @@ export function PredictionDashboard() {
       {/* ROW 3: MAIN VISUALIZATIONS */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         {/* RISK FORECAST MAP */}
-        <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col min-h-[350px]">
+        <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col h-[350px]">
           <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">Risk Forecast Map (Next {horizon})</h3>
           <div className="flex-1 relative rounded-lg overflow-hidden bg-[#050A15] border border-slate-800/50">
             <LiveMap hotspots={hotspots} hideOverlay={true} theme="forecast" showMaximize={true} />
@@ -226,7 +226,7 @@ export function PredictionDashboard() {
         </div>
 
         {/* RISK TREND FORECAST */}
-        <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col min-h-[350px]">
+        <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col h-[350px]">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Risk Trend Forecast</h3>
           </div>
@@ -256,7 +256,7 @@ export function PredictionDashboard() {
         </div>
 
         {/* WHY AI PREDICTS THIS */}
-        <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col min-h-[350px]">
+        <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col h-[350px]">
           <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">Why AI Predicts This</h3>
           <div className="flex-1 space-y-4">
             {aiFactors.length > 0 ? (
@@ -289,7 +289,7 @@ export function PredictionDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         
         {/* REAL-TIME ANOMALIES */}
-        <div className="xl:col-span-1 bg-[#050A15]/80 border border-slate-800/50 rounded-xl p-0 flex flex-col min-h-[350px] overflow-hidden">
+        <div className="xl:col-span-1 bg-[#050A15]/80 border border-slate-800/50 rounded-xl p-0 flex flex-col h-[350px] overflow-hidden">
           {/* Tabs */}
           <div className="flex border-b border-slate-800/50 shrink-0">
             <button className="flex-1 py-3 text-[10px] font-bold text-white border-b-2 border-blue-500 bg-[#0B1220]">Real-time Anomalies</button>
@@ -370,7 +370,7 @@ export function PredictionDashboard() {
         </div>
 
         {/* TIME & DAY HEATMAP */}
-        <div className="xl:col-span-2 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col min-h-[350px]">
+        <div className="xl:col-span-2 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col h-[350px]">
           <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">Time & Day Heatmap</h3>
           <div className="flex-1 flex flex-col">
             <div className="flex-1 flex relative">
@@ -408,7 +408,7 @@ export function PredictionDashboard() {
         </div>
 
         {/* PATROL RECOMMENDATION */}
-        <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col min-h-[350px]">
+        <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col h-[350px]">
           <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">Patrol Recommendation (Next 7 Days)</h3>
           <div className="flex-1 flex flex-col gap-3">
             <div className="grid grid-cols-4 text-[8px] font-bold text-slate-500 uppercase pb-2 border-b border-slate-800/50">

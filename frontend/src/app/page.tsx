@@ -54,7 +54,7 @@ export default function DashboardPage() {
       </section>
 
       {/* SECTION B: Middle Row - Alert Center, Live Map, AI Analysis */}
-      <section className="grid grid-cols-1 lg:grid-cols-4 gap-6 min-h-[500px]">
+      <section className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-[500px]">
         {/* Left: Alert Center (25%) */}
         <div className="lg:col-span-1 flex flex-col overflow-hidden h-full min-h-0">
            <LiveAlerts />
@@ -74,27 +74,27 @@ export default function DashboardPage() {
         </div>
 
         {/* Right: AI Analysis (25%) */}
-        <div className="lg:col-span-1 bg-[#0B1220]/80 backdrop-blur-md border border-slate-700/50 rounded-2xl shadow-xl shadow-black/20 p-4 h-full min-h-0 flex flex-col relative overflow-hidden group">
+        <div className="lg:col-span-1 bg-[#0B1220]/80 backdrop-blur-md border border-slate-700/50 rounded-2xl shadow-xl shadow-black/20 p-4 h-full min-h-0 flex flex-col relative overflow-y-auto group custom-scrollbar">
            <AiAnalysis />
         </div>
       </section>
 
       {/* SECTION C: Bottom Row - Analytics Grid */}
-      <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 min-h-[300px]">
+      <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 h-[300px]">
         {/* Crime Trend */}
-        <div className="bg-[#0B1220]/80 backdrop-blur-md border border-slate-700/50 rounded-2xl p-4 shadow-xl shadow-black/20 xl:col-span-1 relative overflow-hidden group">
+        <div className="bg-[#0B1220]/80 backdrop-blur-md border border-slate-700/50 rounded-2xl p-4 shadow-xl shadow-black/20 xl:col-span-1 relative overflow-y-auto custom-scrollbar group">
            <CrimeTrendChart />
         </div>
         {/* Crime By Category */}
-        <div className="bg-[#0B1220]/80 backdrop-blur-md border border-slate-700/50 rounded-2xl p-4 shadow-xl shadow-black/20 xl:col-span-1 relative overflow-hidden group">
+        <div className="bg-[#0B1220]/80 backdrop-blur-md border border-slate-700/50 rounded-2xl p-4 shadow-xl shadow-black/20 xl:col-span-1 relative overflow-y-auto custom-scrollbar group">
            <CrimeCategoryChart />
         </div>
         {/* Predicted Escalations */}
-        <div className="bg-[#0B1220]/80 backdrop-blur-md border border-slate-700/50 rounded-2xl p-4 shadow-xl shadow-black/20 xl:col-span-1 relative overflow-hidden group">
+        <div className="bg-[#0B1220]/80 backdrop-blur-md border border-slate-700/50 rounded-2xl p-4 shadow-xl shadow-black/20 xl:col-span-1 relative overflow-y-auto custom-scrollbar group">
            <EscalationsList />
         </div>
         {/* Patrol Status */}
-        <div className="bg-[#0B1220]/80 backdrop-blur-md border border-slate-700/50 rounded-2xl p-4 shadow-xl shadow-black/20 xl:col-span-1 relative overflow-hidden group">
+        <div className="bg-[#0B1220]/80 backdrop-blur-md border border-slate-700/50 rounded-2xl p-4 shadow-xl shadow-black/20 xl:col-span-1 relative overflow-y-auto custom-scrollbar group">
            <PatrolStatus />
         </div>
       </section>

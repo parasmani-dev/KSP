@@ -21,58 +21,8 @@ export default function TopNav() {
         </button>
       </div>
 
-      {/* Center: Metric Widgets */}
-      <div className="hidden lg:flex items-center gap-6">
-        
-        {/* Threat Level */}
-        <div className="flex items-center gap-3 bg-red-500/10 border border-red-500/20 px-4 py-2 rounded-lg">
-          <ShieldAlert className="h-6 w-6 text-red-500" />
-          <div className="flex flex-col">
-            <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">Threat Level</span>
-            <div className="flex items-baseline gap-2">
-              <span className="text-sm font-bold text-red-500">HIGH</span>
-              <span className="text-[10px] text-red-400/80">Elevated Risk</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Live Incidents */}
-        <div className="flex items-center gap-3 bg-blue-500/10 border border-blue-500/20 px-4 py-2 rounded-lg">
-          <Activity className="h-6 w-6 text-blue-400" />
-          <div className="flex flex-col">
-            <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">Live Incidents</span>
-            <div className="flex items-baseline gap-2">
-              <span className="text-sm font-bold text-white">32</span>
-              <span className="text-[10px] text-blue-400/80">+8 in last 1hr</span>
-            </div>
-          </div>
-        </div>
-
-        {/* AI Agents Running */}
-        <div className="flex items-center gap-3 bg-green-500/10 border border-green-500/20 px-4 py-2 rounded-lg">
-          <Cpu className="h-6 w-6 text-green-400" />
-          <div className="flex flex-col">
-            <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">AI Agents Running</span>
-            <div className="flex items-baseline gap-2">
-              <span className="text-sm font-bold text-white">5</span>
-              <span className="text-[10px] text-green-400/80">All Systems Active</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Response Time */}
-        <div className="flex items-center gap-3 bg-indigo-500/10 border border-indigo-500/20 px-4 py-2 rounded-lg">
-          <Clock className="h-6 w-6 text-indigo-400" />
-          <div className="flex flex-col">
-            <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">Response Time</span>
-            <div className="flex items-baseline gap-2">
-              <span className="text-sm font-bold text-white">2.3s</span>
-              <span className="text-[10px] text-indigo-400/80">Average Time</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
+      {/* Center: Metric Widgets - Removed as per user request */}
+      <div className="hidden lg:flex flex-1"></div>
 
       {/* Right: Search & Profile */}
       <div className="flex items-center gap-5">

@@ -28,10 +28,22 @@ export default function DashboardPage() {
   const [hotspots, setHotspots] = useState<any[]>([]);
 
   useEffect(() => {
-    aiApi.get('/data/map/crimes').then(res => setCrimes(res.data.crimes || [])).catch(() => {});
-    aiApi.get('/data/map/patrols').then(res => setPatrols(res.data.patrols || [])).catch(() => {});
-    aiApi.get('/data/map/cctv').then(res => setCctvs(res.data.cctv || [])).catch(() => {});
-    aiApi.get('/predictions/hotspots').then(res => setHotspots(res.data.hotspots || [])).catch(() => {});
+    let isMounted = true;
+
+    const fetchData = () => {
+      aiApi.get('/data/map/crimes').then(res => { if(isMounted) setCrimes(res.data.crimes || []) }).catch(() => {});
+      aiApi.get('/data/map/patrols').then(res => { if(isMounted) setPatrols(res.data.patrols || []) }).catch(() => {});
+      aiApi.get('/data/map/cctv').then(res => { if(isMounted) setCctvs(res.data.cctv || []) }).catch(() => {});
+      aiApi.get('/predictions/hotspots').then(res => { if(isMounted) setHotspots(res.data.hotspots || []) }).catch(() => {});
+    };
+
+    fetchData();
+    const intervalId = setInterval(fetchData, 10000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(intervalId);
+    };
   }, []);
 
   return (
@@ -56,6 +68,7 @@ export default function DashboardPage() {
               crimes={crimes}
               patrols={patrols}
               cctvs={cctvs}
+              showMaximize={true}
             />
           </div>
         </div>

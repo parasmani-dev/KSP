@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.routes import predictions, recommendations, data
+from api.routes import predictions, recommendations, data, copilot
 from engine import sse_stream
 
 app = FastAPI(
@@ -23,6 +23,9 @@ app.include_router(data.router, prefix="/data", tags=["Dataset Access (Phase 2)"
 
 # Feature 7 Branches
 app.include_router(sse_stream.router, tags=["Fusion Layer (Branch B - SSE)"])
+
+# Kannada AI Copilot (Module 6 — PRD Feature 7)
+app.include_router(copilot.router, tags=["Kannada AI Copilot (Module 6)"])
 
 @app.on_event("startup")
 def startup_event():

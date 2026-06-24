@@ -23,7 +23,7 @@ export function AiAnalysis() {
       </div>
       
       {/* Risk Score Widget */}
-      <div className="border border-border/10 rounded-lg bg-[#121A2F] p-4 flex gap-4 items-center relative overflow-hidden shrink-0">
+      <div className="border border-slate-700/50 rounded-xl bg-[#0B1220]/50 backdrop-blur shadow-inner p-4 flex gap-4 items-center relative overflow-hidden shrink-0 group">
         {/* Glow effect */}
         <div className="absolute top-0 left-0 w-full h-1 bg-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.8)]"></div>
         
@@ -41,22 +41,22 @@ export function AiAnalysis() {
              <AlertTriangle className="h-3.5 w-3.5 text-red-400" />
              <span className="text-xs font-bold text-red-400 uppercase tracking-wider">Critical Threat Level</span>
            </div>
-           <p className="text-xs text-muted-foreground leading-relaxed">
+           <p className="text-[11px] text-slate-400 leading-relaxed mt-1">
              Multiple escalating patterns detected across Central zones. Organized cybercrime syndicate highly active. Immediate preventive patrols recommended.
            </p>
         </div>
       </div>
 
       {/* Top Hotspots */}
-      <div className="flex-1 border border-border/10 rounded-lg bg-[#121A2F] p-4 flex flex-col min-h-0">
-         <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-3">Top Crime Hotspots</h4>
+      <div className="flex-1 border border-slate-700/50 rounded-xl bg-[#0B1220]/50 backdrop-blur p-4 flex flex-col min-h-0 shadow-inner">
+         <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Top Crime Hotspots</h4>
          
          <div className="flex-1 overflow-y-auto space-y-3 custom-scrollbar pr-1">
            {hotspots.length > 0 ? hotspots.map((spot, i) => (
-              <div key={i} className="flex justify-between items-center bg-[#0B1220] p-2.5 rounded-md border border-border/5">
-                <div className="flex flex-col">
-                  <span className="text-sm font-bold text-white">{spot.area}</span>
-                  <span className="text-[10px] text-muted-foreground">Primary: <span className="text-white/70">{spot.primary_crime || 'General'}</span></span>
+               <div key={i} className="flex justify-between items-center bg-[#0f172a]/50 p-3 rounded-lg border border-slate-700/30 hover:border-slate-600 transition-colors">
+                 <div className="flex flex-col">
+                   <span className="text-sm font-bold text-slate-200">{spot.area}</span>
+                   <span className="text-[10px] text-slate-500 font-medium mt-0.5">Primary: <span className="text-slate-300">{spot.primary_crime || 'General'}</span></span>
                 </div>
                 <div className="flex flex-col items-end">
                   <div className={`text-sm font-bold ${spot.risk_level === 'Critical' ? 'text-red-400' : spot.risk_level === 'High' ? 'text-orange-400' : 'text-yellow-400'}`}>

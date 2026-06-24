@@ -49,6 +49,7 @@ export function PredictionDashboard() {
   const [liveTrendData, setLiveTrendData] = useState<any[]>([])
   const [aiFactors, setAiFactors] = useState<any[]>([])
   const [aiEvents, setAiEvents] = useState<any[]>([])
+  const [loading, setLoading] = useState(false)
   
   const setHorizon = (h: string) => {
     const days = h === '7 Days' ? 7 : h === '14 Days' ? 14 : 30
@@ -60,6 +61,7 @@ export function PredictionDashboard() {
     let isMounted = true
 
     const fetchData = () => {
+      setLoading(true)
       Promise.all([
         aiApi.get(`/predictions/hotspots?days=${horizonDays}`),
         aiApi.get('/data/map/crimes'),
@@ -81,6 +83,9 @@ export function PredictionDashboard() {
           setAiEvents(eventsRes.data.events || [])
         })
         .catch(err => console.error("Error fetching live data:", err))
+        .finally(() => {
+          if (isMounted) setLoading(false)
+        })
     }
 
     fetchData()
@@ -195,9 +200,17 @@ export function PredictionDashboard() {
       </div>
 
       {/* ROW 2: KPI CARDS */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-        <KpiCard title={`PREDICTED INCIDENTS (NEXT ${horizon.toUpperCase()})`} value={totalPredictedIncidents > 0 ? Math.round(totalPredictedIncidents) : "186"} subtitle="+24.7%" subDesc={`vs previous ${horizon}`} subColor="text-red-500" icon={<Activity className="text-red-500 w-5 h-5" />} chartColor={COLORS.red} chartPattern="wave1" />
-        <KpiCard title="HIGH RISK ZONES" value={highRiskZones > 0 ? highRiskZones : "8"} subtitle="↑ 2" subDesc="New zones" subColor="text-red-500" icon={<MapPin className="text-purple-500 w-5 h-5" />} chartColor={COLORS.purple} chartPattern="wave2" />
+      <div className="relative min-h-[400px]">
+        {loading && (
+          <div className="absolute inset-0 z-50 flex flex-col items-center justify-center backdrop-blur-[4px] bg-[#020817]/40 rounded-xl transition-all duration-300">
+            <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mb-3"></div>
+            <p className="text-xs font-bold tracking-widest text-blue-400 uppercase">Recalculating Models...</p>
+          </div>
+        )}
+        <div className={`transition-opacity duration-300 ${loading ? 'opacity-40 pointer-events-none' : 'opacity-100'}`}>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
+            <KpiCard title={`PREDICTED INCIDENTS (NEXT ${horizon.toUpperCase()})`} value={totalPredictedIncidents > 0 ? Math.round(totalPredictedIncidents) : "186"} subtitle="+24.7%" subDesc={`vs previous ${horizon}`} subColor="text-red-500" icon={<Activity className="text-red-500 w-5 h-5" />} chartColor={COLORS.red} chartPattern="wave1" />
+            <KpiCard title="HIGH RISK ZONES" value={highRiskZones > 0 ? highRiskZones : "8"} subtitle="↑ 2" subDesc="New zones" subColor="text-red-500" icon={<MapPin className="text-purple-500 w-5 h-5" />} chartColor={COLORS.purple} chartPattern="wave2" />
         <KpiCard title="AVERAGE CITY RISK" value={hotspots.length > 0 ? `${Math.round((hotspots.reduce((sum, h) => sum + h.risk_score, 0) / hotspots.length) * 100)}%` : "0%"} subtitle="Active" subDesc="Across all zones" subColor="text-orange-500" icon={<Target className="text-orange-500 w-5 h-5" />} chartColor={COLORS.orange} chartPattern="wave3" />
         <KpiCard title="PEAK RISK AREA" value={peakRiskArea ? peakRiskArea.area : "N/A"} subtitle={peakRiskArea ? peakRiskArea.risk_level : "—"} subDesc="Highest threat level" subColor={peakRiskArea?.risk_level === 'Critical' ? 'text-red-500' : peakRiskArea?.risk_level === 'High' ? 'text-orange-500' : 'text-yellow-500'} icon={<ShieldAlert className="text-red-500 w-5 h-5" />} chartColor={COLORS.red} chartPattern="wave4" />
       </div>
@@ -205,7 +218,7 @@ export function PredictionDashboard() {
       {/* ROW 3: MAIN VISUALIZATIONS */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         {/* RISK FORECAST MAP */}
-        <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col h-[350px]">
+        <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col min-h-[350px]">
           <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">Risk Forecast Map (Next {horizon})</h3>
           <div className="flex-1 relative rounded-lg overflow-hidden bg-[#050A15] border border-slate-800/50">
             <LiveMap hotspots={hotspots} hideOverlay={true} theme="forecast" showMaximize={true} />
@@ -213,7 +226,7 @@ export function PredictionDashboard() {
         </div>
 
         {/* RISK TREND FORECAST */}
-        <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col h-[350px]">
+        <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col min-h-[350px]">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Risk Trend Forecast</h3>
           </div>
@@ -243,7 +256,7 @@ export function PredictionDashboard() {
         </div>
 
         {/* WHY AI PREDICTS THIS */}
-        <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col h-[350px]">
+        <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col min-h-[350px]">
           <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">Why AI Predicts This</h3>
           <div className="flex-1 space-y-4">
             {aiFactors.length > 0 ? (
@@ -276,7 +289,7 @@ export function PredictionDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         
         {/* REAL-TIME ANOMALIES */}
-        <div className="xl:col-span-1 bg-[#050A15]/80 border border-slate-800/50 rounded-xl p-0 flex flex-col h-[350px] overflow-hidden">
+        <div className="xl:col-span-1 bg-[#050A15]/80 border border-slate-800/50 rounded-xl p-0 flex flex-col min-h-[350px] overflow-hidden">
           {/* Tabs */}
           <div className="flex border-b border-slate-800/50 shrink-0">
             <button className="flex-1 py-3 text-[10px] font-bold text-white border-b-2 border-blue-500 bg-[#0B1220]">Real-time Anomalies</button>
@@ -357,7 +370,7 @@ export function PredictionDashboard() {
         </div>
 
         {/* TIME & DAY HEATMAP */}
-        <div className="xl:col-span-2 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col h-[350px]">
+        <div className="xl:col-span-2 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col min-h-[350px]">
           <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">Time & Day Heatmap</h3>
           <div className="flex-1 flex flex-col">
             <div className="flex-1 flex relative">
@@ -395,7 +408,7 @@ export function PredictionDashboard() {
         </div>
 
         {/* PATROL RECOMMENDATION */}
-        <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col h-[350px]">
+        <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col min-h-[350px]">
           <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">Patrol Recommendation (Next 7 Days)</h3>
           <div className="flex-1 flex flex-col gap-3">
             <div className="grid grid-cols-4 text-[8px] font-bold text-slate-500 uppercase pb-2 border-b border-slate-800/50">
@@ -434,6 +447,8 @@ export function PredictionDashboard() {
         </div>
       </div>
 
+        </div>
+      </div>
     </div>
   )
 }
@@ -465,8 +480,8 @@ function KpiCard({ title, value, subtitle, subDesc, subColor, icon, chartColor, 
       
       {/* Sparkline at the bottom */}
       <div className="absolute bottom-0 left-0 right-0 h-16 opacity-40 pointer-events-none">
-        <svg viewBox="0 0 100 30" preserveAspectRatio="none" className="w-full h-full">
-          <path d={`${pathD} L100,30 L0,30 Z`} fill={chartColor} opacity="0.15" />
+        <svg viewBox="-2 0 104 31" preserveAspectRatio="none" className="w-full h-full overflow-visible">
+          <path d={`${pathD} L100,31 L0,31 Z`} fill={chartColor} opacity="0.15" />
           <path d={pathD} fill="none" stroke={chartColor} strokeWidth="1.5" vectorEffect="non-scaling-stroke" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>

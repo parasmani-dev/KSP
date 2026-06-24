@@ -1,98 +1,90 @@
 "use client"
+import { useState, useEffect } from "react";
+import { KpiCards } from "@/components/dashboard/KpiCards";
 import { LiveAlerts } from "@/components/dashboard/LiveAlerts";
-import { PredictionDashboard } from "@/components/predictions/PredictionDashboard";
-import { useEffect, useState } from "react";
-import { aiApi, graphApi } from "@/lib/api";
-import { ShieldAlert, Users, Activity, Server } from "lucide-react";
+import { AiAnalysis } from "@/components/dashboard/AiAnalysis";
+import { CrimeTrendChart, CrimeCategoryChart } from "@/components/dashboard/TrendCharts";
+import { EscalationsList } from "@/components/dashboard/EscalationsList";
+import { PatrolStatus } from "@/components/dashboard/PatrolStatus";
+import dynamic from 'next/dynamic';
+import { ShieldAlert, Users, Activity, Server, Target } from "lucide-react";
+import { aiApi } from "@/lib/api";
+
+// The LiveMap will be extracted or used from prediction dashboard, for now we will dynamically load it or a placeholder
+const LiveMap = dynamic(() => import('@/components/predictions/LiveMap'), {
+  ssr: false,
+  loading: () => (
+    <div className="h-full flex flex-col items-center justify-center text-muted-foreground bg-[#0B1220] rounded-xl border border-border/20">
+      <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full mb-4"></div>
+      <p className="text-sm">Initializing Geospatial Engine...</p>
+    </div>
+  )
+})
 
 export default function DashboardPage() {
-  const [stats, setStats] = useState({
-    criticalHotspots: '-',
-    monitored: '-',
-    aiStatus: 'checking',
-    graphStatus: 'checking',
-  });
+  const [crimes, setCrimes] = useState<any[]>([]);
+  const [patrols, setPatrols] = useState<any[]>([]);
+  const [cctvs, setCctvs] = useState<any[]>([]);
+  const [hotspots, setHotspots] = useState<any[]>([]);
 
   useEffect(() => {
-    // Check AI service
-    aiApi.get('/predictions/hotspots').then(res => {
-      const hotspots = res.data.hotspots || [];
-      const critical = hotspots.filter((h: any) => h.risk_level === 'Critical').length;
-      setStats(prev => ({ ...prev, criticalHotspots: String(critical), aiStatus: 'online' }));
-    }).catch(() => setStats(prev => ({ ...prev, aiStatus: 'offline' })));
-
-    // Check Graph service
-    graphApi.get('/graph/network').then(res => {
-      const nodes = res.data.network?.nodes || [];
-      const citizens = nodes.filter((n: any) => n.type === 'Citizen' || !n.type).length;
-      setStats(prev => ({ ...prev, monitored: String(citizens), graphStatus: 'online' }));
-    }).catch(() => setStats(prev => ({ ...prev, graphStatus: 'offline' })));
+    aiApi.get('/data/map/crimes').then(res => setCrimes(res.data.crimes || [])).catch(() => {});
+    aiApi.get('/data/map/patrols').then(res => setPatrols(res.data.patrols || [])).catch(() => {});
+    aiApi.get('/data/map/cctv').then(res => setCctvs(res.data.cctv || [])).catch(() => {});
+    aiApi.get('/predictions/hotspots').then(res => setHotspots(res.data.hotspots || [])).catch(() => {});
   }, []);
 
-  const allOnline = stats.aiStatus === 'online' && stats.graphStatus === 'online';
-
   return (
-    <div className="p-8 space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Command Center</h1>
-        <p className="text-muted-foreground mt-2">
-          Live crime intelligence, predictive alerts, and system health.
-        </p>
-      </div>
+    <div className="p-6 space-y-6 bg-background min-h-full">
+      {/* SECTION A: Top Row - KPI Cards */}
+      <section>
+        <KpiCards />
+      </section>
 
-      {/* Live stats cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-card rounded-xl border border-border p-5 shadow-sm flex items-center gap-4">
-          <div className="p-2.5 rounded-lg bg-destructive/10">
-            <ShieldAlert className="h-5 w-5 text-destructive" />
-          </div>
-          <div>
-            <p className="text-sm text-muted-foreground">Critical Hotspots</p>
-            <div className="text-2xl font-bold text-destructive">{stats.criticalHotspots}</div>
-          </div>
+      {/* SECTION B: Middle Row - Alert Center, Live Map, AI Analysis */}
+      <section className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-[500px]">
+        {/* Left: Alert Center (25%) */}
+        <div className="lg:col-span-1 flex flex-col overflow-hidden h-full min-h-0">
+           <LiveAlerts />
         </div>
-        <div className="bg-card rounded-xl border border-border p-5 shadow-sm flex items-center gap-4">
-          <div className="p-2.5 rounded-lg bg-primary/10">
-            <Users className="h-5 w-5 text-primary" />
-          </div>
-          <div>
-            <p className="text-sm text-muted-foreground">Monitored Citizens</p>
-            <div className="text-2xl font-bold">{stats.monitored}</div>
-          </div>
-        </div>
-        <div className="bg-card rounded-xl border border-border p-5 shadow-sm flex items-center gap-4">
-          <div className={`p-2.5 rounded-lg ${stats.aiStatus === 'online' ? 'bg-emerald-500/10' : 'bg-red-500/10'}`}>
-            <Activity className={`h-5 w-5 ${stats.aiStatus === 'online' ? 'text-emerald-500' : 'text-red-400'}`} />
-          </div>
-          <div>
-            <p className="text-sm text-muted-foreground">AI Service (8000)</p>
-            <div className={`text-sm font-bold capitalize ${stats.aiStatus === 'online' ? 'text-emerald-500' : stats.aiStatus === 'offline' ? 'text-red-400' : 'text-muted-foreground'}`}>
-              {stats.aiStatus === 'checking' ? 'Checking...' : stats.aiStatus}
-            </div>
-          </div>
-        </div>
-        <div className="bg-card rounded-xl border border-border p-5 shadow-sm flex items-center gap-4">
-          <div className={`p-2.5 rounded-lg ${stats.graphStatus === 'online' ? 'bg-emerald-500/10' : 'bg-red-500/10'}`}>
-            <Server className={`h-5 w-5 ${stats.graphStatus === 'online' ? 'text-emerald-500' : 'text-red-400'}`} />
-          </div>
-          <div>
-            <p className="text-sm text-muted-foreground">Graph Service (8001)</p>
-            <div className={`text-sm font-bold capitalize ${stats.graphStatus === 'online' ? 'text-emerald-500' : stats.graphStatus === 'offline' ? 'text-red-400' : 'text-muted-foreground'}`}>
-              {stats.graphStatus === 'checking' ? 'Checking...' : stats.graphStatus}
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Live stream + predictions */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6" style={{ minHeight: 480 }}>
-        <div className="lg:col-span-1 h-full">
-          <LiveAlerts />
+        {/* Center: Live Crime Map (50%) */}
+        <div className="lg:col-span-2 bg-[#0B1220] border border-border/20 rounded-xl overflow-hidden shadow-sm relative h-full min-h-0">
+          <div className="absolute inset-0 z-0">
+            <LiveMap 
+              hotspots={hotspots}
+              crimes={crimes}
+              patrols={patrols}
+              cctvs={cctvs}
+            />
+          </div>
         </div>
-        <div className="lg:col-span-2 overflow-y-auto">
-          <PredictionDashboard />
+
+        {/* Right: AI Analysis (25%) */}
+        <div className="lg:col-span-1 bg-[#0B1220] border border-border/20 rounded-xl shadow-sm p-4 h-full min-h-0 flex flex-col">
+           <AiAnalysis />
         </div>
-      </div>
+      </section>
+
+      {/* SECTION C: Bottom Row - Analytics Grid */}
+      <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 h-[300px]">
+        {/* Crime Trend */}
+        <div className="bg-[#0B1220] border border-border/20 rounded-xl p-4 shadow-sm xl:col-span-1">
+           <CrimeTrendChart />
+        </div>
+        {/* Crime By Category */}
+        <div className="bg-[#0B1220] border border-border/20 rounded-xl p-4 shadow-sm xl:col-span-1">
+           <CrimeCategoryChart />
+        </div>
+        {/* Predicted Escalations */}
+        <div className="bg-[#0B1220] border border-border/20 rounded-xl p-4 shadow-sm xl:col-span-1">
+           <EscalationsList />
+        </div>
+        {/* Patrol Status */}
+        <div className="bg-[#0B1220] border border-border/20 rounded-xl p-4 shadow-sm xl:col-span-1">
+           <PatrolStatus />
+        </div>
+      </section>
     </div>
   );
 }

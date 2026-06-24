@@ -84,7 +84,11 @@ async def run_simulation():
         
         # Give it a generic alert type if none exists so the frontend parses it nicely
         if "alert_type" not in event:
-            event["alert_type"] = "Simulated Event"
+            event_type = event.get("event_type", "Simulated Event")
+            if event_type == "NEW_FIR":
+                event["alert_type"] = f"New FIR: {event.get('crime_type', 'Unknown')}"
+            else:
+                event["alert_type"] = str(event_type).replace("_", " ").title()
             
         await broadcast(event)
         await asyncio.sleep(2.0)

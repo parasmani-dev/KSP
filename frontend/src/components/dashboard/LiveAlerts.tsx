@@ -66,77 +66,91 @@ export function LiveAlerts() {
   }
 
   return (
-    <div className="bg-card rounded-xl border border-border p-5 shadow-sm h-full flex flex-col">
-      <div className="flex items-center gap-3 mb-4 shrink-0">
-        <ShieldAlert className="h-5 w-5 text-destructive" />
-        <h3 className="font-semibold text-lg">Alert Center</h3>
-        
-        <div className="ml-auto flex items-center bg-muted/50 rounded-lg p-1">
+    <div className="bg-[#0B1220] border border-border/20 rounded-xl shadow-sm h-full flex flex-col overflow-hidden w-full">
+      <div className="p-4 border-b border-border/10 flex justify-between items-center bg-[#121A2F] shrink-0">
+        <h3 className="font-semibold text-white flex items-center gap-2">
+          <ShieldAlert className="h-4 w-4 text-red-500" />
+          Alert Center
+        </h3>
+        <div className="flex bg-[#0B1220] p-1 rounded-md border border-border/10">
           <button 
             onClick={() => setActiveTab('live')} 
-            className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${activeTab === 'live' ? 'bg-background shadow-sm text-foreground' : 'text-muted-foreground'}`}
+            className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide rounded transition-colors ${activeTab === 'live' ? 'bg-blue-600 text-white shadow-sm' : 'text-muted-foreground hover:text-white'}`}
           >
             Live
           </button>
           <button 
             onClick={() => setActiveTab('history')} 
-            className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${activeTab === 'history' ? 'bg-background shadow-sm text-foreground' : 'text-muted-foreground'}`}
+            className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide rounded transition-colors ${activeTab === 'history' ? 'bg-blue-600 text-white shadow-sm' : 'text-muted-foreground hover:text-white'}`}
           >
-            History
+            System
           </button>
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto min-h-0">
+      <div className="flex-1 overflow-y-auto p-4 min-h-0 bg-[#0B1220]">
         {activeTab === 'live' ? (
           <div className="space-y-4 h-full flex flex-col">
-            <div className="flex items-center justify-between">
-               <div className="flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium bg-primary/10 text-primary">
+            <div className="flex items-center justify-between mb-2">
+               <div className="flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">
                  <Activity className="w-3 h-3 animate-pulse" />
-                 Listening for incoming events...
+                 Listening for events...
                </div>
                {error ? (
                   <span className="text-xs text-muted-foreground flex items-center gap-1">
                     <WifiOff className="w-3 h-3 text-red-400" /> Disconnected
                   </span>
                 ) : (
-                  <span className="text-xs text-emerald-500 flex items-center gap-1">
-                    <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" /> Live Stream
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-green-400 flex items-center gap-1.5">
+                    <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" /> STREAM ACTIVE
                   </span>
                 )}
             </div>
             
-            <div className="space-y-2.5 flex-1 overflow-y-auto">
+            <div className="space-y-3 flex-1 overflow-y-auto pr-2 custom-scrollbar">
               {alerts.length > 0 ? (
                 alerts.map((alert, idx) => (
-                  <div key={idx} className="flex gap-3 p-3 rounded-lg bg-muted/30 border border-border/50">
-                    <AlertTriangle className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+                  <div key={idx} className="flex flex-col gap-2 p-3 rounded-lg bg-[#121A2F] border border-border/10 hover:border-border/30 transition-colors">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] text-muted-foreground font-medium">Just now</span>
+                      <div className="flex items-center gap-1.5 bg-red-500/10 border border-red-500/20 px-2 py-0.5 rounded text-[9px] font-bold text-red-400 uppercase tracking-wider">
+                         <div className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                         CRITICAL
+                      </div>
+                    </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-medium truncate">{formatAlert(alert)}</p>
-                      <p className="text-xs text-muted-foreground mt-0.5">{formatDetail(alert)}</p>
+                      <p className="text-sm font-bold text-white truncate">{formatAlert(alert)}</p>
+                      <p className="text-xs text-muted-foreground mt-1 line-clamp-2 leading-relaxed">{formatDetail(alert)}</p>
                     </div>
                   </div>
                 ))
               ) : (
                 <div className="flex flex-col items-center justify-center h-full text-muted-foreground py-8">
-                  <Info className="h-8 w-8 mb-2 opacity-20" />
-                  <p className="text-sm">Waiting for incoming events...</p>
-                  <p className="text-xs mt-1 opacity-60">Start a simulation or trigger FIR to see events</p>
+                  <Info className="h-8 w-8 mb-3 opacity-20" />
+                  <p className="text-sm text-white/60">Waiting for events...</p>
+                  <p className="text-xs mt-1 opacity-40 text-center max-w-[200px]">Start a simulation to see live intelligence stream.</p>
                 </div>
               )}
             </div>
           </div>
         ) : (
-          <div className="space-y-2.5">
+          <div className="space-y-3 pr-2 custom-scrollbar">
              {history.length > 0 ? history.map((item, i) => (
-                <div key={i} className="flex gap-3 p-3 rounded-lg bg-background border border-border/50">
-                  <Clock className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
+                <div key={i} className="flex flex-col gap-2 p-3 rounded-lg bg-[#121A2F] border border-border/10">
+                  <div className="flex items-center justify-between">
+                      <span className="text-[10px] text-muted-foreground font-medium flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        {item.timestamp ? new Date(item.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Past'}
+                      </span>
+                      <div className="flex items-center gap-1.5 bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 rounded text-[9px] font-bold text-orange-400 uppercase tracking-wider">
+                         SYSTEM
+                      </div>
+                    </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-medium truncate">{item.alert_type || item.action}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">
-                      {item.timestamp ? new Date(item.timestamp).toLocaleString() : 'Past Event'} · 
-                      Area: <span className="font-semibold text-primary">{item.area}</span> · 
-                      Status: <span className="text-amber-400">{item.status || 'Resolved'}</span>
+                    <p className="text-sm font-bold text-white truncate">{item.alert_type || item.action}</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Area: <span className="font-semibold text-blue-400">{item.area}</span> · 
+                      Status: <span className="text-green-400">{item.status || 'Resolved'}</span>
                     </p>
                   </div>
                 </div>

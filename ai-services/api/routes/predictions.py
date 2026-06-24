@@ -116,7 +116,7 @@ def get_hotspots(days: int = 7):
         future = m.make_future_dataframe(periods=days)
         forecast = m.predict(future)
         
-        future_only = forecast[forecast['ds'] > pd.Timestamp.today()]
+        future_only = forecast.tail(days)
         assert len(future_only) > 0, "Forecast contains no future dates"
         avg_count = float(np.mean(future_only['yhat']))
         

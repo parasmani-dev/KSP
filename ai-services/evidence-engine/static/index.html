@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 1 Verification: Unified Evidence Processor</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 1000px; margin: 0 auto; padding: 20px; background-color: #f5f7fa; }
+        h1, h2 { color: #2c3e50; }
+        .container { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: inherit; margin-bottom: 15px; resize: vertical; }
+        button { background-color: #3498db; color: #fff; border: none; padding: 12px 24px; font-size: 16px; border-radius: 4px; cursor: pointer; transition: background-color 0.3s; }
+        button:hover { background-color: #2980b9; }
+        button:disabled { background-color: #95a5a6; cursor: not-allowed; }
+        #results { display: none; }
+        pre { background: #f8f9fa; padding: 15px; border-radius: 4px; overflow-x: auto; border: 1px solid #e9ecef; }
+        .loading { display: none; margin-top: 20px; font-weight: bold; color: #e67e22; }
+        .error { color: #e74c3c; font-weight: bold; margin-top: 10px; }
+        .timer { font-family: monospace; color: #7f8c8d; }
+    </style>
+</head>
+<body>
+    <h1>Evidence Intelligence Engine</h1>
+    <p>Module 1 Unified Processor. Paste the FIR and Witness Statements below to test all 5 AI features at once.</p>
+
+    <div class="container">
+        <h2>Input Evidence</h2>
+        <label for="firText"><strong>FIR / Primary Document Text:</strong></label>
+        <textarea id="firText" rows="6">On 10th Dec 2024 at 14:00, Ramesh reported his bike stolen from MG Road. It was a black Splendor KA-01-AB-1234.</textarea>
+
+        <label for="witnessText"><strong>Witness Statement (Optional):</strong></label>
+        <textarea id="witnessText" rows="4">I saw a man in a red jacket take a black Splendor near MG Road around 2 PM.</textarea>
+
+        <button id="processBtn" onclick="processEvidence()">Process All Evidence</button>
+        
+        <div id="loading" class="loading">
+            Processing concurrently using Gemini 1.5 Flash... <br>
+            Time elapsed: <span id="timer" class="timer">0s</span>
+        </div>
+        <div id="error" class="error"></div>
+    </div>
+
+    <div id="results" class="container">
+        <h2>Results</h2>
+        
+        <h3>1. Summarization</h3>
+        <pre id="resSummary"></pre>
+
+        <h3>2. Entity Extraction</h3>
+        <pre id="resEntities"></pre>
+
+        <h3>3. Timeline Generation</h3>
+        <pre id="resTimeline"></pre>
+
+        <h3>4. Contradiction Detection</h3>
+        <pre id="resContradictions"></pre>
+
+        <h3>5. Evidence Scoring</h3>
+        <pre id="resScoring"></pre>
+    </div>
+
+    <script>
+        let timerInterval;
+
+        async function processEvidence() {
+            const firText = document.getElementById('firText').value;
+            const witnessText = document.getElementById('witnessText').value;
+            
+            if (!firText.trim()) {
+                alert("Please provide FIR text.");
+                return;
+            }
+
+            const payload = {
+                fir_text: firText,
+                witness_statements: witnessText.trim() ? [witnessText] : []
+            };
+
+            document.getElementById('processBtn').disabled = true;
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('error').textContent = '';
+            
+            let seconds = 0;
+            document.getElementById('timer').textContent = '0s';
+            timerInterval = setInterval(() => {
+                seconds++;
+                document.getElementById('timer').textContent = seconds + 's';
+            }, 1000);
+
+            try {
+                const response = await fetch('/api/v1/processor/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                clearInterval(timerInterval);
+
+                if (!response.ok) {
+                    const err = await response.text();
+                    throw new Error(`Server returned ${response.status}: ${err}`);
+                }
+
+                const data = await response.json();
+                
+                document.getElementById('resSummary').textContent = JSON.stringify(data.summary, null, 2);
+                document.getElementById('resEntities').textContent = JSON.stringify(data.entities, null, 2);
+                document.getElementById('resTimeline').textContent = JSON.stringify(data.timeline, null, 2);
+                document.getElementById('resContradictions').textContent = JSON.stringify(data.contradictions, null, 2);
+                document.getElementById('resScoring').textContent = JSON.stringify(data.scoring, null, 2);
+                
+                document.getElementById('results').style.display = 'block';
+            } catch (error) {
+                clearInterval(timerInterval);
+                document.getElementById('error').textContent = error.message;
+            } finally {
+                document.getElementById('processBtn').disabled = false;
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

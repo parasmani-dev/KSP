@@ -2,14 +2,8 @@ import { PredictionDashboard } from "@/components/predictions/PredictionDashboar
 
 export default function PredictionsPage() {
   return (
-    <div className="p-8 h-full flex flex-col">
-      <div className="mb-6 shrink-0">
-        <h1 className="text-3xl font-bold tracking-tight">AI Predictions</h1>
-        <p className="text-muted-foreground mt-2">
-          Neural network forecasts for hotspots, escalations, and citizen risk.
-        </p>
-      </div>
-      <div className="flex-1 min-h-0 overflow-y-auto pr-2">
+    <div className="h-full bg-[#050A15] min-h-screen">
+      <div className="h-full overflow-y-auto px-6 py-6 md:px-8">
         <PredictionDashboard />
       </div>
     </div>

@@ -129,7 +129,7 @@ def get_map_crimes():
     try:
         df = pd.read_csv(os.path.join(DATA_DIR, "crime_records_sample.csv"))
         # Return last 1500 to keep payload size reasonable but dense enough for heatmap
-        records = df[['lat', 'long', 'risk_score']].dropna().tail(1500)
+        records = df[['lat', 'long', 'risk_score', 'crime_type', 'day', 'hour']].dropna().tail(1500)
         return {"crimes": records.to_dict(orient="records")}
     except Exception as e:
         return {"error": str(e)}

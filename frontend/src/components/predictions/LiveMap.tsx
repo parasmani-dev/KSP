@@ -70,6 +70,16 @@ function getRiskColor(level: string) {
   }
 }
 
+function getForecastColor(level: string) {
+  switch (level?.toLowerCase()) {
+    case 'critical': return '#F97316'; // Orange
+    case 'high': return '#EC4899'; // Pink
+    case 'moderate': 
+    case 'medium': return '#D946EF'; // Fuchsia
+    default: return '#4F46E5'; // Indigo
+  }
+}
+
 function getRiskShadow(level: string) {
   const color = getRiskColor(level);
   return `0 0 30px 10px ${color}40, 0 0 60px 20px ${color}20`;
@@ -130,6 +140,49 @@ const createClusterIcon = (count: number, riskLevel: string) => {
   });
 };
 
+const createForecastIcon = (area: string, riskScore: number, riskLevel: string) => {
+  const color = getForecastColor(riskLevel);
+  return L.divIcon({
+    className: 'custom-forecast-icon',
+    html: `<div style="
+      width: 150px;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    ">
+      <div style="
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 40px; height: 40px;
+        background: ${color};
+        border-radius: 50%;
+        filter: blur(15px);
+        box-shadow: 0 0 50px 30px ${color}90, 0 0 80px 50px ${color}50;
+      "></div>
+      <div style="
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        color: white;
+        background: rgba(5, 11, 20, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 4px 10px;
+        border-radius: 8px;
+        backdrop-filter: blur(4px);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+      ">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.5px; opacity: 0.9;">${area}</div>
+        <div style="font-size: 14px; font-weight: 900;">${Math.round(riskScore * 100)}%</div>
+      </div>
+    </div>`,
+    iconSize: [150, 150],
+    iconAnchor: [75, 75]
+  });
+};
+
 const createShieldIcon = () => L.divIcon({
   className: 'custom-shield-icon',
   html: `<div style="
@@ -153,15 +206,21 @@ export default function LiveMap({
   hotspots = [], 
   crimes = [], 
   patrols = [], 
-  cctvs = []
+  cctvs = [],
+  showMaximize = false,
+  hideOverlay = false,
+  theme = 'live'
 }: { 
   hotspots?: any[],
   crimes?: any[],
   patrols?: any[],
-  cctvs?: any[]
+  cctvs?: any[],
+  showMaximize?: boolean,
+  hideOverlay?: boolean,
+  theme?: 'live' | 'forecast'
 }) {
   // UI State
-  const [mapMode, setMapMode] = useState<'heatmap' | 'clusters'>('clusters');
+  const [mapMode, setMapMode] = useState<'heatmap' | 'clusters' | 'forecast'>(theme === 'forecast' ? 'forecast' : 'clusters');
   const [showPatrols, setShowPatrols] = useState(true);
   const [showIncidentsLayer, setShowIncidentsLayer] = useState(false);
 
@@ -225,6 +284,21 @@ export default function LiveMap({
             );
           })}
 
+          {/* 1C. Forecast (Design Theme) */}
+          {mapMode === 'forecast' && hotspots.map((spot, i) => {
+            const coords = REAL_COORDS[spot.area] || [
+              defaultCenter[0] + seededRandom(i * 10) * 0.1, 
+              defaultCenter[1] + seededRandom(i * 20) * 0.1
+            ];
+            return (
+              <Marker
+                key={`forecast-${i}`}
+                position={coords as [number, number]}
+                icon={createForecastIcon(spot.area, spot.risk_score, spot.risk_level)}
+              />
+            );
+          })}
+
           {/* 2. Patrol Units & Police Stations */}
           {showPatrols && patrols.map((patrol, i) => {
             const coords = REAL_COORDS[patrol.area];
@@ -261,6 +335,7 @@ export default function LiveMap({
       </div>
 
       {/* OVERLAY UI - TOP BAR */}
+      {!hideOverlay && (
       <div className="absolute top-4 left-4 right-4 z-[400] flex items-center justify-between pointer-events-none">
         
         {/* Title */}
@@ -289,35 +364,79 @@ export default function LiveMap({
              </div>
              Clusters
            </button>
+           <button 
+             className={`px-4 py-1.5 rounded-md text-xs font-semibold transition-colors flex items-center gap-2 ${mapMode === 'forecast' ? 'bg-[#1e3a8a] text-white shadow-inner' : 'text-slate-400 hover:text-white'}`}
+             onClick={() => setMapMode('forecast')}
+           >
+             <div className={`w-3 h-3 rounded-full border flex items-center justify-center ${mapMode === 'forecast' ? 'border-[#60a5fa]' : 'border-current'}`}>
+               {mapMode === 'forecast' && <div className="w-1.5 h-1.5 bg-[#60a5fa] rounded-full"></div>}
+             </div>
+             Forecast
+           </button>
         </div>
 
         {/* Right Controls */}
-        <div className="flex items-center gap-3 pointer-events-auto">
-          <Link href="/map" className="p-2 bg-[#0B1220]/80 backdrop-blur-md border border-[#1e3a8a]/50 rounded-lg text-slate-400 hover:text-white shadow-lg transition-colors inline-block">
+        {showMaximize && (
+          <div className="flex items-center gap-3 pointer-events-auto">
+            <Link href="/map" className="p-2 bg-[#0B1220]/80 backdrop-blur-md border border-[#1e3a8a]/50 rounded-lg text-slate-400 hover:text-white shadow-lg transition-colors inline-block">
+              <Maximize2 className="w-4 h-4" />
+            </Link>
+          </div>
+        )}
+        {/* Right Controls removed */}
+      </div>
+      )}
+
+      {/* STANDALONE MAXIMIZE BUTTON (WHEN OVERLAY IS HIDDEN) */}
+      {hideOverlay && showMaximize && (
+        <div className="absolute top-4 right-4 z-[400] pointer-events-auto">
+          <Link href="/map?mode=forecast" className="p-2 bg-[#0B1220]/80 backdrop-blur-md border border-[#1e3a8a]/50 rounded-lg text-slate-400 hover:text-white shadow-lg transition-colors flex items-center justify-center hover:bg-[#1e3a8a]/20">
             <Maximize2 className="w-4 h-4" />
           </Link>
         </div>
-      </div>
+      )}
 
-      {/* OVERLAY UI - RIGHT LEGEND */}
-      <div className="absolute bottom-6 right-4 z-[400] flex flex-col gap-4 pointer-events-none">
+      {/* FORECAST LEGEND (BOTTOM CENTER) */}
+      {mapMode === 'forecast' && (
+        hideOverlay ? (
+          // Compact pill for Prediction Dashboard widget
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-[400] flex items-center gap-2 pointer-events-none bg-[#0B1220]/90 backdrop-blur-md px-3 py-1 rounded-full shadow-lg border border-slate-800/60">
+            <span className="text-[8px] text-slate-300 font-bold uppercase whitespace-nowrap">Low Risk</span>
+            <div className="w-16 h-1 rounded-full bg-gradient-to-r from-[#4F46E5] via-[#D946EF] to-[#F97316]"></div>
+            <span className="text-[8px] text-slate-300 font-bold uppercase whitespace-nowrap">High Risk</span>
+          </div>
+        ) : (
+          // Full-sized pill matching the w-52 Risk Level Index box for Full Screen Map
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-[400] flex items-center justify-between pointer-events-none bg-[#0B1220]/90 backdrop-blur-md px-5 py-2 rounded-full shadow-lg border border-slate-800/60 w-52">
+            <span className="text-[10px] text-slate-300 font-bold tracking-wide">Low Risk</span>
+            <div className="flex-1 mx-3 h-1.5 rounded-full bg-gradient-to-r from-[#4F46E5] via-[#D946EF] to-[#F97316]"></div>
+            <span className="text-[10px] text-slate-300 font-bold tracking-wide">High Risk</span>
+          </div>
+        )
+      )}
+
+
+
+      {/* FLOATING LEGEND (BOTTOM RIGHT) */}
+      {!hideOverlay && (
+      <div className="absolute bottom-4 right-4 z-[400] flex flex-col gap-3 pointer-events-none">
         
-        <div className="bg-[#0B1220]/85 backdrop-blur-md border border-[#1e3a8a]/40 rounded-xl p-2 w-32 shadow-2xl pointer-events-auto flex flex-col gap-2">
+        <div className="bg-[#0B1220]/85 backdrop-blur-md border border-[#1e3a8a]/40 rounded-xl p-4 w-44 shadow-2xl pointer-events-auto flex flex-col gap-3">
           {/* RISK LEVEL */}
           <div>
-            <h4 className="text-[8px] font-bold uppercase tracking-widest text-slate-400 mb-1.5">Risk Level</h4>
-            <div className="space-y-1">
-              <div className="flex items-center gap-1.5 text-[9px] text-slate-200">
-                <div className="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_4px_rgba(239,68,68,0.6)]"></div> Critical
+            <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Risk Level</h4>
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2 text-xs text-slate-200">
+                <div className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_4px_rgba(239,68,68,0.6)]"></div> Critical
               </div>
-              <div className="flex items-center gap-1.5 text-[9px] text-slate-200">
-                <div className="w-2 h-2 rounded-full bg-orange-500 shadow-[0_0_4px_rgba(249,115,22,0.6)]"></div> High
+              <div className="flex items-center gap-2 text-xs text-slate-200">
+                <div className="w-2.5 h-2.5 rounded-full bg-orange-500 shadow-[0_0_4px_rgba(249,115,22,0.6)]"></div> High
               </div>
-              <div className="flex items-center gap-1.5 text-[9px] text-slate-200">
-                <div className="w-2 h-2 rounded-full bg-yellow-500 shadow-[0_0_4px_rgba(234,179,8,0.6)]"></div> Medium
+              <div className="flex items-center gap-2 text-xs text-slate-200">
+                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500 shadow-[0_0_4px_rgba(234,179,8,0.6)]"></div> Medium
               </div>
-              <div className="flex items-center gap-1.5 text-[9px] text-slate-200">
-                <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_4px_rgba(34,197,94,0.6)]"></div> Low
+              <div className="flex items-center gap-2 text-xs text-slate-200">
+                <div className="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_4px_rgba(34,197,94,0.6)]"></div> Low
               </div>
             </div>
           </div>
@@ -326,14 +445,14 @@ export default function LiveMap({
 
           {/* LAYERS */}
           <div>
-            <h4 className="text-[8px] font-bold uppercase tracking-widest text-slate-400 mb-1.5">Layers</h4>
-            <div className="space-y-1">
-              <label className="flex items-center gap-1.5 text-[9px] text-slate-200 cursor-pointer group">
-                <input type="checkbox" checked={showPatrols} onChange={(e) => setShowPatrols(e.target.checked)} className="accent-[#3b82f6] rounded bg-[#0f172a] border-[#1e3a8a] scale-50" />
+            <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Layers</h4>
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-xs text-slate-200 cursor-pointer group">
+                <input type="checkbox" checked={showPatrols} onChange={(e) => setShowPatrols(e.target.checked)} className="accent-[#3b82f6] rounded bg-[#0f172a] border-[#1e3a8a] scale-90" />
                 <span className="group-hover:text-white transition-colors">Patrol Vehicles</span>
               </label>
-              <label className="flex items-center gap-1.5 text-[9px] text-slate-200 cursor-pointer group">
-                <input type="checkbox" checked={showIncidentsLayer} onChange={(e) => setShowIncidentsLayer(e.target.checked)} className="accent-[#3b82f6] rounded bg-[#0f172a] border-[#1e3a8a] scale-50" />
+              <label className="flex items-center gap-2 text-xs text-slate-200 cursor-pointer group">
+                <input type="checkbox" checked={showIncidentsLayer} onChange={(e) => setShowIncidentsLayer(e.target.checked)} className="accent-[#3b82f6] rounded bg-[#0f172a] border-[#1e3a8a] scale-90" />
                 <span className="group-hover:text-white transition-colors">Incidents</span>
               </label>
             </div>
@@ -344,8 +463,8 @@ export default function LiveMap({
         <div className="flex flex-col gap-1 pointer-events-auto bg-[#0B1220]/80 backdrop-blur-md border border-[#1e3a8a]/40 rounded-lg overflow-hidden w-10 ml-auto mr-[-4rem]">
            {/* We disabled default zoomControl, if needed we can add custom zoom buttons here */}
         </div>
-
       </div>
+      )}
     </div>
   );
 }

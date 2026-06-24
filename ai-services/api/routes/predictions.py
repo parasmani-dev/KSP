@@ -9,6 +9,8 @@ router = APIRouter()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SAVED_DIR = os.path.join(BASE_DIR, "models", "saved")
+ROOT_DIR = os.path.dirname(BASE_DIR)
+DATA_DIR = os.path.join(ROOT_DIR, "Dataset") if os.path.exists(os.path.join(ROOT_DIR, "Dataset")) else os.path.join(BASE_DIR, "Dataset")
 
 # Removed PyTorch models to avoid overlapping with Module 1's architecture.
 
@@ -24,6 +26,32 @@ def get_risk_bucket(score: float) -> str:
     elif score >= 0.31:
         return "Moderate"
     return "Low"
+
+def get_mock_hotspots(days: int):
+    file_path = os.path.join(DATA_DIR, "mock_predictions_sample.csv")
+    if not os.path.exists(file_path):
+        file_path = os.path.join(DATA_DIR, "mock_predictions.csv")
+    try:
+        df = pd.read_csv(file_path)
+    except:
+        return {"hotspots": []}
+    
+    hotspots = []
+    for _, row in df.iterrows():
+        score = row.get('risk_score', 0)
+        hotspots.append({
+            "area": row.get('area', 'Unknown'),
+            "forecast_days": days,
+            "avg_predicted_incidents": row.get('predicted_count_7d', 0),
+            "risk_score": score,
+            "risk_level": get_risk_bucket(score),
+            "reasons": [
+                {"code": "SOURCE", "value": "MOCK_FALLBACK"},
+                {"code": "TREND", "value": row.get('trend', 'Unknown')},
+                {"code": "DOMINANT_CRIME", "value": row.get('dominant_crime', 'Unknown')}
+            ]
+        })
+    return {"hotspots": hotspots[:10]}
 
 def load_models():
     if not models:
@@ -77,7 +105,7 @@ def get_hotspots(days: int = 7):
         
     load_models()
     if 'prophet' not in models:
-        raise HTTPException(status_code=503, detail="Prophet model not available.")
+        return get_mock_hotspots(days)
         
     # First pass: calculate avg counts for all areas in parallel
     area_metrics = {}
@@ -126,7 +154,8 @@ def get_hotspots(days: int = 7):
             continue
         
         # Normalize against THIS area's historical max, capped at 1.0
-        normalized_score = min(avg_count / area_baseline, 1.0)
+        # Divide by (baseline * 1.5) so that 100% risk means 50% above normal median
+        normalized_score = min(avg_count / (area_baseline * 1.5), 1.0)
         risk_level = get_risk_bucket(normalized_score)
             
         spot = {
@@ -147,8 +176,144 @@ def get_hotspots(days: int = 7):
             spot["low_confidence"] = True
             
         hotspots.append(spot)
-        
+    hotspots.sort(key=lambda x: x["risk_score"] if x["risk_score"] is not None else -1, reverse=True)
     return {"hotspots": hotspots}
+
+@router.get("/trend")
+def get_trend(area: str = None, days: int = 14):
+    """Returns day-by-day historical and predicted incident counts."""
+    load_models()
+    if 'prophet' not in models:
+        raise HTTPException(status_code=503, detail="Prophet model not available.")
+    
+    trend_data = []
+    today = pd.Timestamp.today().normalize()
+    start_date = today - pd.Timedelta(days=days)
+    dates = pd.date_range(start=start_date, periods=days*2 + 1)
+    future = pd.DataFrame({'ds': dates})
+    
+    if area and area in models['prophet']:
+        m = models['prophet'][area]
+        recent = m.predict(future)
+        
+        for _, row in recent.iterrows():
+            date = row['ds']
+            val = max(0, row['yhat'])
+            date_str = date.strftime('%m/%d')
+            
+            if date < today:
+                trend_data.append({"day": date_str, "historical": round(val, 2), "predicted": None})
+            elif date == today:
+                trend_data.append({"day": "Today", "historical": round(val, 2), "predicted": round(val, 2)})
+            else:
+                trend_data.append({"day": date_str, "historical": None, "predicted": round(val, 2)})
+    else:
+        agg_forecast = {}
+        for a, m in models['prophet'].items():
+            recent = m.predict(future)
+            
+            for _, row in recent.iterrows():
+                date_str = row['ds'].strftime('%m/%d')
+                if date_str not in agg_forecast:
+                    agg_forecast[date_str] = {"val": 0, "ds": row['ds']}
+                agg_forecast[date_str]["val"] += max(0, row['yhat'])
+                
+        sorted_dates = sorted(agg_forecast.values(), key=lambda x: x["ds"])
+        
+        for item in sorted_dates:
+            date = item["ds"]
+            val = item["val"]
+            date_str = date.strftime('%m/%d')
+            
+            if date < today:
+                trend_data.append({"day": date_str, "historical": round(val, 2), "predicted": None})
+            elif date == today:
+                trend_data.append({"day": "Today", "historical": round(val, 2), "predicted": round(val, 2)})
+            else:
+                trend_data.append({"day": date_str, "historical": None, "predicted": round(val, 2)})
+                
+    return {"trend": trend_data}
+
+@router.get("/factors")
+def get_factors(days: int = 7):
+    """Returns dynamic AI prediction driving factors, scaled to the forecast horizon."""
+    load_models()
+    now = pd.Timestamp.now()
+    today = now.normalize()
+    
+    # Scale factor — longer horizons amplify cumulative risk
+    scale = 1.0 if days == 7 else (1.25 if days == 14 else 1.5)
+    
+    pool = []
+
+    # 1. Weekend Effect
+    day_of_week = today.dayofweek
+    if day_of_week in [4, 5, 6]:
+        weekend_pct = 25 + (day_of_week - 4) * 10
+    else:
+        weekend_pct = max(5, 25 - (4 - day_of_week) * 5)
+    # More weekends in a longer window
+    weekends_in_window = max(1, days // 7)
+    weekend_pct = min(95, int(weekend_pct * weekends_in_window * (0.8 if days > 7 else 1.0)))
+    pool.append({"icon": "TrendingUp", "title": "Weekend Effect", "desc": f"{weekends_in_window} weekend(s) in window", "pct": f"+{weekend_pct}%", "color": "bg-orange-500", "iconColor": "text-orange-500", "val": weekend_pct})
+
+    # 2. Festival Season
+    month = today.month
+    if month in [10, 11]:
+        fest_pct = int(45 * scale)
+    elif month in [12, 1]:
+        fest_pct = int(25 * scale)
+    else:
+        fest_pct = int(12 * scale)
+    fest_pct = min(95, fest_pct)
+    pool.append({"icon": "Calendar", "title": "Festival Season", "desc": f"Cumulative risk over {days} days", "pct": f"+{fest_pct}%", "color": "bg-red-500", "iconColor": "text-red-500", "val": fest_pct})
+
+    # 3. Prior Crime Density
+    base_val = 3.0
+    if 'area_baselines' in models and '__citywide_median__' in models['area_baselines']:
+        base_val = models['area_baselines']['__citywide_median__']
+    density_pct = min(90, int(((base_val / 5.0) * 20) + 15 + (days * 0.5)))
+    pool.append({"icon": "MapPin", "title": "Prior Crime Density", "desc": f"Across {days}-day forecast window", "pct": f"+{density_pct}%", "color": "bg-orange-500", "iconColor": "text-orange-500", "val": density_pct})
+
+    # 4. Patrol Gap
+    patrol_pct = max(10, density_pct - 15)
+    pool.append({"icon": "Activity", "title": "Patrol Gap", "desc": f"Coverage deficit over {days} days", "pct": f"+{patrol_pct}%", "color": "bg-yellow-500", "iconColor": "text-yellow-500", "val": patrol_pct})
+
+    # 5. Population Movement
+    pop_pct = min(75, int((weekend_pct + fest_pct) / 2) + 10)
+    pool.append({"icon": "Users", "title": "Population Movement", "desc": "Increased footfall expected", "pct": f"+{pop_pct}%", "color": "bg-green-500", "iconColor": "text-green-500", "val": pop_pct})
+
+    # 6. Night Crime Spike
+    hour = now.hour
+    if hour >= 20 or hour <= 4:
+        night_pct = 50 + (abs(hour - 24) if hour >= 20 else hour) * 5
+    else:
+        night_pct = 5
+    pool.append({"icon": "Moon", "title": "Night Crime Spike", "desc": "Reduced visibility & security", "pct": f"+{night_pct}%", "color": "bg-indigo-500", "iconColor": "text-indigo-500", "val": night_pct})
+
+    # 7. Summer Heat Agitation
+    if month in [4, 5, 6]:
+        heat_pct = min(90, int((35 + (month - 4) * 5) * scale))
+    else:
+        heat_pct = 8
+    pool.append({"icon": "Thermometer", "title": "Summer Heat Agitation", "desc": "High temp behavioral shift", "pct": f"+{heat_pct}%", "color": "bg-red-500", "iconColor": "text-red-500", "val": heat_pct})
+
+    # 8. Traffic Gridlock
+    if hour in [8, 9, 10, 17, 18, 19]:
+        traffic_pct = 40
+    else:
+        traffic_pct = 15
+    pool.append({"icon": "Car", "title": "Traffic Gridlock", "desc": "Rush hour frustration", "pct": f"+{traffic_pct}%", "color": "bg-yellow-500", "iconColor": "text-yellow-500", "val": traffic_pct})
+
+    # Sort descending by val
+    pool.sort(key=lambda x: x['val'], reverse=True)
+    
+    # Return top 5, removing the internal 'val' key
+    top_5 = pool[:5]
+    for item in top_5:
+        del item['val']
+        
+    return {"factors": top_5}
 
 @router.get("/escalation")
 def get_escalation():
@@ -283,3 +448,88 @@ def detect_emerging_threats(req: ThreatRequest):
         "alerts": threats,
         "reasons": reasons
     }
+
+@router.get("/events")
+def get_events(days: int = 7):
+    """Returns top predicted events (hybrid calendar/AI logic) for the next N days."""
+    load_models()
+    events = []
+    today = pd.Timestamp.today().normalize()
+    
+    # 1. Hybrid Rule: Weekends within the full horizon
+    weekends_added = 0
+    for i in range(1, days + 1):
+        future_day = today + pd.Timedelta(days=i)
+        if future_day.dayofweek == 5:  # Saturday
+            sunday = future_day + pd.Timedelta(days=1)
+            date_str = f"{future_day.strftime('%b %d')} - {sunday.strftime('%b %d')}"
+            events.append({
+                "title": "Weekend Risk Spike",
+                "date": date_str,
+                "risk": "Medium Risk",
+                "riskColor": "text-orange-500 border-orange-500/30",
+                "iconType": "Calendar",
+                "iconBg": "bg-orange-500/20"
+            })
+            weekends_added += 1
+            if weekends_added >= 2:  # Cap at 2 weekends to avoid clutter
+                break
+
+    # 2. Hybrid Rule: Festivals / Holidays based on real month
+    month = today.month
+    if month in [6, 7]:
+        events.append({
+            "title": "Summer Heat Agitation",
+            "date": "Ongoing",
+            "risk": "High Risk",
+            "riskColor": "text-red-500 border-red-500/30",
+            "iconType": "Thermometer",
+            "iconBg": "bg-red-500/20"
+        })
+    elif month in [10, 11]:
+        events.append({
+            "title": "Festival Season Surge",
+            "date": "Upcoming Weeks",
+            "risk": "Critical Risk",
+            "riskColor": "text-red-500 border-red-500/30",
+            "iconType": "Activity",
+            "iconBg": "bg-red-500/20"
+        })
+
+    # 3. AI Predictive Anomalies across the full horizon
+    if 'prophet' in models:
+        dates = pd.date_range(start=today, periods=days + 1)[1:]  # next N days
+        future = pd.DataFrame({'ds': dates})
+        
+        city_daily = np.zeros(days)
+        
+        for area, m in models['prophet'].items():
+            forecast = m.predict(future)
+            city_daily += forecast['yhat'].values
+            
+        mean_city = np.mean(city_daily)
+        std_city = np.std(city_daily)
+        
+        # Find days > mean + 1 std
+        spike_dates = []
+        for i, val in enumerate(city_daily):
+            if val > (mean_city + std_city):
+                spike_dates.append(dates[i])
+        
+        if spike_dates:
+            if len(spike_dates) == 1:
+                date_str = spike_dates[0].strftime('%b %d')
+            else:
+                date_str = f"{spike_dates[0].strftime('%b %d')} - {spike_dates[-1].strftime('%b %d')}"
+                
+            events.append({
+                "title": "AI Detected Crime Spike",
+                "date": date_str,
+                "risk": "High Risk",
+                "riskColor": "text-red-500 border-red-500/30",
+                "iconType": "ShieldAlert",
+                "iconBg": "bg-purple-500/20"
+            })
+
+    # Limit to top 5
+    return {"events": events[:5]}

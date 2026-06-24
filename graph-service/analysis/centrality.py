@@ -15,6 +15,6 @@ def get_top_centrality(graph: nx.Graph, top_n: int = 10):
     top_betweenness = sorted(betweenness_cent.items(), key=lambda x: x[1], reverse=True)[:top_n]
     
     return {
-        "degree": [{"node": node, "score": score} for node, score in top_degree],
+        "degree": [{"node": node, "score": score, "links": graph.degree(node)} for node, score in top_degree],
         "betweenness": [{"node": node, "score": score} for node, score in top_betweenness]
     }

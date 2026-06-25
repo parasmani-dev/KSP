@@ -194,6 +194,10 @@ export default function CitizensPage() {
     }
   }, [urlSearch])
 
+  const filteredCitizens = search
+    ? allCitizens.filter(c => c.toLowerCase().includes(search.toLowerCase()) && c.toLowerCase() !== search.toLowerCase()).slice(0, 5)
+    : []
+
   return (
     <div className="p-6 h-full flex flex-col font-sans text-slate-300 overflow-y-auto">
       {/* HEADER SECTION */}

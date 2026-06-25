@@ -14,9 +14,9 @@ import { aiApi } from "@/lib/api";
 const LiveMap = dynamic(() => import('@/components/predictions/LiveMap'), {
   ssr: false,
   loading: () => (
-    <div className="h-full flex flex-col items-center justify-center text-muted-foreground bg-[#0B1220] rounded-xl border border-border/20">
-      <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full mb-4"></div>
-      <p className="text-sm">Initializing Geospatial Engine...</p>
+    <div className="h-full flex flex-col items-center justify-center text-slate-400 bg-[#0B1220]/80 backdrop-blur-md rounded-2xl border border-slate-700/50 shadow-xl">
+      <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full mb-4 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
+      <p className="text-sm font-semibold tracking-wide">Initializing Geospatial Engine...</p>
     </div>
   )
 })
@@ -61,7 +61,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Center: Live Crime Map (50%) */}
-        <div className="lg:col-span-2 bg-[#0B1220] border border-border/20 rounded-xl overflow-hidden shadow-sm relative h-full min-h-0">
+        <div className="lg:col-span-2 bg-[#0B1220]/80 backdrop-blur-md border border-slate-700/50 rounded-2xl overflow-hidden shadow-xl shadow-black/20 relative h-full min-h-0 group">
           <div className="absolute inset-0 z-0">
             <LiveMap 
               hotspots={hotspots}
@@ -74,7 +74,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Right: AI Analysis (25%) */}
-        <div className="lg:col-span-1 bg-[#0B1220] border border-border/20 rounded-xl shadow-sm p-4 h-full min-h-0 flex flex-col">
+        <div className="lg:col-span-1 bg-[#0B1220]/80 backdrop-blur-md border border-slate-700/50 rounded-2xl shadow-xl shadow-black/20 p-4 h-full min-h-0 flex flex-col relative overflow-y-auto group custom-scrollbar">
            <AiAnalysis />
         </div>
       </section>
@@ -82,19 +82,19 @@ export default function DashboardPage() {
       {/* SECTION C: Bottom Row - Analytics Grid */}
       <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 h-[300px]">
         {/* Crime Trend */}
-        <div className="bg-[#0B1220] border border-border/20 rounded-xl p-4 shadow-sm xl:col-span-1">
+        <div className="bg-[#0B1220]/80 backdrop-blur-md border border-slate-700/50 rounded-2xl p-4 shadow-xl shadow-black/20 xl:col-span-1 relative overflow-y-auto custom-scrollbar group">
            <CrimeTrendChart />
         </div>
         {/* Crime By Category */}
-        <div className="bg-[#0B1220] border border-border/20 rounded-xl p-4 shadow-sm xl:col-span-1">
+        <div className="bg-[#0B1220]/80 backdrop-blur-md border border-slate-700/50 rounded-2xl p-4 shadow-xl shadow-black/20 xl:col-span-1 relative overflow-y-auto custom-scrollbar group">
            <CrimeCategoryChart />
         </div>
         {/* Predicted Escalations */}
-        <div className="bg-[#0B1220] border border-border/20 rounded-xl p-4 shadow-sm xl:col-span-1">
+        <div className="bg-[#0B1220]/80 backdrop-blur-md border border-slate-700/50 rounded-2xl p-4 shadow-xl shadow-black/20 xl:col-span-1 relative overflow-y-auto custom-scrollbar group">
            <EscalationsList />
         </div>
         {/* Patrol Status */}
-        <div className="bg-[#0B1220] border border-border/20 rounded-xl p-4 shadow-sm xl:col-span-1">
+        <div className="bg-[#0B1220]/80 backdrop-blur-md border border-slate-700/50 rounded-2xl p-4 shadow-xl shadow-black/20 xl:col-span-1 relative overflow-y-auto custom-scrollbar group">
            <PatrolStatus />
         </div>
       </section>

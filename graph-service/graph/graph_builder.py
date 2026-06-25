@@ -31,9 +31,10 @@ def build_graph():
         # Read new attributes from enriched crime_records.csv
         case_status = row.get('case_status')
         io_name = row.get('io_name')
+        case_date = row.get('date')  # YYYY-MM-DD format from dataset
         
         if pd.notna(fir_id):
-            G.add_node(fir_id, type='Case', crime_type=crime_type, area=area, status=case_status, investigating_officer=io_name)
+            G.add_node(fir_id, type='Case', crime_type=crime_type, area=area, status=case_status, investigating_officer=io_name, date=case_date if pd.notna(case_date) else None)
             if pd.notna(area):
                 # Ensure Area node exists
                 if not G.has_node(area):

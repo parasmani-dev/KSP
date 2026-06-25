@@ -108,7 +108,8 @@ export default function CrimeNetworkGraphClient({ searchQuery, onNodeSelected, o
     let isMounted = true;
     const fetchGraph = async () => {
       try {
-        const res = await fetch('http://localhost:8001/graph/network');
+        const hostname = typeof window !== 'undefined' && window.location.hostname !== 'localhost' ? window.location.hostname : '127.0.0.1';
+        const res = await fetch(`http://${hostname}:8001/graph/network`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         if (!isMounted) return;
@@ -318,7 +319,7 @@ export default function CrimeNetworkGraphClient({ searchQuery, onNodeSelected, o
       
       // Zoom to node
       cy.animate({
-        zoom: 1.5,
+        zoom: 0.8,
         center: { ele: node }
       }, { duration: 500 });
       

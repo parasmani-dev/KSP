@@ -29,7 +29,8 @@ export function KpiCards() {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-6">
       {stats.map((s, i) => (
-        <div key={i} className="bg-[#0B1220] border border-border/20 rounded-xl p-5 shadow-sm relative overflow-hidden group">
+        <div key={i} className="bg-[#0B1220]/80 backdrop-blur-md border border-slate-700/50 rounded-2xl p-5 shadow-xl shadow-black/20 relative overflow-hidden group">
+          <div className={`absolute top-0 right-0 w-24 h-24 rounded-full blur-[40px] -z-10 opacity-50 group-hover:opacity-100 transition-opacity ${s.bg.replace('/10', '/20')}`} />
           <div className="flex items-start justify-between">
             <div>
               <p className="text-sm font-medium text-muted-foreground mb-1">{s.label}</p>

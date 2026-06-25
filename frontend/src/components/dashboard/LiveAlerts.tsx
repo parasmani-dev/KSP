@@ -66,13 +66,15 @@ export function LiveAlerts() {
   }
 
   return (
-    <div className="bg-[#0B1220] border border-border/20 rounded-xl shadow-sm h-full flex flex-col overflow-hidden w-full">
-      <div className="p-4 border-b border-border/10 flex justify-between items-center bg-[#121A2F] shrink-0">
+    <div className="bg-[#0B1220]/80 backdrop-blur-md border border-slate-700/50 rounded-2xl shadow-xl shadow-black/20 h-full flex flex-col overflow-hidden w-full relative group">
+      <div className="absolute top-0 left-0 w-32 h-32 bg-red-500/5 rounded-full blur-[40px] -z-10 group-hover:bg-red-500/10 transition-colors"></div>
+      
+      <div className="p-4 border-b border-slate-700/50 flex justify-between items-center bg-[#0B1220]/50 shrink-0">
         <h3 className="font-semibold text-white flex items-center gap-2">
           <ShieldAlert className="h-4 w-4 text-red-500" />
           Alert Center
         </h3>
-        <div className="flex bg-[#0B1220] p-1 rounded-md border border-border/10">
+        <div className="flex bg-[#0B1220]/80 p-1 rounded-md border border-slate-700/50 shadow-inner">
           <button 
             onClick={() => setActiveTab('live')} 
             className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide rounded transition-colors ${activeTab === 'live' ? 'bg-blue-600 text-white shadow-sm' : 'text-muted-foreground hover:text-white'}`}
@@ -88,7 +90,7 @@ export function LiveAlerts() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 min-h-0 bg-[#0B1220]">
+      <div className="flex-1 overflow-y-auto p-4 min-h-0 bg-transparent">
         {activeTab === 'live' ? (
           <div className="space-y-4 h-full flex flex-col">
             <div className="flex items-center justify-between mb-2">

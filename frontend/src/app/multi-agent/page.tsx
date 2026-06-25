@@ -109,10 +109,11 @@ export default function MultiAgentPage() {
       {/* HEADER SECTION */}
       <div className="flex items-center justify-between mb-6 shrink-0">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight flex items-center gap-3 text-white">
-            <BrainCircuit className="w-7 h-7 text-blue-500" /> Autonomous Multi-Agent Engine
+          <h1 className="text-2xl font-extrabold tracking-tight flex items-center gap-3 text-white">
+            <BrainCircuit className="w-7 h-7 text-blue-500 drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]" /> 
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-slate-400">Autonomous Multi-Agent Engine</span>
           </h1>
-          <p className="text-slate-400 text-sm mt-1 max-w-3xl">
+          <p className="text-slate-400 text-sm mt-2 max-w-3xl leading-relaxed">
             The CIOS autonomously activates a swarm of specialized AI agents to extract intelligence, build criminal networks, assess risk and generate actionable insights.
           </p>
         </div>
@@ -124,7 +125,8 @@ export default function MultiAgentPage() {
         {/* LEFT COLUMN: INPUTS (3/12) */}
         <div className="xl:col-span-3 flex flex-col gap-5">
           {/* Upload Widget */}
-          <div className="bg-[#0f172a] rounded-xl border border-slate-800 p-5 flex flex-col items-center">
+          <div className="bg-[#0B1220]/80 backdrop-blur-md rounded-2xl border border-slate-700/50 p-6 flex flex-col items-center shadow-xl shadow-black/20 group relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl -z-10 group-hover:bg-blue-500/10 transition-colors" />
             <div className="flex items-center gap-2 w-full mb-4">
               <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-xs">1</div>
               <h3 className="font-semibold text-slate-200 text-sm">Upload Case Files</h3>
@@ -135,20 +137,31 @@ export default function MultiAgentPage() {
               onClick={() => document.getElementById('file-upload-agent')?.click()}
             >
                <Upload className="w-8 h-8 text-blue-500 mb-3" />
-               <p className="text-xs text-slate-300">Drag & drop FIR, PDF or images</p>
+               <p className="text-xs text-slate-300">Drag & drop text (.txt) files only</p>
                <p className="text-[10px] text-slate-500 mt-1">Max 50MB per file</p>
                <input 
                  type="file" 
+                 accept=".txt"
                  id="file-upload-agent" 
                  className="hidden" 
                  onChange={(e) => {
                    if (e.target.files && e.target.files.length > 0) {
                      const file = e.target.files[0]
                      setUploadedFile(file)
-                     setFormData({
-                       ...formData,
-                       text: `FIR REPORT [Auto-Extracted from ${file.name}]: Suspect unknown was spotted near Whitefield intersection. Reported to have connections with the local cartel. Involved in multiple altercations.`
-                     })
+                     
+                     if (file.type === "text/plain" || file.name.endsWith(".txt")) {
+                       const reader = new FileReader();
+                       reader.onload = (event) => {
+                         const content = event.target?.result as string;
+                         setFormData(prev => ({ ...prev, text: content }));
+                       };
+                       reader.readAsText(file);
+                     } else {
+                       setFormData(prev => ({
+                         ...prev,
+                         text: `FIR REPORT [Auto-Extracted from ${file.name}]: Suspect unknown was spotted near Whitefield intersection. Reported to have connections with the local cartel. Involved in multiple altercations.`
+                       }))
+                     }
                    }
                  }} 
                />
@@ -177,7 +190,8 @@ export default function MultiAgentPage() {
           </div>
 
           {/* Manual FIR Input */}
-          <div className="bg-[#0f172a] rounded-xl border border-slate-800 p-5 flex flex-col flex-1">
+          <div className="bg-[#0B1220]/80 backdrop-blur-md rounded-2xl border border-slate-700/50 p-6 flex flex-col flex-1 shadow-xl shadow-black/20 relative overflow-hidden group">
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-3xl -z-10 group-hover:bg-indigo-500/10 transition-colors" />
             <h3 className="font-semibold text-sm mb-4 flex items-center gap-2 text-slate-200">
               <FileText className="w-4 h-4 text-blue-500"/> Manual FIR Input
             </h3>
@@ -214,7 +228,8 @@ export default function MultiAgentPage() {
         <div className="xl:col-span-6 flex flex-col gap-5">
           
           {/* Swarm Execution Graph */}
-          <div className="bg-[#0f172a] rounded-xl border border-slate-800 p-6 flex flex-col flex-1 relative overflow-hidden">
+          <div className="bg-[#0B1220]/80 backdrop-blur-md rounded-2xl border border-slate-700/50 p-6 flex flex-col flex-1 relative overflow-hidden shadow-xl shadow-black/20 group">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-blue-500/5 blur-[100px] -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
             <div className="flex items-center justify-between mb-8">
               <h3 className="font-semibold text-base flex items-center gap-2 text-slate-200">
                 <Network className="w-5 h-5 text-blue-500"/> Swarm Execution Graph
@@ -285,7 +300,8 @@ export default function MultiAgentPage() {
           </div>
 
           {/* Real-time Intelligence Output */}
-          <div className="bg-[#0f172a] rounded-xl border border-slate-800 p-5 flex flex-col shrink-0">
+          <div className="bg-[#0B1220]/80 backdrop-blur-md rounded-2xl border border-slate-700/50 p-6 flex flex-col shrink-0 shadow-xl shadow-black/20 relative overflow-hidden group">
+             <div className="absolute bottom-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl -z-10 group-hover:bg-orange-500/10 transition-colors" />
              <h3 className="font-semibold text-base mb-4 text-slate-200">Real-time Intelligence Output</h3>
              
              <div className="relative flex-1 flex flex-col">
@@ -369,7 +385,8 @@ export default function MultiAgentPage() {
         <div className="xl:col-span-3 flex flex-col gap-5">
           
           {/* Swarm Intelligence Overview */}
-          <div className="bg-[#0f172a] rounded-xl border border-slate-800 p-5">
+          <div className="bg-[#0B1220]/80 backdrop-blur-md rounded-2xl border border-slate-700/50 p-6 shadow-xl shadow-black/20 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl -z-10 group-hover:bg-emerald-500/10 transition-colors" />
             <h3 className="font-semibold text-sm mb-5 text-slate-200">Swarm Intelligence Overview</h3>
             <div className="flex items-center gap-6">
                <div className="relative w-20 h-20 flex-shrink-0">
@@ -409,7 +426,8 @@ export default function MultiAgentPage() {
           </div>
 
           {/* Swarm Activity Feed */}
-          <div className="bg-[#0f172a] rounded-xl border border-slate-800 p-5 flex flex-col flex-1 h-[320px]">
+          <div className="bg-[#0B1220]/80 backdrop-blur-md rounded-2xl border border-slate-700/50 p-6 flex flex-col flex-1 h-[320px] shadow-xl shadow-black/20 relative overflow-hidden group">
+            <div className="absolute bottom-0 right-0 w-32 h-32 bg-red-500/5 rounded-full blur-3xl -z-10 group-hover:bg-red-500/10 transition-colors" />
             <div className="flex items-center justify-between mb-4">
                <h3 className="font-semibold text-sm text-slate-200">Swarm Activity Feed</h3>
                <div className="flex items-center gap-1.5 text-[10px] text-red-400 font-bold tracking-wider">
@@ -456,7 +474,8 @@ export default function MultiAgentPage() {
 
       {/* FINAL INTELLIGENCE BRIEF EXPANDED */}
       {showBrief && activeStage === 5 && (
-        <div className="bg-[#0f172a] rounded-xl border border-slate-800 flex flex-col shrink-0 animate-in fade-in slide-in-from-bottom-4 duration-500 mb-6">
+        <div className="bg-[#0B1220]/80 backdrop-blur-md rounded-2xl border border-slate-700/50 flex flex-col shrink-0 shadow-2xl shadow-black/40 animate-in fade-in slide-in-from-bottom-4 duration-500 mb-6 relative overflow-hidden group">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-blue-500/5 rounded-full blur-[100px] -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
           {/* Header */}
           <div className="p-5 flex items-center justify-between border-b border-slate-800">
             <div className="flex items-center gap-3 text-green-500">
@@ -475,7 +494,7 @@ export default function MultiAgentPage() {
               {/* Entity Rows */}
               <div className="flex flex-col gap-3">
                 {/* Citizen */}
-                <div className="bg-[#0B1220] border border-slate-800 rounded-lg p-4 flex justify-between items-center">
+                <div className="bg-[#0f172a]/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4 flex justify-between items-center transition-colors hover:border-slate-600">
                   <div>
                     <p className="text-xs text-slate-400 mb-1">Citizen</p>
                     <p className="text-sm font-semibold text-white">{intelData.suspect}</p>
@@ -483,7 +502,7 @@ export default function MultiAgentPage() {
                   <span className="text-[10px] bg-slate-800 text-slate-300 px-2.5 py-1 rounded">Primary Suspect</span>
                 </div>
                 {/* Location */}
-                <div className="bg-[#0B1220] border border-slate-800 rounded-lg p-4 flex justify-between items-center">
+                <div className="bg-[#0f172a]/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4 flex justify-between items-center transition-colors hover:border-slate-600">
                   <div>
                     <p className="text-xs text-slate-400 mb-1">Location</p>
                     <p className="text-sm font-semibold text-white">{intelData.location}</p>
@@ -491,7 +510,7 @@ export default function MultiAgentPage() {
                   <span className="text-[10px] bg-slate-800 text-slate-300 px-2.5 py-1 rounded">Incident Zone</span>
                 </div>
                 {/* Crime */}
-                <div className="bg-[#0B1220] border border-slate-800 rounded-lg p-4 flex justify-between items-center">
+                <div className="bg-[#0f172a]/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4 flex justify-between items-center transition-colors hover:border-slate-600">
                   <div>
                     <p className="text-xs text-slate-400 mb-1">Crime</p>
                     <p className="text-sm font-semibold text-white">{intelData.crimeType}</p>

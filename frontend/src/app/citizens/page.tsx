@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { aiApi, graphApi } from "@/lib/api"
-import { Search, Activity, Users, X, UserX } from "lucide-react"
+import { Search, Activity, Users, User, X, UserX } from "lucide-react"
 import { TopKpiCards, CitizenProfileCard, RiskScoreGauge, AiRiskExplanation } from "@/components/citizens/CitizenWidgets"
 import { RelationshipNetwork, LinkedCasesWidget, ThreatProfilerWidget } from "@/components/citizens/CitizenWidgets2"
 import { RiskComparison, SimilarProfiles } from "@/components/citizens/CitizenWidgets3"

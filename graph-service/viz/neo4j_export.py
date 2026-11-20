@@ -2,11 +2,14 @@ import os
 import networkx as nx
 from neo4j import GraphDatabase
 
-def export_to_neo4j(graph: nx.Graph, uri="neo4j://localhost:7687", user="neo4j", password="password"):
+def export_to_neo4j(graph: nx.Graph, uri="neo4j://localhost:7687", user="neo4j", password=None):
     """
     Exports the NetworkX graph to Neo4j for visualization purposes.
     Neo4j is used strictly for visualization/demoing; no analysis happens here.
     """
+    password = password or os.getenv("NEO4J_PASSWORD")
+    if not password:
+        raise ValueError("Set NEO4J_PASSWORD before exporting the graph.")
     try:
         driver = GraphDatabase.driver(uri, auth=(user, password))
     except Exception as e:

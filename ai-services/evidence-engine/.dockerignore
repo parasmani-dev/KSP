@@ -1,0 +1,11 @@
+.env*
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+artifacts/
+tests/
+test_*.py
+list_models.py
+run_demo.py
+verify_module_1.py

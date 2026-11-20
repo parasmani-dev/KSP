@@ -67,8 +67,6 @@ async def run_simulation():
     
     try:
         file_path = os.path.join(DATA_DIR, "kafka_seed_events_sample.csv")
-        if not os.path.exists(file_path):
-            file_path = os.path.join(DATA_DIR, "kafka_seed_events.csv")
         df = pd.read_csv(file_path)
     except Exception as e:
         print("Failed to load kafka seed events", e)

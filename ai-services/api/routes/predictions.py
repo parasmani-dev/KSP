@@ -32,12 +32,10 @@ def get_risk_bucket(score: float) -> str:
 
 def get_mock_hotspots(days: int):
     file_path = os.path.join(DATA_DIR, "mock_predictions_sample.csv")
-    if not os.path.exists(file_path):
-        file_path = os.path.join(DATA_DIR, "mock_predictions.csv")
     try:
         df = pd.read_csv(file_path)
     except:
-        return {"hotspots": []}
+        return {"hotspots": [], "source": "synthetic_scenarios", "forecast_available": False}
     
     hotspots = []
     for _, row in df.iterrows():

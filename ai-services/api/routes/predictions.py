@@ -17,6 +17,9 @@ DATA_DIR = os.path.join(ROOT_DIR, "Dataset") if os.path.exists(os.path.join(ROOT
 # Lazy loading models
 models = {}
 
+def demo_mode() -> bool:
+    return os.getenv("CIOS_DEMO_MODE", "1") != "0"
+
 def get_risk_bucket(score: float) -> str:
     """Unified risk bucket math mapping 0.0-1.0 probability score to Ideation spec labels."""
     if score >= 0.86:
@@ -51,9 +54,11 @@ def get_mock_hotspots(days: int):
                 {"code": "DOMINANT_CRIME", "value": row.get('dominant_crime', 'Unknown')}
             ]
         })
-    return {"hotspots": hotspots[:10]}
+    return {"hotspots": hotspots[:10], "source": "synthetic_scenarios", "forecast_available": False}
 
 def load_models():
+    if demo_mode():
+        return
     if not models:
         try:
             models['prophet'] = joblib.load(os.path.join(SAVED_DIR, "prophet_models.joblib"))
@@ -86,12 +91,14 @@ def get_all_predictions():
     """Returns all current predictions (hotspots, etc.)"""
     load_models()
     if not models:
-        raise HTTPException(status_code=503, detail="Models not trained yet.")
+        return {"message": "No predictive model is deployed in the public demo.", "source": "synthetic_demo"}
     return {"message": "Models are active. Use specific endpoints for inference."}
 
 @router.post("/run")
 def run_prediction_engine():
     """Manually trigger the prediction engine to re-run using latest data"""
+    if demo_mode():
+        raise HTTPException(status_code=403, detail="Model training is disabled in the public demo.")
     import subprocess
     script_path = os.path.join(BASE_DIR, "models", "train_models.py")
     subprocess.Popen(["python", script_path])
@@ -249,6 +256,18 @@ def get_trend(area: str = None, days: int = 14):
 def get_factors(days: int = 7):
     """Returns dynamic AI prediction driving factors, scaled to the forecast horizon."""
     load_models()
+    if demo_mode():
+        sample = pd.read_csv(os.path.join(DATA_DIR, "crime_records_sample.csv"))
+        total = max(len(sample), 1)
+        factors = [
+            ("Calendar", "Weekend records", "Share of synthetic records", "is_weekend", "bg-orange-500", "text-orange-500"),
+            ("Moon", "Night records", "Share of synthetic records", "is_night_crime", "bg-indigo-500", "text-indigo-500"),
+            ("MapPin", "Festival-tagged records", "Share of synthetic records", "is_festival_period", "bg-yellow-500", "text-yellow-500"),
+        ]
+        return {"source": "synthetic_history", "factors": [
+            {"icon": icon, "title": title, "desc": desc, "pct": f"{round(sample[column].eq(1).sum() / total * 100)}%", "color": color, "iconColor": icon_color}
+            for icon, title, desc, column, color, icon_color in factors
+        ]}
     now = pd.Timestamp.now()
     today = now.normalize()
     
@@ -414,7 +433,28 @@ def detect_emerging_threats(req: ThreatRequest):
         
     load_models()
     if 'iso_forest' not in models:
-        raise HTTPException(status_code=503, detail="Isolation Forest model not available.")
+        # Keep the public demo usable without shipping an unvalidated model.
+        # These are counts in the synthetic sample, never an anomaly verdict.
+        sample = pd.read_csv(os.path.join(DATA_DIR, "crime_records_sample.csv"))
+        matches = sample[
+            sample['area'].str.casefold().eq(req.area.strip().casefold())
+            & sample['crime_type'].str.casefold().eq(req.crime_type.strip().casefold())
+            & sample['hour'].eq(req.hour)
+            & sample['month'].eq(req.month)
+            & sample['is_festival_period'].eq(req.is_festival_period)
+            & sample['is_night_crime'].eq(req.is_night_crime)
+            & sample['is_weekend'].eq(req.is_weekend)
+        ]
+        return {
+            "area": req.area,
+            "analysis_mode": "synthetic_history",
+            "is_anomaly": None,
+            "matching_records": int(len(matches)),
+            "total_records": int(len(sample)),
+            "alerts": [],
+            "reasons": [],
+            "message": "This is a count of matching synthetic sample records. No anomaly model is deployed."
+        }
         
     try:
         area_encoded = models['le_area'].transform([req.area])[0]
@@ -455,6 +495,7 @@ def detect_emerging_threats(req: ThreatRequest):
         
     return {
         "area": req.area,
+        "analysis_mode": "isolation_forest",
         "is_anomaly": bool(is_anomaly),
         "alerts": threats,
         "reasons": reasons
@@ -464,6 +505,8 @@ def detect_emerging_threats(req: ThreatRequest):
 def get_events(days: int = 7):
     """Returns top predicted events (hybrid calendar/AI logic) for the next N days."""
     load_models()
+    if demo_mode():
+        return {"events": [], "source": "no_deployed_model"}
     events = []
     today = pd.Timestamp.today().normalize()
     

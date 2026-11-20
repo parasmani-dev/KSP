@@ -2,6 +2,7 @@ __pycache__/
 *.pyc
 *.pyo
 *.pth
-.env
+.env*
+!.env.example
 .DS_Store
 ai-services/models/saved/*.joblib

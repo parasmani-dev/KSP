@@ -42,6 +42,7 @@ export function PredictionDashboard() {
   const [anomalyWeekend, setAnomalyWeekend] = useState(true)
   const [anomalyLoading, setAnomalyLoading] = useState(false)
   const [anomalyResult, setAnomalyResult] = useState<any>(null)
+  const [anomalyError, setAnomalyError] = useState("")
 
   // Live Data State
   const [hotspots, setHotspots] = useState<any[]>([])
@@ -106,7 +107,7 @@ export function PredictionDashboard() {
   
   // Derived Crime Type Pie Chart Data
   const crimeCounts = crimes.reduce((acc: any, c: any) => {
-    acc[c.type] = (acc[c.type] || 0) + 1
+    acc[c.crime_type] = (acc[c.crime_type] || 0) + 1
     return acc
   }, {})
   
@@ -131,6 +132,8 @@ export function PredictionDashboard() {
 
   const handleAnomalyScan = async () => {
     setAnomalyLoading(true)
+    setAnomalyError("")
+    setAnomalyResult(null)
     try {
       const res = await aiApi.post('/predictions/emerging_threats', {
         area: anomalyArea,
@@ -145,6 +148,7 @@ export function PredictionDashboard() {
       setAnomalyResult(res.data)
     } catch (e) {
       console.error(e)
+      setAnomalyError("The sample review is temporarily unavailable. Try again shortly.")
     }
     setAnomalyLoading(false)
   }
@@ -173,10 +177,10 @@ export function PredictionDashboard() {
         <div>
           <div className="ksp-eyebrow mb-2">Analysis / synthetic data</div>
           <h1 className="ksp-heading flex items-center gap-2"><TrendingUp className="text-[#d0ad71] w-6 h-6" /> Forecast review</h1>
-          <p className="ksp-subheading mt-2">Compare area estimates and recorded patterns. Model outputs require independent review.</p>
+          <p className="ksp-subheading mt-2">Explore synthetic scenarios and recorded sample patterns. No predictive model is deployed in this demo.</p>
         </div>
         <div className="flex items-center gap-4 bg-[#0B1220]/80 p-1.5 rounded-lg border border-slate-800/50">
-          <span className="text-xs text-slate-400 pl-3">Forecast Horizon</span>
+          <span className="text-xs text-slate-400 pl-3">Scenario window</span>
           <div className="flex items-center">
             {['7 Days', '14 Days', '30 Days'].map(h => (
               <button 
@@ -202,9 +206,9 @@ export function PredictionDashboard() {
         )}
         <div className={`transition-opacity duration-300 ${loading ? 'opacity-40 pointer-events-none' : 'opacity-100'}`}>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
-            <KpiCard title={`ESTIMATED INCIDENTS / ${horizon.toUpperCase()}`} value={hotspots.length ? Math.round(totalPredictedIncidents) : '—'} subtitle="Model output" subDesc="Synthetic sample" subColor="text-[#d0ad71]" icon={<Activity className="text-[#d0ad71] w-5 h-5" />} />
-            <KpiCard title="HIGH RISK AREAS" value={hotspots.length ? highRiskZones : '—'} subtitle="Risk buckets" subDesc="Review source data" subColor="text-[#d0ad71]" icon={<MapPin className="text-[#d0ad71] w-5 h-5" />} />
-            <KpiCard title="MEAN AREA RISK" value={hotspots.length ? `${Math.round((hotspots.reduce((sum, h) => sum + h.risk_score, 0) / hotspots.length) * 100)}%` : '—'} subtitle="Across areas" subDesc="Synthetic sample" subColor="text-[#d0ad71]" icon={<Target className="text-[#d0ad71] w-5 h-5" />} />
+            <KpiCard title={`SCENARIO INCIDENTS / ${horizon.toUpperCase()}`} value={hotspots.length ? Math.round(totalPredictedIncidents) : '—'} subtitle="Illustrative input" subDesc="Synthetic sample" subColor="text-[#d0ad71]" icon={<Activity className="text-[#d0ad71] w-5 h-5" />} />
+            <KpiCard title="HIGH SCORE AREAS" value={hotspots.length ? highRiskZones : '—'} subtitle="Scenario buckets" subDesc="Not a live forecast" subColor="text-[#d0ad71]" icon={<MapPin className="text-[#d0ad71] w-5 h-5" />} />
+            <KpiCard title="MEAN SCENARIO SCORE" value={hotspots.length ? `${Math.round((hotspots.reduce((sum, h) => sum + h.risk_score, 0) / hotspots.length) * 100)}%` : '—'} subtitle="Across areas" subDesc="Synthetic sample" subColor="text-[#d0ad71]" icon={<Target className="text-[#d0ad71] w-5 h-5" />} />
             <KpiCard title="HIGHEST SCORE AREA" value={peakRiskArea ? peakRiskArea.area : '—'} subtitle={peakRiskArea ? peakRiskArea.risk_level : 'No estimate'} subDesc="Review locally" subColor="text-[#d0ad71]" icon={<ShieldAlert className="text-[#d0ad71] w-5 h-5" />} />
           </div>
 
@@ -212,7 +216,7 @@ export function PredictionDashboard() {
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         {/* RISK FORECAST MAP */}
         <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col h-[350px]">
-          <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">Risk Forecast Map (Next {horizon})</h3>
+          <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">Synthetic scenario map ({horizon})</h3>
           <div className="flex-1 relative rounded-lg overflow-hidden bg-[#050A15] border border-slate-800/50">
             <LiveMap hotspots={hotspots} hideOverlay={true} theme="forecast" showMaximize={true} />
           </div>
@@ -221,7 +225,7 @@ export function PredictionDashboard() {
         {/* RISK TREND FORECAST */}
         <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col h-[350px]">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Recorded trend and estimate</h3>
+            <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Recorded sample trend</h3>
           </div>
           <div className="flex-1 min-h-0">
             {liveTrendData.length === 0 ? <div className="flex h-full items-center justify-center text-xs text-slate-500">Trend data unavailable.</div> : <ResponsiveContainer width="100%" height="100%">
@@ -250,7 +254,7 @@ export function PredictionDashboard() {
 
         {/* WHY AI PREDICTS THIS */}
         <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col h-[350px]">
-          <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">Scenario factors</h3>
+          <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">Sample composition</h3>
           <div className="flex-1 space-y-4">
             {aiFactors.length > 0 ? (
               aiFactors.map((f, i) => {
@@ -271,7 +275,7 @@ export function PredictionDashboard() {
               <div className="text-xs text-slate-500">No factors available.</div>
             )}
           </div>
-          <p className="border-t border-slate-800/50 pt-3 mt-auto text-[10px] text-slate-500">Illustrative factors. Validate before operational use.</p>
+          <p className="border-t border-slate-800/50 pt-3 mt-auto text-[10px] text-slate-500">Percentages describe the synthetic corpus, not causal risk factors.</p>
         </div>
       </div>
 
@@ -288,9 +292,9 @@ export function PredictionDashboard() {
           <div className="p-4 flex-1 flex flex-col overflow-y-auto custom-scrollbar">
             <div className="flex items-center gap-2 mb-2 shrink-0">
               <ShieldAlert className="w-4 h-4 text-blue-500" />
-              <h3 className="text-sm font-bold text-white">Emerging Threats</h3>
+              <h3 className="text-sm font-bold text-white">Sample lookup</h3>
             </div>
-            <p className="text-[10px] text-slate-400 mb-4 shrink-0">Scan specific conditions to detect novel crime spikes or anomalies.</p>
+            <p className="text-[10px] text-slate-400 mb-4 shrink-0">Compare selected conditions with synthetic sample records. Model output appears only when a validated model is available.</p>
             
             <div className="grid grid-cols-2 gap-3 mb-3 shrink-0">
               <div className="flex flex-col">
@@ -324,12 +328,19 @@ export function PredictionDashboard() {
             
             <button onClick={handleAnomalyScan} disabled={anomalyLoading} className="w-full py-2 bg-blue-600 hover:bg-blue-500 rounded text-white text-[11px] font-bold flex items-center justify-center gap-2 transition-colors mb-4 shrink-0">
               {anomalyLoading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <ShieldAlert className="w-3.5 h-3.5" />}
-              Scan for Anomalies
+              Review Sample
             </button>
+            {anomalyError && <p role="alert" className="mb-3 text-xs text-red-300">{anomalyError}</p>}
             
             {anomalyResult && (
               <div className="mt-auto border border-slate-800/50 rounded-lg p-3 bg-[#0B1220] shrink-0">
-                <div className={`p-3 rounded-lg mb-3 ${anomalyResult.is_anomaly ? 'bg-red-950/40 border border-red-900/50' : 'bg-green-950/40 border border-green-900/50'}`}>
+                {anomalyResult.analysis_mode === 'synthetic_history' ? (
+                  <div className="rounded-lg border border-[#715b40] bg-[#302b27] p-3">
+                    <p className="text-[11px] font-bold text-[#ead0a4]">Synthetic sample match</p>
+                    <p className="mt-1 text-xs text-white">{anomalyResult.matching_records} matching record{anomalyResult.matching_records === 1 ? '' : 's'} out of {anomalyResult.total_records}</p>
+                    <p className="mt-2 text-[10px] leading-4 text-slate-300">{anomalyResult.message}</p>
+                  </div>
+                ) : <><div className={`p-3 rounded-lg mb-3 ${anomalyResult.is_anomaly ? 'bg-red-950/40 border border-red-900/50' : 'bg-green-950/40 border border-green-900/50'}`}>
                   <div className="flex items-start gap-2">
                     <Activity className={`w-4 h-4 shrink-0 mt-0.5 ${anomalyResult.is_anomaly ? 'text-red-500' : 'text-green-500'}`} />
                     <div className="flex flex-col">
@@ -345,7 +356,7 @@ export function PredictionDashboard() {
                   </div>
                 </div>
                 
-                <h4 className="text-[9px] font-bold text-slate-500 mb-2 uppercase tracking-wider">AI Reasoning</h4>
+                <h4 className="text-[9px] font-bold text-slate-500 mb-2 uppercase tracking-wider">Model factors</h4>
                 <div className="flex flex-col gap-1.5">
                   {anomalyResult.reasons?.map((r: any, i: number) => (
                     <div key={i} className="flex justify-between items-center text-[9px] font-mono">
@@ -353,7 +364,7 @@ export function PredictionDashboard() {
                       <span className="text-blue-400">{Array.isArray(r.value) ? r.value.join(', ') : r.value}</span>
                     </div>
                   ))}
-                </div>
+                </div></>}
               </div>
             )}
           </div>
@@ -361,7 +372,7 @@ export function PredictionDashboard() {
 
         {/* TIME & DAY HEATMAP */}
         <div className="xl:col-span-2 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col h-[350px]">
-          <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">Time & Day Heatmap</h3>
+          <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">Sample time and day heatmap</h3>
           <div className="flex-1 flex flex-col">
             <div className="flex-1 flex relative">
               <div className="flex flex-col justify-between text-[8px] text-slate-500 pr-2 pt-1 pb-4">
@@ -403,7 +414,7 @@ export function PredictionDashboard() {
           <div className="flex-1 flex flex-col gap-3">
             <div className="grid grid-cols-4 text-[8px] font-bold text-slate-500 uppercase pb-2 border-b border-slate-800/50">
               <span className="col-span-1">Zone</span>
-              <span className="col-span-1 text-center">Risk Score</span>
+              <span className="col-span-1 text-center">Scenario score</span>
               <span className="col-span-2 text-right">Review note</span>
             </div>
             {hotspots.length > 0 ? hotspots.slice(0, 5).map((spot, i) => {
@@ -421,12 +432,12 @@ export function PredictionDashboard() {
 
       {/* ROW 5: FOOTER EVENTS */}
       <div>
-        <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-3">Top Predicted Events (Next 7 Days)</h3>
+        <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-3">Model event outlook</h3>
         <div className={`grid grid-cols-1 md:grid-cols-2 ${aiEvents.length === 1 ? 'xl:grid-cols-1' : aiEvents.length === 2 ? 'xl:grid-cols-2' : aiEvents.length === 3 ? 'xl:grid-cols-3' : aiEvents.length === 4 ? 'xl:grid-cols-4' : 'xl:grid-cols-5'} gap-4 items-center`}>
           {aiEvents.length > 0 ? aiEvents.map((ev, idx) => (
             <EventCard key={idx} {...ev} />
           )) : (
-            <div className="text-[10px] text-slate-500 col-span-5">No significant events or anomalies detected in the upcoming 7 days.</div>
+            <div className="text-[10px] text-slate-500 col-span-5">No event model is deployed in the keyless public demo.</div>
           )}
         </div>
       </div>

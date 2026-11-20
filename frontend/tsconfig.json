@@ -30,5 +30,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules", "page_dark.tsx", "src/app/network/page_recovered.tsx", "src/app/network/page_recovered_diff.tsx"]
+  "exclude": ["node_modules"]
 }

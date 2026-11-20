@@ -78,7 +78,7 @@ export function LiveAlerts() {
             onClick={() => setActiveTab('live')} 
             className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide rounded transition-colors ${activeTab === 'live' ? 'bg-[#a8824c] text-[#101922]' : 'text-muted-foreground hover:text-white'}`}
           >
-            Live
+            Demo feed
           </button>
           <button 
             onClick={() => setActiveTab('history')} 
@@ -95,7 +95,7 @@ export function LiveAlerts() {
             <div className="flex items-center justify-between mb-2">
                <div className="flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">
                  <Activity className="w-3 h-3 animate-pulse" />
-                 Listening for events...
+                 Synthetic event stream
                </div>
                {error ? (
                   <span className="text-xs text-muted-foreground flex items-center gap-1">
@@ -113,7 +113,7 @@ export function LiveAlerts() {
                 alerts.map((alert, idx) => (
                   <div key={idx} className="flex flex-col gap-2 p-3 rounded-lg bg-[#121A2F] border border-border/10 hover:border-border/30 transition-colors">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] text-muted-foreground font-medium">Just now</span>
+                      <span className="text-[10px] text-muted-foreground font-medium">Sample event</span>
                       <div className="flex items-center gap-1.5 bg-red-500/10 border border-red-500/20 px-2 py-0.5 rounded text-[9px] font-bold text-red-400 uppercase tracking-wider">
                          <div className="h-1.5 w-1.5 rounded-full bg-red-500" />
                          {String(alert.severity || 'EVENT').toUpperCase()}
@@ -128,8 +128,8 @@ export function LiveAlerts() {
               ) : (
                 <div className="flex flex-col items-center justify-center h-full text-muted-foreground py-8">
                   <Info className="h-8 w-8 mb-3 opacity-20" />
-                  <p className="text-sm text-white/60">Waiting for events...</p>
-                  <p className="text-xs mt-1 opacity-40 text-center max-w-[200px]">Start a simulation to see live intelligence stream.</p>
+                  <p className="text-sm text-white/60">Waiting for sample events...</p>
+                  <p className="text-xs mt-1 opacity-40 text-center max-w-[200px]">The synthetic feed starts with this dashboard.</p>
                 </div>
               )}
             </div>

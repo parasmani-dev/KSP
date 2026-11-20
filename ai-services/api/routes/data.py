@@ -37,14 +37,12 @@ def get_dashboard_kpis():
         total = len(df)
         active = len(df[df['case_status'] == 'Under Investigation'])
         closed = len(df[df['case_status'] == 'Closed'])
-        # Mock arrest / clearance logic if not explicitly in data
-        arrests = int(total * 0.12)
         clearance = round((closed / total) * 100, 1) if total > 0 else 0
         return {
             "total_incidents": total,
             "active_cases": active,
             "solved_cases": closed,
-            "arrests": arrests,
+            "cities_represented": int(df['city'].nunique()),
             "clearance_rate": clearance
         }
     except Exception as e:
@@ -54,8 +52,12 @@ def get_dashboard_kpis():
 def get_crime_trends():
     try:
         df = pd.read_csv(os.path.join(DATA_DIR, "crime_records_sample.csv"))
-        # Get counts per month
-        counts = df['month'].value_counts().sort_index()
+        df['date'] = pd.to_datetime(df['date'], errors='coerce')
+        df = df.dropna(subset=['date'])
+        if df.empty:
+            return {"trends": []}
+        latest_year = int(df['date'].dt.year.max())
+        counts = df.groupby([df['date'].dt.year, df['date'].dt.month]).size()
         
         month_names = {
             1: 'Jan', 2: 'Feb', 3: 'Mar', 4: 'Apr', 5: 'May', 6: 'Jun',
@@ -63,15 +65,15 @@ def get_crime_trends():
         }
         
         trend_data = []
-        for month_num, count in counts.items():
-            label = month_names.get(int(month_num), str(month_num))
+        for month_num in range(1, 13):
+            label = month_names[month_num]
             
             trend_data.append({
                 "date": label,
-                "current": int(count),
-                "previous": int(count * 0.85) # mock previous period
+                "current": int(counts.get((latest_year, month_num), 0)),
+                "previous": int(counts.get((latest_year - 1, month_num), 0))
             })
-        return {"trends": trend_data}
+        return {"trends": trend_data, "current_year": latest_year, "previous_year": latest_year - 1}
     except Exception as e:
         return {"error": str(e)}
 
@@ -104,23 +106,18 @@ def get_crime_categories():
 def get_patrol_status():
     try:
         df = pd.read_csv(os.path.join(DATA_DIR, "patrol_logs_sample.csv"))
-        # Base logic on historical patrol logs (avg officer counts)
-        total_officers = df['officer_count'].sum()
-        # Mock active/available splits based on real dataset size
-        active = int(total_officers * 0.7)
-        available = int(total_officers * 0.2)
-        offline = int(total_officers) - active - available
+        hotspot = int(df['is_hotspot_area'].eq(1).sum())
+        other = int(len(df) - hotspot)
         
         data = [
-            {"name": "Active", "value": active, "color": "#14b8a6"},
-            {"name": "Available", "value": available, "color": "#3b82f6"},
-            {"name": "Busy/Offline", "value": offline, "color": "#f97316"}
+            {"name": "Hotspot entries", "value": hotspot, "color": "#14b8a6"},
+            {"name": "Other entries", "value": other, "color": "#3b82f6"}
         ]
         
-        total = active + available + offline
-        coverage = round((active / total) * 100) if total > 0 else 0
+        total = hotspot + other
+        coverage = round((hotspot / total) * 100) if total > 0 else 0
         
-        return {"status": data, "coverage": coverage}
+        return {"status": data, "coverage": coverage, "source": "synthetic_patrol_logs"}
     except Exception as e:
         return {"error": str(e)}
 

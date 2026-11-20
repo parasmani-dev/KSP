@@ -12,8 +12,6 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    "page_dark.tsx",
-    "src/app/network/page_recovered*.tsx",
   ]),
 ]);
 

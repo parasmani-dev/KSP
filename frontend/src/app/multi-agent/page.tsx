@@ -1,680 +1,122 @@
 "use client"
-import { useState, useEffect } from "react"
-import {
-  Upload, FileText, Settings, Network, BrainCircuit, FileSearch,
-  CheckCircle2, ShieldAlert, Activity, ArrowRight, Server, ShieldCheck,
-  Database, Fingerprint, Share2, Scale, Settings2, User, Gavel, MapPin, Building2, Star, Target, Shield, CarFront
-} from "lucide-react"
+
+import { ChangeEvent, useState } from "react"
+import { AxiosError } from "axios"
+import { ArrowRight, CheckCircle2, FileText, Loader2, RotateCcw, ShieldCheck, Upload } from "lucide-react"
 import { evidenceApi } from "@/lib/api"
 
-const AGENTS = [
-  { id: 'evidence', name: 'Evidence Agent', role: 'Data Collection', icon: Database, color: 'text-blue-500', bg: 'bg-blue-500', border: 'border-blue-500', shadow: 'shadow-blue-500' },
-  { id: 'pattern', name: 'Pattern Agent', role: 'Pattern Recognition', icon: Fingerprint, color: 'text-teal-400', bg: 'bg-teal-400', border: 'border-teal-400', shadow: 'shadow-teal-400' },
-  { id: 'network', name: 'Network Agent', role: 'Link Analysis', icon: Share2, color: 'text-purple-500', bg: 'bg-purple-500', border: 'border-purple-500', shadow: 'shadow-purple-500' },
-  { id: 'risk', name: 'Risk Agent', role: 'Risk Assessment', icon: ShieldAlert, color: 'text-orange-500', bg: 'bg-orange-500', border: 'border-orange-500', shadow: 'shadow-orange-500' },
-  { id: 'report', name: 'Report Agent', role: 'Intel. Output', icon: FileText, color: 'text-green-500', bg: 'bg-green-500', border: 'border-green-500', shadow: 'shadow-green-500' }
-]
+const SAMPLE_FIR = "SYNTHETIC DEMO RECORD — On 14 November 2024 at 22:30, a witness reported a theft near Whitefield, Bengaluru. The witness mentioned a person named Arun Kumar and a white car. This is fictional sample text; no allegation has been verified."
 
-export default function MultiAgentPage() {
-  const [activeStage, setActiveStage] = useState(-1) // Start in awaiting state
+type EvidenceResult = {
+  analysis_mode: string
+  notice: string
+  summary: { summary: string; key_facts: string[] }
+  entities: Record<string, string[]>
+  timeline: { events: { timestamp: string; description: string }[] }
+}
+
+const ENTITY_LABELS: Record<string, string> = {
+  persons: "People mentioned",
+  locations: "Places mentioned",
+  vehicles: "Vehicles mentioned",
+  dates: "Dates mentioned",
+  times: "Times mentioned",
+  organizations: "Organizations mentioned",
+}
+
+export default function EvidenceWorkspace() {
+  const [text, setText] = useState(SAMPLE_FIR)
+  const [fileName, setFileName] = useState("")
+  const [result, setResult] = useState<EvidenceResult | null>(null)
   const [loading, setLoading] = useState(false)
-  const [showBrief, setShowBrief] = useState(false)
-  const [completionTimes, setCompletionTimes] = useState<string[]>(Array(5).fill('--:--:--'))
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null)
-  const [formData, setFormData] = useState({
-    text: "FIR REPORT: Suspect Sunil Patel was spotted in Dharavi area allegedly distributing narcotics near Intersection 12. Known to have 3 prior offenses. Associates with the Kurla syndicate.",
-    suspect: '',
-    location: '',
-    description: ''
-  })
+  const [error, setError] = useState("")
 
-  const [intelData, setIntelData] = useState({
-    suspect: 'Sunil Patel',
-    location: 'Dharavi',
-    crimeType: 'Narcotics',
-    riskScore: '53.28',
-    riskLevel: 'Moderate',
-    connections: 7,
-    crimes: 3,
-    daysSince: 45,
-    summary: 'Analysis indicates Suspect Sunil Patel is part of a narcotics distribution network operating in the Whitefield-Dharavi corridor.'
-  })
+  const loadFile = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+    event.target.value = ""
+    if (!file.name.toLowerCase().endsWith(".txt") || file.size > 128 * 1024) {
+      setError("Choose a .txt file smaller than 128 KB.")
+      return
+    }
+    setText(await file.text())
+    setFileName(file.name)
+    setResult(null)
+    setError("")
+  }
 
-  const [timeline, setTimeline] = useState<any[]>([])
-  const [extractedEntities, setExtractedEntities] = useState<any>({})
-  const [contradictions, setContradictions] = useState<any[]>([])
-
-  const handleLaunch = async () => {
-    if (activeStage >= 0) {
-      // Reset
-      setActiveStage(-1)
+  const processText = async () => {
+    if (!text.trim()) {
+      setError("Add synthetic text before running the preview.")
+      return
+    }
+    setLoading(true)
+    setError("")
+    setResult(null)
+    try {
+      const response = await evidenceApi.post<EvidenceResult>("/api/v1/processor/", {
+        fir_text: text,
+        witness_statements: [],
+      })
+      setResult(response.data)
+    } catch (cause) {
+      const status = (cause as AxiosError).response?.status
+      setError(status === 503
+        ? "The evidence service is waking up or temporarily unavailable. Try again shortly."
+        : "The preview could not run. Check that the evidence service is online and try again.")
+    } finally {
       setLoading(false)
-      setShowBrief(false)
-      setCompletionTimes(Array(5).fill('--:--:--'))
-    } else {
-      // Launch
-      setLoading(true)
-      setActiveStage(0)
-      setShowBrief(false)
-      setCompletionTimes(Array(5).fill('--:--:--'))
-
-      const text = formData.text || '';
-
-      try {
-        const docId = `DOC-${Math.floor(Math.random() * 100000)}`
-
-        // Fast-forward stages visually while waiting
-        let currentStage = 0;
-        const interval = setInterval(() => {
-          if (currentStage < 4) {
-             setActiveStage(currentStage);
-             setCompletionTimes(prev => {
-                const newTimes = [...prev];
-                newTimes[currentStage] = new Date().toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit', second: '2-digit' });
-                return newTimes;
-             });
-             currentStage++;
-          }
-        }, 1500);
-
-        // Make the real API call to the Evidence Engine!
-        const res = await evidenceApi.post('/api/v1/processor/', {
-          fir_text: text,
-          witness_statements: []
-        });
-
-        clearInterval(interval);
-
-        // Mark all complete
-        setActiveStage(5);
-        setCompletionTimes(prev => prev.map((t, i) => t === '--:--:--' ? new Date().toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit', second: '2-digit' }) : t));
-
-        const data = res.data;
-
-        // Parse real NLP data from the Evidence Engine
-        const suspects = data.entities?.persons || [];
-        const suspectName = suspects.length > 0 ? suspects[0] : (data.summary?.suspect || 'Unknown Subject');
-
-        const locations = data.entities?.locations || [];
-        const locName = locations.length > 0 ? locations[0] : (data.summary?.location || 'Unknown Location');
-
-        const score = data.scoring?.overall_confidence || 0.5;
-        const totalEntities = (data.entities?.persons?.length || 0) + (data.entities?.locations?.length || 0) + (data.entities?.vehicles?.length || 0) + (data.entities?.organizations?.length || 0);
-
-        setIntelData({
-          suspect: suspectName,
-          location: locName,
-          crimeType: data.summary?.crime_type || 'Extracted via NLP',
-          riskScore: (score * 100).toFixed(2),
-          riskLevel: score > 0.75 ? 'Critical' : score > 0.5 ? 'Moderate' : 'Low',
-          connections: totalEntities,
-          crimes: data.timeline?.events?.length || 1,
-          daysSince: Math.floor(Math.random() * 30),
-          summary: data.summary?.summary || "Analysis complete."
-        })
-
-        setTimeline(data.timeline?.events || [])
-        setExtractedEntities(data.entities || {})
-        setContradictions(data.contradictions?.contradictions || [])
-
-      } catch (error) {
-        console.error("Evidence Engine API failed:", error);
-      } finally {
-        setLoading(false);
-      }
     }
   }
 
+  const groups = Object.entries(result?.entities ?? {}).filter(([key, values]) => ENTITY_LABELS[key] && values.length > 0)
+  const keyless = result?.analysis_mode === "synthetic_preview"
+
   return (
-    <div className="ksp-page h-full flex flex-col text-slate-200 overflow-y-auto overflow-x-hidden min-h-screen custom-scrollbar">
+    <div className="ksp-page min-h-full overflow-y-auto text-slate-200">
+      <div className="mx-auto max-w-[1280px] space-y-6 pb-10">
+        <header className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <div className="ksp-eyebrow mb-2">Casework / demonstration</div>
+            <h1 className="ksp-heading flex items-center gap-3"><FileText className="h-6 w-6 text-[#d0ad71]" /> Evidence workspace</h1>
+            <p className="ksp-subheading mt-2 max-w-2xl">Explore a fictional report and review text matches. This workspace is for demonstration, not investigative findings.</p>
+          </div>
+          <span className="rounded-full border border-[#715b40] bg-[#302b27] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#ead0a4]">Synthetic demo</span>
+        </header>
 
-      {/* HEADER SECTION */}
-      <div className="flex items-center justify-between mb-6 shrink-0">
-        <div>
-          <div className="ksp-eyebrow mb-2">Casework / demonstration</div>
-          <h1 className="ksp-heading flex items-center gap-3"><BrainCircuit className="w-6 h-6 text-[#d0ad71]" /> Evidence workspace</h1>
-          <p className="ksp-subheading mt-2">Process synthetic FIR text and review extracted evidence, links and analysis in sequence.</p>
-        </div>
-      </div>
-
-      {/* 3-COLUMN MAIN GRID */}
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 min-h-0 shrink-0 mb-6">
-
-        {/* LEFT COLUMN: INPUTS (3/12) */}
-        <div className="xl:col-span-3 flex flex-col gap-5">
-          {/* Upload Widget */}
-          <div className="bg-[#0B1220]/80 backdrop-blur-md rounded-2xl border border-slate-700/50 p-6 flex flex-col items-center shadow-xl shadow-black/20 group relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl -z-10 group-hover:bg-blue-500/10 transition-colors" />
-            <div className="flex items-center gap-2 w-full mb-4">
-              <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-xs">1</div>
-              <h3 className="font-semibold text-slate-200 text-sm">Upload Case Files</h3>
+        <div className="grid gap-5 xl:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+          <section className="rounded-xl border border-[#30404a] bg-[#101d25] p-5 shadow-lg shadow-black/10" aria-labelledby="source-title">
+            <div className="mb-5 flex items-start justify-between gap-3">
+              <div><p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#c7a770]">01 / Source</p><h2 id="source-title" className="mt-1 text-lg font-semibold text-white">Fictional report text</h2></div>
+              <button type="button" onClick={() => { setText(SAMPLE_FIR); setFileName(""); setResult(null); setError("") }} className="inline-flex items-center gap-1.5 rounded border border-[#41525a] px-2.5 py-1.5 text-xs text-slate-300 hover:bg-[#20303a]"><RotateCcw className="h-3.5 w-3.5" /> Reset sample</button>
             </div>
-
-            <div
-              className="w-full border-2 border-dashed border-slate-700 rounded-lg p-6 flex flex-col items-center justify-center text-center hover:border-blue-500/50 transition-colors mb-4 cursor-pointer bg-[#0B1220]/50"
-              onClick={() => document.getElementById('file-upload-agent')?.click()}
-            >
-               <Upload className="w-8 h-8 text-blue-500 mb-3" />
-               <p className="text-xs text-slate-300">Drag & drop text (.txt) files only</p>
-               <p className="text-[10px] text-slate-500 mt-1">Max 50MB per file</p>
-               <input
-                 type="file"
-                 accept=".txt"
-                 id="file-upload-agent"
-                 className="hidden"
-                 onChange={(e) => {
-                   if (e.target.files && e.target.files.length > 0) {
-                     const file = e.target.files[0]
-                     setUploadedFile(file)
-
-                     if (file.type === "text/plain" || file.name.endsWith(".txt")) {
-                       const reader = new FileReader();
-                       reader.onload = (event) => {
-                         const content = event.target?.result as string;
-                         setFormData(prev => ({ ...prev, text: content }));
-                       };
-                       reader.readAsText(file);
-                     } else {
-                       setFormData(prev => ({
-                         ...prev,
-                         text: `FIR REPORT [Auto-Extracted from ${file.name}]: Suspect unknown was spotted near Whitefield intersection. Reported to have connections with the local cartel. Involved in multiple altercations.`
-                       }))
-                     }
-                   }
-                 }}
-               />
+            <label htmlFor="fir-text" className="mb-2 block text-xs font-medium text-slate-300">Report content</label>
+            <textarea id="fir-text" value={text} onChange={(event) => { setText(event.target.value); setResult(null) }} maxLength={8000} rows={13} className="w-full resize-y rounded-lg border border-[#41525a] bg-[#0b151c] p-4 text-sm leading-6 text-slate-100 outline-none focus:border-[#c7a770]" aria-describedby="text-help" />
+            <p id="text-help" className="mt-2 text-xs leading-5 text-slate-400">Use fictional text only. The browser reads .txt files locally; it sends the text to the demo API when you run the preview.</p>
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              <label className="inline-flex cursor-pointer items-center gap-2 rounded border border-[#41525a] px-3 py-2 text-xs font-medium text-slate-200 hover:bg-[#20303a]"><Upload className="h-4 w-4" /> Load .txt <input type="file" accept=".txt,text/plain" onChange={loadFile} className="sr-only" /></label>
+              {fileName && <span className="max-w-[220px] truncate text-xs text-slate-400" title={fileName}>{fileName}</span>}
             </div>
+            <button type="button" disabled={loading} onClick={processText} className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#c7a770] px-4 py-3 text-sm font-bold text-[#142028] transition-colors hover:bg-[#e1c38e] disabled:cursor-wait disabled:opacity-60">{loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <ArrowRight className="h-4 w-4" />}{loading ? "Processing preview…" : "Run evidence preview"}</button>
+            {error && <p role="alert" className="mt-3 rounded border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-200">{error}</p>}
+          </section>
 
-            {uploadedFile && (
-              <div className="w-full bg-[#0B1220] border border-slate-700/50 rounded-lg p-3 flex items-center justify-between">
-                 <div className="flex items-center gap-3">
-                   <div className="bg-red-500/20 p-2 rounded text-red-500">
-                     <FileText className="w-4 h-4" />
-                   </div>
-                   <div className="min-w-0 flex-1">
-                     <p className="text-xs font-medium text-slate-200 truncate pr-2" title={uploadedFile.name}>
-                       {uploadedFile.name}
-                     </p>
-                     <p className="text-[10px] text-slate-500">
-                       {(uploadedFile.size / 1024 / 1024).toFixed(1)} MB • Uploaded
-                     </p>
-                   </div>
-                 </div>
-                 <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
+          <section className="rounded-xl border border-[#30404a] bg-[#101d25] p-5 shadow-lg shadow-black/10" aria-labelledby="review-title">
+            <div className="mb-5 flex items-start justify-between gap-3"><div><p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#c7a770]">02 / Review</p><h2 id="review-title" className="mt-1 text-lg font-semibold text-white">Preview output</h2></div>{result && <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-xs text-emerald-200">Completed</span>}</div>
+            {!result ? (
+              <div className="flex min-h-[420px] flex-col items-center justify-center rounded-lg border border-dashed border-[#41525a] bg-[#0b151c] p-8 text-center"><ShieldCheck className="mb-4 h-9 w-9 text-[#c7a770]" /><h3 className="text-base font-semibold text-white">Ready for a synthetic walkthrough</h3><p className="mt-2 max-w-sm text-sm leading-6 text-slate-400">Run the preloaded sample to see a text preview, explicitly mentioned entities, and a timestamp list. No API key is required.</p></div>
+            ) : (
+              <div className="space-y-5">
+                <div className="rounded-lg border border-[#715b40] bg-[#302b27] p-4"><p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#ead0a4]">{keyless ? "Keyless text preview" : "Model-assisted response"}</p><p className="mt-1 text-xs leading-5 text-slate-300">{result.notice || "Review all outputs against the source text. This demonstration is not an operational finding."}</p></div>
+                <div><h3 className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Submitted text</h3><p className="rounded-lg border border-[#30404a] bg-[#0b151c] p-4 text-sm leading-6 text-slate-200">{result.summary.summary}</p></div>
+                <div><h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Explicit text matches</h3>{groups.length ? <div className="grid gap-3 sm:grid-cols-2">{groups.map(([key, values]) => <div key={key} className="rounded-lg border border-[#30404a] bg-[#0b151c] p-3"><p className="mb-2 text-[11px] font-medium text-slate-400">{ENTITY_LABELS[key]}</p><div className="flex flex-wrap gap-1.5">{values.map((value, index) => <span key={`${value}-${index}`} className="rounded border border-[#41525a] bg-[#1b2b34] px-2 py-1 text-xs text-slate-100">{value}</span>)}</div></div>)}</div> : <p className="text-sm text-slate-400">No supported text patterns matched.</p>}</div>
+                <div><h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Times mentioned</h3>{result.timeline.events.length ? <ol className="space-y-2">{result.timeline.events.map((event, index) => <li key={`${event.timestamp}-${index}`} className="flex gap-3 rounded-lg border border-[#30404a] bg-[#0b151c] p-3 text-xs"><span className="font-semibold text-[#ead0a4]">{event.timestamp}</span><span className="text-slate-300">{event.description}</span></li>)}</ol> : <p className="text-sm text-slate-400">No timestamp found in the submitted text.</p>}</div>
               </div>
             )}
-
-            <div className="w-full text-center mt-4 mb-2 text-xs text-slate-500 font-medium">OR</div>
-          </div>
-
-          {/* Manual FIR Input */}
-          <div className="bg-[#0B1220]/80 backdrop-blur-md rounded-2xl border border-slate-700/50 p-6 flex flex-col flex-1 shadow-xl shadow-black/20 relative overflow-hidden group">
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-3xl -z-10 group-hover:bg-indigo-500/10 transition-colors" />
-            <h3 className="font-semibold text-sm mb-4 flex items-center gap-2 text-slate-200">
-              <FileText className="w-4 h-4 text-blue-500"/> Manual FIR Input
-            </h3>
-            <div className="flex-1 mb-6">
-              <label className="block text-[10px] font-bold text-slate-400 mb-2 uppercase tracking-widest">Raw FIR Text</label>
-              <textarea
-                value={formData.text}
-                onChange={e => setFormData({...formData, text: e.target.value})}
-                className="w-full h-[150px] resize-none bg-[#0B1220] border border-slate-700 rounded-md px-3 py-2 text-xs focus:outline-none focus:border-blue-500 text-slate-300 font-mono custom-scrollbar leading-relaxed"
-                placeholder="Paste FIR text here..."
-              />
-            </div>
-
-            <div className="mt-auto flex flex-col gap-3">
-              <button
-                onClick={handleLaunch}
-                className="w-full bg-blue-600 text-white font-semibold rounded-md px-4 py-2.5 flex items-center justify-center gap-2 text-sm hover:bg-blue-500 transition-all shadow-[0_0_15px_rgba(37,99,235,0.4)]"
-              >
-                <Activity className="w-4 h-4" />
-                Process FIR text
-              </button>
-              <button
-                onClick={() => setActiveStage(-1)}
-                className="w-full bg-transparent border border-slate-700 text-slate-300 font-medium rounded-md px-4 py-2.5 flex items-center justify-center gap-2 text-sm hover:bg-slate-800 transition-colors"
-              >
-                <Activity className="w-4 h-4 opacity-50" />
-                Reset workspace
-              </button>
-            </div>
-          </div>
+          </section>
         </div>
-
-        {/* CENTER COLUMN: EXECUTION GRAPH & OUTPUT (6/12) */}
-        <div className="xl:col-span-6 flex flex-col gap-5">
-
-          {/* Swarm Execution Graph */}
-          <div className="bg-[#0B1220]/80 backdrop-blur-md rounded-2xl border border-slate-700/50 p-6 flex flex-col flex-1 relative overflow-hidden shadow-xl shadow-black/20 group">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-blue-500/5 blur-[100px] -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-            <div className="flex items-center justify-between mb-8">
-              <h3 className="font-semibold text-base flex items-center gap-2 text-slate-200">
-                <Network className="w-5 h-5 text-[#d0ad71]"/> Processing stages
-              </h3>
-              <div className="flex items-center gap-2 px-2 py-1 bg-[#302b27] border border-[#715b40] rounded-full">
-                <div className={`w-2 h-2 rounded-full ${loading ? 'bg-[#d0ad71]' : 'bg-slate-500'}`}></div>
-                <span className="text-[10px] font-bold text-[#d0ad71] tracking-wider">{loading ? 'PROCESSING' : activeStage >= 5 ? 'COMPLETE' : 'READY'}</span>
-              </div>
-            </div>
-
-            <div className="flex-1 flex items-center justify-between relative px-2 mt-4 mb-10">
-              {/* Connecting Gradient Line */}
-              <div className="absolute top-7 left-[10%] right-[10%] h-[2px] bg-slate-800 z-0">
-                <div
-                  className="h-full bg-[#b99158] transition-all duration-1000 ease-in-out relative"
-                  style={{ width: `${Math.min(100, (Math.max(0, activeStage) / (AGENTS.length - 1)) * 100)}%` }}
-                >
-                  {activeStage >= 0 && activeStage < 5 && (
-                     <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,1)] animate-pulse"></div>
-                  )}
-                </div>
-              </div>
-
-              {AGENTS.map((agent, i) => {
-                const isActive = activeStage === i
-                const isDone = activeStage > i
-                const isPending = activeStage < i
-
-                return (
-                  <div key={agent.id} className="relative z-10 flex flex-col items-center gap-3 w-[20%]">
-
-                    <div className={`w-14 h-14 rounded-full flex items-center justify-center border-2 transition-all duration-500 ${
-                      isActive ? `bg-[#0B1220] ${agent.border} ${agent.color} shadow-[0_0_20px_currentColor] scale-110 animate-pulse` :
-                      isDone ? `${agent.bg} border-transparent text-white shadow-lg ${agent.shadow}/40` :
-                      'bg-[#0B1220] border-slate-700 text-slate-600'
-                    }`}>
-                      <agent.icon className={`w-6 h-6 ${isDone ? 'text-white' : ''}`} />
-                    </div>
-
-                    <div className="text-center mt-2">
-                      <p className={`text-xs font-bold leading-tight ${isActive || isDone ? 'text-slate-200' : 'text-slate-500'}`}>{agent.name}</p>
-                      <p className="text-[10px] text-slate-500 mt-1">{agent.role}</p>
-                    </div>
-
-                    {/* Meta Table under each node */}
-                    <div className="mt-2 w-full text-[9px] flex flex-col gap-1 px-1">
-                       <div className="flex justify-between w-full">
-                         <span className="text-slate-500">Status</span>
-                         <span className={isDone ? 'text-green-500 font-bold' : isActive ? 'text-blue-400 font-bold bg-blue-500/10 px-1 rounded' : 'text-orange-500 font-bold bg-orange-500/10 px-1 rounded'}>
-                           {isDone ? 'COMPLETED' : isActive ? 'PROCESSING' : 'PENDING'}
-                         </span>
-                       </div>
-                       <div className="flex justify-between w-full">
-                         <span className="text-slate-500">Time</span>
-                         <span className="text-slate-300">{isDone ? completionTimes[i] : '--:--:--'}</span>
-                       </div>
-                       <div className="flex justify-between w-full">
-                         <span className="text-slate-500">Output</span>
-                         <span className="text-slate-300 truncate pl-1">
-                            {isDone ? (i === 0 ? 'Extracted Data' : i === 1 ? `${intelData.crimes} Patterns` : i === 2 ? `${intelData.connections} Connections` : i === 3 ? `${intelData.riskScore}% Risk` : 'Intel Brief') : '- - -'}
-                         </span>
-                       </div>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-
-          {/* Real-time Intelligence Output */}
-          <div className="bg-[#0B1220]/80 backdrop-blur-md rounded-2xl border border-slate-700/50 p-6 flex flex-col shrink-0 shadow-xl shadow-black/20 relative overflow-hidden group">
-             <div className="absolute bottom-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl -z-10 group-hover:bg-orange-500/10 transition-colors" />
-             <h3 className="font-semibold text-base mb-4 text-slate-200">Evidence output</h3>
-
-             <div className="relative flex-1 flex flex-col">
-               {/* OVERLAY for uncompleted state */}
-               {activeStage < 5 && (
-                 <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-[#111d2b] rounded-lg">
-                   {loading ? (
-                     <div className="flex flex-col items-center text-blue-400">
-                       <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mb-2"></div>
-                       <p className="text-xs font-bold tracking-widest uppercase">Processing Data...</p>
-                     </div>
-                   ) : (
-                     <div className="flex flex-col items-center text-slate-500">
-                       <ShieldAlert className="w-6 h-6 mb-2 opacity-50" />
-                       <p className="text-xs font-bold tracking-widest uppercase">Awaiting FIR Input</p>
-                     </div>
-                   )}
-                 </div>
-               )}
-
-               <div aria-hidden={activeStage < 5} className={`flex flex-col gap-4 transition-all duration-500 ${activeStage < 5 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-                 <div className="grid grid-cols-4 gap-3">
-                    {/* Primary Suspect */}
-                    <div className="bg-[#0B1220] border border-blue-500/20 rounded-lg p-3 flex items-center gap-3">
-                      <div className="bg-blue-500/10 p-2.5 rounded-lg text-blue-400"><User className="w-5 h-5"/></div>
-                      <div>
-                        <p className="text-[10px] text-slate-400">Primary Suspect</p>
-                        <p className="text-sm font-bold text-white leading-tight">{intelData.suspect}</p>
-                        <p className="text-[9px] text-blue-400 mt-1">Confidence <span className="bg-blue-500/20 px-1 py-0.5 rounded">92%</span></p>
-                      </div>
-                    </div>
-                    {/* Risk Score */}
-                    <div className="bg-[#0B1220] border border-orange-500/20 rounded-lg p-3 flex items-center gap-3">
-                       <div className="bg-orange-500/10 p-2.5 rounded-lg text-orange-400"><ShieldAlert className="w-5 h-5"/></div>
-                       <div>
-                         <p className="text-[10px] text-slate-400">Risk Score</p>
-                         <p className="text-sm font-bold text-white leading-tight">{intelData.riskScore}%</p>
-                         <p className={`text-[9px] font-bold mt-1 ${intelData.riskLevel === 'Critical' ? 'text-red-400' : intelData.riskLevel === 'Moderate' ? 'text-orange-400' : 'text-green-400'}`}>{intelData.riskLevel} Risk</p>
-                       </div>
-                    </div>
-                    {/* Network Links */}
-                    <div className="bg-[#0B1220] border border-purple-500/20 rounded-lg p-3 flex items-center gap-3">
-                       <div className="bg-purple-500/10 p-2.5 rounded-lg text-purple-400"><Share2 className="w-5 h-5"/></div>
-                       <div>
-                         <p className="text-[10px] text-slate-400">Network Links</p>
-                         <p className="text-sm font-bold text-white leading-tight">{intelData.connections}</p>
-                         <p className="text-[9px] text-slate-500 mt-1">Connections</p>
-                       </div>
-                    </div>
-                    {/* Prior Crimes */}
-                    <div className="bg-[#0B1220] border border-red-500/20 rounded-lg p-3 flex items-center gap-3">
-                       <div className="bg-red-500/10 p-2.5 rounded-lg text-red-400"><Scale className="w-5 h-5"/></div>
-                       <div>
-                         <p className="text-[10px] text-slate-400">Prior Crimes</p>
-                         <p className="text-sm font-bold text-white leading-tight">{intelData.crimes}</p>
-                         <p className="text-[9px] text-slate-500 mt-1">Matched Records</p>
-                       </div>
-                    </div>
-                 </div>
-
-                 <div className="bg-[#0B1220] border border-slate-700/50 rounded-lg p-4 relative">
-                    <h4 className="text-xs font-bold text-blue-400 mb-2 flex items-center gap-2">
-                      <Star className="w-3 h-3 fill-blue-400" /> AI Summary
-                    </h4>
-                    <p className="text-xs text-slate-300 leading-relaxed max-w-[90%]">
-                      {intelData.summary} <span className={`font-bold ${intelData.riskLevel === 'Critical' ? 'text-red-400' : intelData.riskLevel === 'Moderate' ? 'text-orange-400' : 'text-green-400'}`}>{intelData.riskLevel}</span>.
-                    </p>
-                    <button
-                      onClick={() => setShowBrief(true)}
-                      className="absolute bottom-4 right-4 text-[10px] font-medium text-blue-400 flex items-center gap-1 hover:text-blue-300"
-                    >
-                      View Full Intelligence Brief <ArrowRight className="w-3 h-3"/>
-                    </button>
-                 </div>
-               </div>
-             </div>
-          </div>
-        </div>
-
-        {/* RIGHT COLUMN: OVERVIEW & FEED (3/12) */}
-        <div className="xl:col-span-3 flex flex-col gap-5">
-
-          {/* Swarm Intelligence Overview */}
-          <div className="bg-[#0B1220]/80 backdrop-blur-md rounded-2xl border border-slate-700/50 p-6 shadow-xl shadow-black/20 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl -z-10 group-hover:bg-emerald-500/10 transition-colors" />
-            <h3 className="font-semibold text-sm mb-5 text-slate-200">Analysis summary</h3>
-            <div className="flex items-center gap-6">
-               <div className="relative w-20 h-20 flex-shrink-0">
-                  {/* SVG Circle Gauge */}
-                  <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                     <circle cx="50" cy="50" r="40" fill="transparent" stroke="#1e293b" strokeWidth="8" />
-                     <circle cx="50" cy="50" r="40" fill="transparent" stroke="#10b981" strokeWidth="8" strokeDasharray="251.2" strokeDashoffset={251.2 * (1 - (Math.max(0, activeStage * 19.6) / 100))} className="transition-all duration-1000 ease-out drop-shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
-                  </svg>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-lg font-bold text-white">{Math.max(0, Math.min(100, activeStage * 20))}%</span>
-                    <span className="text-[8px] text-slate-400 uppercase tracking-wide">Progress</span>
-                  </div>
-               </div>
-               <div className="flex-1 flex flex-col gap-2.5">
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="text-slate-400">Current state</span>
-                    <span className="text-[#d0ad71] font-bold">{loading ? 'Processing' : activeStage >= 5 ? 'Complete' : 'Idle'}</span>
-                  </div>
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="text-slate-400">Stages complete</span>
-                    <span className="text-slate-200 font-semibold">{Math.max(0, Math.min(5, activeStage))} / 5</span>
-                  </div>
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="text-slate-400">Timeline entries</span>
-                    <span className="text-slate-200 font-semibold">{activeStage >= 5 ? timeline.length : '—'}</span>
-                  </div>
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="text-slate-400">Entity fields</span>
-                    <span className="text-slate-200 font-semibold">{activeStage >= 5 ? Object.keys(extractedEntities).length : '—'}</span>
-                  </div>
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="text-slate-400">Contradictions</span>
-                    <span className="text-slate-200 font-semibold">{activeStage >= 5 ? contradictions.length : '—'}</span>
-                  </div>
-               </div>
-            </div>
-          </div>
-
-          {/* Swarm Activity Feed */}
-          <div className="bg-[#0B1220]/80 backdrop-blur-md rounded-2xl border border-slate-700/50 p-6 flex flex-col flex-1 h-[320px] shadow-xl shadow-black/20 relative overflow-hidden group">
-            <div className="absolute bottom-0 right-0 w-32 h-32 bg-red-500/5 rounded-full blur-3xl -z-10 group-hover:bg-red-500/10 transition-colors" />
-            <div className="flex items-center justify-between mb-4">
-               <h3 className="font-semibold text-sm text-slate-200">Activity log</h3>
-               <div className="flex items-center gap-1.5 text-[10px] text-[#d0ad71] font-bold tracking-wider">
-                 <div className="w-1.5 h-1.5 rounded-full bg-[#d0ad71]"></div> {loading ? 'RUNNING' : activeStage >= 5 ? 'COMPLETE' : 'IDLE'}
-               </div>
-            </div>
-
-            <div className="flex-1 flex flex-col justify-between py-2 overflow-y-auto custom-scrollbar pr-2">
-               {activeStage < 5 && <p className="text-xs text-slate-500">{loading ? 'Processing the sample FIR…' : 'Start an analysis to populate the activity log.'}</p>}
-               {activeStage >= 5 && [
-                 { id: 1, agent: 'Evidence Agent', msg: 'Extracted key entities from FIR document', icon: Database, color: 'text-blue-400', bg: 'bg-blue-500/10' },
-                 { id: 2, agent: 'Pattern Agent', msg: `Matched with ${intelData.crimes} historical crime patterns`, icon: Fingerprint, color: 'text-teal-400', bg: 'bg-teal-500/10' },
-                 { id: 3, agent: 'Network Agent', msg: `Linked ${intelData.connections} nodes in criminal network graph`, icon: Share2, color: 'text-purple-400', bg: 'bg-purple-500/10' },
-                 { id: 4, agent: 'Risk Agent', msg: `Calculated escalation risk score of ${intelData.riskScore}%`, icon: ShieldAlert, color: 'text-orange-400', bg: 'bg-orange-500/10' },
-                 { id: 5, agent: 'Report Agent', msg: 'Synthesizing final intelligence brief', icon: FileText, color: 'text-green-400', bg: 'bg-green-500/10' },
-               ].map((item, idx) => {
-                  const currentStatus = activeStage > idx ? 'done' : activeStage === idx ? 'processing' : 'waiting';
-                  const displayTime = activeStage > idx ? completionTimes[idx] : '--:--:--';
-
-                  return (
-                    <div key={item.id} className={`flex gap-3 transition-all duration-500 ${activeStage >= idx ? 'opacity-100' : 'opacity-40 grayscale'}`}>
-                       <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${item.bg} ${item.color}`}>
-                         <item.icon className="w-4 h-4" />
-                       </div>
-                       <div className="flex-1 min-w-0">
-                         <p className="text-[11px] font-bold text-slate-200">{item.agent}</p>
-                         <p className="text-[10px] text-slate-400 truncate mt-0.5">
-                           {currentStatus === 'waiting' ? 'Awaiting execution...' : item.msg}
-                         </p>
-                       </div>
-                       <div className={`flex flex-col items-end justify-center shrink-0 ${item.color}`}>
-                         <span className="text-[9px] text-slate-500 mb-1">{displayTime}</span>
-                         {currentStatus === 'done' && <CheckCircle2 className="w-3 h-3 text-green-500" />}
-                         {currentStatus === 'processing' && <div className="w-3 h-3 rounded-full border-2 border-current border-t-transparent animate-spin"></div>}
-                         {currentStatus === 'waiting' && <div className="text-slate-600 tracking-widest text-[8px]">- - -</div>}
-                       </div>
-                    </div>
-                  )
-               })}
-            </div>
-
-          </div>
-        </div>
+        <div className="grid gap-3 md:grid-cols-3">{[["01", "Load a sample", "Start with the fictional report or enter your own synthetic text."], ["02", "Run the preview", "The keyless path uses deterministic text matching; no model is invoked."], ["03", "Check the source", "Every match remains a lead to inspect, never a verified allegation."]].map(([number, title, body]) => <div key={number} className="flex gap-3 rounded-lg border border-[#30404a] bg-[#101d25] p-4"><span className="text-xs font-bold text-[#c7a770]">{number}</span><div><p className="text-sm font-semibold text-white">{title}</p><p className="mt-1 text-xs leading-5 text-slate-400">{body}</p></div><CheckCircle2 className="ml-auto h-4 w-4 shrink-0 text-[#6c817e]" /></div>)}</div>
       </div>
-
-      {/* FINAL INTELLIGENCE BRIEF EXPANDED */}
-      {showBrief && activeStage === 5 && (
-        <div className="bg-[#0B1220]/80 backdrop-blur-md rounded-2xl border border-slate-700/50 flex flex-col shrink-0 shadow-2xl shadow-black/40 animate-in fade-in slide-in-from-bottom-4 duration-500 mb-6 relative overflow-hidden group">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-blue-500/5 rounded-full blur-[100px] -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-          {/* Header */}
-          <div className="p-5 flex items-center justify-between border-b border-slate-800">
-            <div className="flex items-center gap-3 text-green-500">
-              <CheckCircle2 className="w-5 h-5" />
-              <h2 className="font-semibold text-sm text-slate-200">Final Intelligence Brief Compiled</h2>
-            </div>
-            <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wide">Generated by Multi-Agent Swarm</span>
-          </div>
-
-          {/* Body */}
-          <div className="p-6 grid grid-cols-2 gap-10">
-            {/* Left Column: Entities */}
-            <div className="flex flex-col gap-4">
-              <h3 className="font-semibold text-sm mb-1 text-slate-200">Extracted Entities & Graph Nodes</h3>
-
-              {/* Entity Rows */}
-              <div className="flex flex-col gap-3">
-                {/* Citizen */}
-                <div className="bg-[#0f172a]/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4 flex justify-between items-center transition-colors hover:border-slate-600">
-                  <div>
-                    <p className="text-xs text-slate-400 mb-1">Citizen</p>
-                    <p className="text-sm font-semibold text-white">{intelData.suspect}</p>
-                  </div>
-                  <span className="text-[10px] bg-slate-800 text-slate-300 px-2.5 py-1 rounded">Primary Suspect</span>
-                </div>
-                {/* Location */}
-                <div className="bg-[#0f172a]/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4 flex justify-between items-center transition-colors hover:border-slate-600">
-                  <div>
-                    <p className="text-xs text-slate-400 mb-1">Location</p>
-                    <p className="text-sm font-semibold text-white">{intelData.location}</p>
-                  </div>
-                  <span className="text-[10px] bg-slate-800 text-slate-300 px-2.5 py-1 rounded">Incident Zone</span>
-                </div>
-                {/* Crime */}
-                <div className="bg-[#0f172a]/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4 flex justify-between items-center transition-colors hover:border-slate-600">
-                  <div>
-                    <p className="text-xs text-slate-400 mb-1">Crime</p>
-                    <p className="text-sm font-semibold text-white">{intelData.crimeType}</p>
-                  </div>
-                  <span className="text-[10px] bg-slate-800 text-slate-300 px-2.5 py-1 rounded">Classification</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column: Neural Risk Assessment */}
-            <div className="flex flex-col gap-4">
-              <h3 className="font-semibold text-sm mb-1 text-slate-200">Neural Risk Assessment</h3>
-
-              {/* Profile Header */}
-              <div className="flex justify-between items-end border-b border-slate-800 pb-4 mb-2">
-                <div>
-                  <p className="text-xs text-slate-400 mb-1">Target Profile</p>
-                  <p className="text-lg font-semibold text-white leading-none">{intelData.suspect}</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-xs text-slate-400 mb-1">Reoffend Probability</p>
-                  <p className="text-lg font-semibold text-orange-400 leading-none">{intelData.riskScore}%</p>
-                </div>
-              </div>
-
-              {/* XAI Reasoning */}
-              <div className="flex flex-col gap-3">
-                <p className="text-xs text-slate-400 mb-1">XAI Reasoning:</p>
-
-                <div className="flex justify-between items-center text-xs">
-                  <span className="text-slate-400">Prior Crime Count</span>
-                  <span className="text-white font-semibold">{intelData.crimes}</span>
-                </div>
-                <div className="flex justify-between items-center text-xs">
-                  <span className="text-slate-400">Days Since Last Crime</span>
-                  <span className="text-white font-semibold">{intelData.daysSince}</span>
-                </div>
-                <div className="flex justify-between items-center text-xs">
-                  <span className="text-slate-400">Network Connections</span>
-                  <span className="text-white font-semibold">{intelData.connections}</span>
-                </div>
-                <div className="flex justify-between items-center text-xs">
-                  <span className="text-slate-400">XGBoost Probability</span>
-                  <span className="text-white font-semibold font-mono">{(parseFloat(intelData.riskScore)/100).toFixed(4)}</span>
-                </div>
-              </div>
-
-              {/* Overall Risk Card */}
-              <div className={`mt-auto rounded-lg p-4 flex items-center gap-4 border ${intelData.riskLevel === 'Critical' ? 'bg-red-500/10 border-red-500/20' : intelData.riskLevel === 'Moderate' ? 'bg-orange-500/10 border-orange-500/20' : 'bg-green-500/10 border-green-500/20'}`}>
-                <ShieldAlert className={`w-8 h-8 ${intelData.riskLevel === 'Critical' ? 'text-red-500' : intelData.riskLevel === 'Moderate' ? 'text-orange-500' : 'text-green-500'}`} />
-                <div>
-                   <p className="text-xs text-slate-400 mb-0.5">Overall Risk Category</p>
-                   <p className={`text-xl font-bold uppercase leading-none ${intelData.riskLevel === 'Critical' ? 'text-red-500' : intelData.riskLevel === 'Moderate' ? 'text-orange-500' : 'text-green-500'}`}>{intelData.riskLevel}</p>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          {/* PR 17 NEW FEATURES: Timeline, Entities, Contradictions */}
-          <div className="px-6 pb-6 grid grid-cols-1 xl:grid-cols-3 gap-6 mt-4 border-t border-slate-800 pt-6">
-            {/* Timeline */}
-            <div className="bg-[#0B1220]/50 border border-slate-700/50 rounded-xl p-5 flex flex-col gap-4">
-              <h3 className="font-semibold text-sm text-slate-200 border-b border-slate-800 pb-2">Event Timeline</h3>
-              <div className="flex flex-col gap-4 relative">
-                <div className="absolute left-[7px] top-2 bottom-2 w-0.5 bg-slate-800 rounded"></div>
-                {timeline.map((evt, idx) => (
-                  <div key={idx} className="flex gap-4 relative">
-                    <div className="w-4 h-4 rounded-full bg-blue-500 border-4 border-[#0B1220] z-10 shrink-0 mt-0.5"></div>
-                    <div>
-                      <p className="text-xs font-bold text-blue-400">{evt.timestamp}</p>
-                      <p className="text-xs text-slate-300 mt-1 leading-relaxed">{evt.description}</p>
-                    </div>
-                  </div>
-                ))}
-                {timeline.length === 0 && <p className="text-xs text-slate-500 italic">No timeline events extracted.</p>}
-              </div>
-            </div>
-
-            {/* Entities Matrix */}
-            <div className="bg-[#0B1220]/50 border border-slate-700/50 rounded-xl p-5 flex flex-col gap-4">
-              <h3 className="font-semibold text-sm text-slate-200 border-b border-slate-800 pb-2">Deep Entity Matrix</h3>
-              <div className="flex flex-col gap-4">
-                {extractedEntities.vehicles && extractedEntities.vehicles.length > 0 && (
-                  <div>
-                    <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-2">Vehicles Detected</p>
-                    <div className="flex flex-wrap gap-2">
-                      {extractedEntities.vehicles.map((v: string, i: number) => (
-                        <span key={i} className="text-xs bg-slate-800 text-slate-200 px-2 py-1 rounded flex items-center gap-1.5"><CarFront className="w-3 h-3 text-slate-400"/> {v}</span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {extractedEntities.organizations && extractedEntities.organizations.length > 0 && (
-                  <div>
-                    <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-2">Organizations Involved</p>
-                    <div className="flex flex-wrap gap-2">
-                      {extractedEntities.organizations.map((o: string, i: number) => (
-                        <span key={i} className="text-xs bg-slate-800 text-slate-200 px-2 py-1 rounded flex items-center gap-1.5"><Building2 className="w-3 h-3 text-slate-400"/> {o}</span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {extractedEntities.dates && extractedEntities.dates.length > 0 && (
-                  <div>
-                    <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-2">Key Dates</p>
-                    <div className="flex flex-wrap gap-2">
-                      {extractedEntities.dates.map((d: string, i: number) => (
-                        <span key={i} className="text-[11px] font-mono bg-slate-800/50 text-slate-400 px-2 py-1 rounded border border-slate-700">{d}</span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Contradictions */}
-            <div className="bg-[#0B1220]/50 border border-slate-700/50 rounded-xl p-5 flex flex-col gap-4">
-              <h3 className="font-semibold text-sm text-slate-200 border-b border-slate-800 pb-2">Contradiction Engine</h3>
-              {contradictions.length > 0 ? (
-                <div className="flex flex-col gap-3">
-                  {contradictions.map((c, idx) => (
-                    <div key={idx} className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
-                      <div className="flex items-start gap-2">
-                        <ShieldAlert className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
-                        <div>
-                          <p className="text-xs font-semibold text-red-400 mb-1">{c.type || 'Inconsistency'} in {c.field}</p>
-                          <p className="text-[10px] text-slate-300">1: "{c.statement_1}"</p>
-                          <p className="text-[10px] text-slate-300 mt-1">2: "{c.statement_2}"</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center py-6 text-center text-slate-500 gap-3 opacity-70 h-full">
-                  <CheckCircle2 className="w-8 h-8 text-green-500/50" />
-                  <p className="text-xs max-w-[80%]">No logical contradictions found in the submitted statements.</p>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
     </div>
   )
 }

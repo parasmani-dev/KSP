@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: ksp-ai-services
+    runtime: docker
+    plan: free
+    dockerfilePath: ./ai-services/Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+
+  - type: web
+    name: ksp-graph-service
+    runtime: docker
+    plan: free
+    dockerfilePath: ./graph-service/Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+
+  - type: web
+    name: ksp-evidence-engine
+    runtime: docker
+    plan: free
+    dockerfilePath: ./ai-services/evidence-engine/Dockerfile
+    dockerContext: ./ai-services/evidence-engine
+    healthCheckPath: /health

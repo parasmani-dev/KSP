@@ -1,18 +1,52 @@
-version: '3.8'
 services:
   frontend:
-    image: node:18-alpine
+    build:
+      context: ./frontend
+    environment:
+      AI_SERVICE_URL: http://ai-services:8000
+      GRAPH_SERVICE_URL: http://graph-service:8001
+      EVIDENCE_SERVICE_URL: http://evidence-engine:8002
     ports:
-      - "3000:3000"
-  backend:
-    image: openjdk:17-jdk-alpine
-    ports:
-      - "8080:8080"
+      - "${PORT:-3000}:3000"
+    depends_on:
+      ai-services:
+        condition: service_healthy
+      graph-service:
+        condition: service_healthy
+      evidence-engine:
+        condition: service_healthy
+    restart: unless-stopped
+
   ai-services:
-    image: python:3.10-slim
-    ports:
-      - "8000:8000"
+    build:
+      context: .
+      dockerfile: ai-services/Dockerfile
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
   graph-service:
-    image: python:3.10-slim
-    ports:
-      - "8001:8001"
+    build:
+      context: .
+      dockerfile: graph-service/Dockerfile
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  evidence-engine:
+    build:
+      context: ./ai-services/evidence-engine
+    environment:
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8002/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped

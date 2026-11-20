@@ -1,0 +1,7 @@
+.git
+**/__pycache__
+**/.env*
+**/node_modules
+**/.next
+**/*.pyc
+**/models/saved

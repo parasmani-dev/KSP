@@ -51,8 +51,6 @@ Generated model binaries are excluded from Git. The public demo runs from the tr
 | Synthetic data | `Dataset/` | Fictional test records and provenance |
 | API contracts | `contracts/` | API sketches for the research modules |
 
-Earlier design notes are kept in [docs/archive](docs/archive/README.md). They describe initial ideas and do not replace this README or the current deployment configuration.
-
 The browser talks only to the Next.js `/api/services/*` proxy. The proxy connects to the three Python services. The demo uses CSV files; it does not need a database.
 
 ## Run locally

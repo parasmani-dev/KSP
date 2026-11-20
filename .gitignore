@@ -2,6 +2,8 @@
 .env*
 !.env.example
 *.pem
+/CLAUDE.md
+/frontend/CLAUDE.md
 
 # Python and test output
 __pycache__/

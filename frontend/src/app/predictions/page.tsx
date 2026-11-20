@@ -2,8 +2,8 @@ import { PredictionDashboard } from "@/components/predictions/PredictionDashboar
 
 export default function PredictionsPage() {
   return (
-    <div className="h-full bg-[#050A15] min-h-screen">
-      <div className="h-full overflow-y-auto px-6 py-6 md:px-8">
+    <div className="h-full bg-background min-h-screen">
+      <div className="ksp-page h-full overflow-y-auto">
         <PredictionDashboard />
       </div>
     </div>

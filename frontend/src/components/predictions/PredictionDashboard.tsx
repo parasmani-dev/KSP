@@ -121,17 +121,12 @@ export function PredictionDashboard() {
     ...c,
     color: Object.values(COLORS)[i % 4],
     pct: Math.round((c.value / totalCrimes) * 100) + '%'
-  })) : [
-    { name: 'Theft', value: 89, color: COLORS.red, pct: '48%' },
-    { name: 'Cybercrime', value: 41, color: COLORS.purple, pct: '22%' },
-    { name: 'Fraud', value: 32, color: COLORS.orange, pct: '17%' },
-    { name: 'Assault', value: 24, color: COLORS.green, pct: '13%' },
-  ]
+  })) : []
   const topCrimeType = livePieData.length > 0 ? livePieData[0] : null
   const totalForecasted = livePieData.reduce((sum, item) => sum + item.value, 0)
 
   // Derived Trend Data (using random variance scaled to total incidents)
-  const baseLine = totalPredictedIncidents > 0 ? totalPredictedIncidents : 186
+  const baseLine = totalPredictedIncidents
   // liveTrendData is now fetched from the backend API
 
   const handleAnomalyScan = async () => {
@@ -176,11 +171,9 @@ export function PredictionDashboard() {
       {/* ROW 1: HEADER */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-            <TrendingUp className="text-blue-500 w-6 h-6" />
-            AI Predictions
-          </h1>
-          <p className="text-sm text-slate-400 mt-1">Forecasting future crime patterns and risks to enable proactive policing.</p>
+          <div className="ksp-eyebrow mb-2">Analysis / synthetic data</div>
+          <h1 className="ksp-heading flex items-center gap-2"><TrendingUp className="text-[#d0ad71] w-6 h-6" /> Forecast review</h1>
+          <p className="ksp-subheading mt-2">Compare area estimates and recorded patterns. Model outputs require independent review.</p>
         </div>
         <div className="flex items-center gap-4 bg-[#0B1220]/80 p-1.5 rounded-lg border border-slate-800/50">
           <span className="text-xs text-slate-400 pl-3">Forecast Horizon</span>
@@ -189,7 +182,7 @@ export function PredictionDashboard() {
               <button 
                 key={h}
                 onClick={() => setHorizon(h)}
-                className={`px-4 py-1.5 text-xs font-semibold rounded-md transition-colors ${horizon === h ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-slate-200'}`}
+                className={`px-4 py-1.5 text-xs font-semibold rounded-md transition-colors ${horizon === h ? 'bg-[#a8824c] text-[#101922]' : 'text-slate-400 hover:text-slate-200'}`}
               >
                 {h}
               </button>
@@ -204,16 +197,16 @@ export function PredictionDashboard() {
         {loading && (
           <div className="absolute inset-0 z-50 flex flex-col items-center justify-center backdrop-blur-[4px] bg-[#020817]/40 rounded-xl transition-all duration-300">
             <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mb-3"></div>
-            <p className="text-xs font-bold tracking-widest text-blue-400 uppercase">Recalculating Models...</p>
+            <p className="text-xs font-bold tracking-widest text-[#d0ad71] uppercase">Updating analysis…</p>
           </div>
         )}
         <div className={`transition-opacity duration-300 ${loading ? 'opacity-40 pointer-events-none' : 'opacity-100'}`}>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
-            <KpiCard title={`PREDICTED INCIDENTS (NEXT ${horizon.toUpperCase()})`} value={totalPredictedIncidents > 0 ? Math.round(totalPredictedIncidents) : "186"} subtitle="+24.7%" subDesc={`vs previous ${horizon}`} subColor="text-red-500" icon={<Activity className="text-red-500 w-5 h-5" />} chartColor={COLORS.red} chartPattern="wave1" />
-            <KpiCard title="HIGH RISK ZONES" value={highRiskZones > 0 ? highRiskZones : "8"} subtitle="↑ 2" subDesc="New zones" subColor="text-red-500" icon={<MapPin className="text-purple-500 w-5 h-5" />} chartColor={COLORS.purple} chartPattern="wave2" />
-        <KpiCard title="AVERAGE CITY RISK" value={hotspots.length > 0 ? `${Math.round((hotspots.reduce((sum, h) => sum + h.risk_score, 0) / hotspots.length) * 100)}%` : "0%"} subtitle="Active" subDesc="Across all zones" subColor="text-orange-500" icon={<Target className="text-orange-500 w-5 h-5" />} chartColor={COLORS.orange} chartPattern="wave3" />
-        <KpiCard title="PEAK RISK AREA" value={peakRiskArea ? peakRiskArea.area : "N/A"} subtitle={peakRiskArea ? peakRiskArea.risk_level : "—"} subDesc="Highest threat level" subColor={peakRiskArea?.risk_level === 'Critical' ? 'text-red-500' : peakRiskArea?.risk_level === 'High' ? 'text-orange-500' : 'text-yellow-500'} icon={<ShieldAlert className="text-red-500 w-5 h-5" />} chartColor={COLORS.red} chartPattern="wave4" />
-      </div>
+            <KpiCard title={`ESTIMATED INCIDENTS / ${horizon.toUpperCase()}`} value={hotspots.length ? Math.round(totalPredictedIncidents) : '—'} subtitle="Model output" subDesc="Synthetic sample" subColor="text-[#d0ad71]" icon={<Activity className="text-[#d0ad71] w-5 h-5" />} />
+            <KpiCard title="HIGH RISK AREAS" value={hotspots.length ? highRiskZones : '—'} subtitle="Risk buckets" subDesc="Review source data" subColor="text-[#d0ad71]" icon={<MapPin className="text-[#d0ad71] w-5 h-5" />} />
+            <KpiCard title="MEAN AREA RISK" value={hotspots.length ? `${Math.round((hotspots.reduce((sum, h) => sum + h.risk_score, 0) / hotspots.length) * 100)}%` : '—'} subtitle="Across areas" subDesc="Synthetic sample" subColor="text-[#d0ad71]" icon={<Target className="text-[#d0ad71] w-5 h-5" />} />
+            <KpiCard title="HIGHEST SCORE AREA" value={peakRiskArea ? peakRiskArea.area : '—'} subtitle={peakRiskArea ? peakRiskArea.risk_level : 'No estimate'} subDesc="Review locally" subColor="text-[#d0ad71]" icon={<ShieldAlert className="text-[#d0ad71] w-5 h-5" />} />
+          </div>
 
       {/* ROW 3: MAIN VISUALIZATIONS */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
@@ -228,10 +221,10 @@ export function PredictionDashboard() {
         {/* RISK TREND FORECAST */}
         <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col h-[350px]">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Risk Trend Forecast</h3>
+            <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Recorded trend and estimate</h3>
           </div>
           <div className="flex-1 min-h-0">
-            <ResponsiveContainer width="100%" height="100%">
+            {liveTrendData.length === 0 ? <div className="flex h-full items-center justify-center text-xs text-slate-500">Trend data unavailable.</div> : <ResponsiveContainer width="100%" height="100%">
               <LineChart data={liveTrendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
                 <XAxis 
@@ -249,15 +242,15 @@ export function PredictionDashboard() {
                 />
                 <Legend iconType="circle" wrapperStyle={{ fontSize: '10px' }} />
                 <Line type="monotone" dataKey="historical" stroke="#475569" strokeWidth={2} dot={false} strokeDasharray="4 4" />
-                <Line type="monotone" dataKey="predicted" stroke="#3b82f6" strokeWidth={2} dot={{ r: 3, fill: '#3b82f6', stroke: '#0f172a', strokeWidth: 2 }} activeDot={{ r: 5 }} />
+                <Line type="monotone" dataKey="predicted" stroke="#d0ad71" strokeWidth={2} dot={{ r: 3, fill: '#d0ad71', stroke: '#0f172a', strokeWidth: 2 }} activeDot={{ r: 5 }} />
               </LineChart>
-            </ResponsiveContainer>
+            </ResponsiveContainer>}
           </div>
         </div>
 
         {/* WHY AI PREDICTS THIS */}
         <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col h-[350px]">
-          <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">Why AI Predicts This</h3>
+          <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">Scenario factors</h3>
           <div className="flex-1 space-y-4">
             {aiFactors.length > 0 ? (
               aiFactors.map((f, i) => {
@@ -275,13 +268,10 @@ export function PredictionDashboard() {
                 )
               })
             ) : (
-              <div className="text-xs text-slate-500 animate-pulse">Loading live factors...</div>
+              <div className="text-xs text-slate-500">No factors available.</div>
             )}
           </div>
-          <div className="border-t border-slate-800/50 pt-3 flex justify-between items-center mt-auto">
-            <span className="text-xs text-slate-400">Model Confidence</span>
-            <span className="text-xs text-green-500 font-bold">High</span>
-          </div>
+          <p className="border-t border-slate-800/50 pt-3 mt-auto text-[10px] text-slate-500">Illustrative factors. Validate before operational use.</p>
         </div>
       </div>
 
@@ -292,7 +282,7 @@ export function PredictionDashboard() {
         <div className="xl:col-span-1 bg-[#050A15]/80 border border-slate-800/50 rounded-xl p-0 flex flex-col h-[350px] overflow-hidden">
           {/* Tabs */}
           <div className="flex border-b border-slate-800/50 shrink-0">
-            <button className="flex-1 py-3 text-[10px] font-bold text-white border-b-2 border-blue-500 bg-[#0B1220]">Real-time Anomalies</button>
+            <button className="flex-1 py-3 text-[10px] font-bold text-white border-b-2 border-[#d0ad71] bg-[#0B1220]">Anomaly review</button>
           </div>
           
           <div className="p-4 flex-1 flex flex-col overflow-y-auto custom-scrollbar">
@@ -409,26 +399,20 @@ export function PredictionDashboard() {
 
         {/* PATROL RECOMMENDATION */}
         <div className="xl:col-span-1 bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-5 flex flex-col h-[350px]">
-          <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">Patrol Recommendation (Next 7 Days)</h3>
+          <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-4">Areas for patrol review</h3>
           <div className="flex-1 flex flex-col gap-3">
             <div className="grid grid-cols-4 text-[8px] font-bold text-slate-500 uppercase pb-2 border-b border-slate-800/50">
               <span className="col-span-1">Zone</span>
               <span className="col-span-1 text-center">Risk Score</span>
-              <span className="col-span-2 text-right">Recommended Action</span>
+              <span className="col-span-2 text-right">Review note</span>
             </div>
             {hotspots.length > 0 ? hotspots.slice(0, 5).map((spot, i) => {
               const dots = spot.risk_level === 'Critical' ? 5 : spot.risk_level === 'High' ? 4 : spot.risk_level === 'Moderate' ? 3 : 2;
               const dotColor = spot.risk_level === 'Critical' ? 'bg-red-500' : spot.risk_level === 'High' ? 'bg-orange-500' : spot.risk_level === 'Moderate' ? 'bg-yellow-500' : 'bg-green-500';
-              const action = spot.risk_level === 'Critical' ? "+4 Officers\n+2 Vehicles" : spot.risk_level === 'High' ? "+2 Officers\n+1 Vehicle" : "+1 Officer";
+              const action = "Check local coverage";
               return <PatrolRow key={i} zone={spot.area} score={Math.round(spot.risk_score * 100)} dots={dots} dotColor={dotColor} action={action} />
             }) : (
-              <>
-                <PatrolRow zone="Kurla" score={94} dots={5} dotColor="bg-red-500" action="+4 Officers\n+2 Vehicles" />
-                <PatrolRow zone="Andheri" score={87} dots={5} dotColor="bg-red-500" action="+3 Officers\n+1 Vehicle" />
-                <PatrolRow zone="Dharavi" score={78} dots={4} dotColor="bg-orange-500" action="+2 Officers\n+1 Vehicle" />
-                <PatrolRow zone="Whitefield" score={72} dots={4} dotColor="bg-orange-500" action="+2 Officers\n+1 Vehicle" />
-                <PatrolRow zone="Bandra" score={65} dots={3} dotColor="bg-yellow-500" action="+2 Officers\n+1 Vehicle" />
-              </>
+              <p className="text-xs text-slate-500 py-5">No area estimates available.</p>
             )}
           </div>
         </div>
@@ -453,17 +437,9 @@ export function PredictionDashboard() {
   )
 }
 
-function KpiCard({ title, value, subtitle, subDesc, subColor, icon, chartColor, chartPattern = 'wave1' }: any) {
-  const paths: Record<string, string> = {
-    wave1: "M0,15 Q15,25 30,10 T70,20 T100,10",
-    wave2: "M0,25 Q20,5 40,20 T80,10 T100,15",
-    wave3: "M0,20 Q25,30 50,15 T100,20",
-    wave4: "M0,25 C30,25 40,10 60,15 S80,5 100,10",
-  }
-  const pathD = paths[chartPattern] || paths.wave1;
-
+function KpiCard({ title, value, subtitle, subDesc, subColor, icon }: any) {
   return (
-    <div className="bg-[#0B1220]/80 border border-slate-800/50 rounded-xl p-4 flex flex-col relative overflow-hidden">
+    <div className="ksp-panel p-4 flex flex-col relative overflow-hidden">
       <div className="flex justify-between items-start mb-2 z-10">
         <h3 className="text-[9px] font-bold text-slate-400 uppercase tracking-wider w-24">{title}</h3>
         <div className="p-1.5 bg-slate-800/50 rounded-md">
@@ -478,13 +454,6 @@ function KpiCard({ title, value, subtitle, subDesc, subColor, icon, chartColor, 
         <span className="text-[9px] text-slate-500">{subDesc}</span>
       </div>
       
-      {/* Sparkline at the bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-16 opacity-40 pointer-events-none">
-        <svg viewBox="-2 0 104 31" preserveAspectRatio="none" className="w-full h-full overflow-visible">
-          <path d={`${pathD} L100,31 L0,31 Z`} fill={chartColor} opacity="0.15" />
-          <path d={pathD} fill="none" stroke={chartColor} strokeWidth="1.5" vectorEffect="non-scaling-stroke" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </div>
     </div>
   )
 }

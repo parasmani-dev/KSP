@@ -25,15 +25,7 @@ export function EscalationsList() {
     }
   }, [])
 
-  // Provide realistic mock data if the API returns an empty array while we develop
-  const mockData = [
-    { area: "Koramangala", status: "Critical Spikes Detected", growth_rate_percentage: 87, risk_level: "Critical" },
-    { area: "Indiranagar", status: "Rapid Escalation", growth_rate_percentage: 73, risk_level: "High" },
-    { area: "Whitefield", status: "Moderate Increase", growth_rate_percentage: 62, risk_level: "Moderate" },
-    { area: "HSR Layout", status: "Slight Trend Up", growth_rate_percentage: 58, risk_level: "Low" }
-  ]
-
-  const displayData = escalating.length > 0 ? escalating : mockData
+  const displayData = escalating
 
   const getIconColor = (idx: number) => {
     if (idx === 0) return "text-red-500"
@@ -57,6 +49,7 @@ export function EscalationsList() {
       </div>
       
       <div className="flex-1 flex flex-col justify-between gap-1.5 overflow-hidden">
+        {displayData.length === 0 && <p className="text-xs text-slate-500 py-6">No escalation estimates available.</p>}
         {displayData.map((area, idx) => (
           <div key={idx} className="flex items-center justify-between p-2 py-1.5 rounded-lg bg-[#0f172a]/50 border border-slate-700/30 hover:border-slate-600 transition-colors">
             <div className="flex items-center gap-2.5 overflow-hidden">

@@ -243,12 +243,13 @@ export default function LiveMap({
           maxBoundsViscosity={1.0}
           style={{ height: '100%', width: '100%', background: '#050b14' }}
           zoomControl={false}
-          attributionControl={false}
+          attributionControl={true}
         >
-          {/* Custom Styled TileLayer - using Carto Dark Matter but with CSS filters to make it deep blue */}
+          {/* Public map tiles with visible source attribution. */}
           <TileLayer
-            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-            className="filter sepia hue-rotate-[190deg] saturate-[3] brightness-[0.8] contrast-[1.2]"
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution="&copy; OpenStreetMap contributors"
+            className="filter brightness-[0.65] invert hue-rotate-[180deg]"
           />
 
           {/* Map Modes: Heatmap / Clusters / Incidents */}
@@ -265,7 +266,7 @@ export default function LiveMap({
               defaultCenter[1] + seededRandom(i * 20) * 0.1
             ];
             // Use ?? instead of || to prevent overriding 0 with random numbers
-            const incidentCount = Math.round(spot.avg_predicted_incidents ?? (seededRandom(i) * 30 + 5));
+            const incidentCount = Math.round(spot.avg_predicted_incidents ?? 0);
             return (
               <Marker
                 key={`hotspot-${i}`}
@@ -341,7 +342,7 @@ export default function LiveMap({
         {/* Title */}
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]"></div>
-          <h2 className="text-white font-bold tracking-widest text-sm drop-shadow-md">LIVE CRIME MAP</h2>
+          <h2 className="text-white font-semibold tracking-[0.12em] text-xs drop-shadow-md">INCIDENT & AREA MAP · DEMO</h2>
         </div>
 
         {/* Center Toggles */}

@@ -38,6 +38,8 @@ This repository includes **neural network research code**, including a graph neu
 
 No displayed score is a validated operational forecast, person-risk assessment, or investigative finding. See [dataset provenance](Dataset/DATA_ORIGIN.md) and the research code under `ai-services/models/` and `graph-service/prediction/` for the experimental work.
 
+Generated model binaries are excluded from Git. The public demo runs from the tracked synthetic sample CSVs; training outputs remain local to the researcher who created them.
+
 ## Architecture
 
 | Component | Directory | Role |
@@ -48,6 +50,8 @@ No displayed score is a validated operational forecast, person-risk assessment, 
 | Evidence engine | `ai-services/evidence-engine/` | Keyless preview; optional Gemini processing |
 | Synthetic data | `Dataset/` | Fictional test records and provenance |
 | API contracts | `contracts/` | API sketches for the research modules |
+
+Earlier design notes are kept in [docs/archive](docs/archive/README.md). They describe initial ideas and do not replace this README or the current deployment configuration.
 
 The browser talks only to the Next.js `/api/services/*` proxy. The proxy connects to the three Python services. The demo uses CSV files; it does not need a database.
 

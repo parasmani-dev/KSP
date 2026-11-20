@@ -2,8 +2,17 @@
 .env*
 !.env.example
 *.pem
-/CLAUDE.md
-/frontend/CLAUDE.md
+
+# Local agent instructions and retired planning files
+**/AGENTS.md
+**/CLAUDE.md
+**/.agents/
+/docs/archive/
+/Ideation of the KSP project.txt
+/PRD.txt
+/TDD.txt
+/SPEC.md
+/STATE.md
 
 # Python and test output
 __pycache__/

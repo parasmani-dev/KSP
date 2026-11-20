@@ -93,14 +93,14 @@ export default function MapPage() {
   }, [])
 
   return (
-    <div className="p-0 h-[calc(100vh-4rem)] flex flex-col relative bg-[#0f172a]">
+    <div className="p-0 h-[calc(100vh-4rem)] flex flex-col relative bg-background">
       {/* Overlay header for the map */}
       <div 
-        className={`absolute top-6 left-8 z-10 bg-background/80 backdrop-blur-md border border-border rounded-xl shadow-lg transition-all duration-700 ease-in-out overflow-hidden ${isExpanded ? 'w-96 p-4 max-h-48' : 'w-48 p-3 max-h-14 cursor-pointer hover:bg-background/95'}`}
+        className={`absolute top-6 left-6 z-10 ksp-panel bg-[#14212a]/95 backdrop-blur-md transition-all duration-300 overflow-hidden ${isExpanded ? 'w-[min(24rem,calc(100vw-3rem))] p-4 max-h-52' : 'w-48 p-3 max-h-14 cursor-pointer hover:bg-[#1d2d37]'}`}
         onClick={() => !isExpanded && setIsExpanded(true)}
       >
         <div className="flex items-center justify-between gap-3">
-          <h1 className={`font-bold tracking-tight whitespace-nowrap transition-all duration-700 ${isExpanded ? 'text-2xl' : 'text-lg'}`}>Live Area Map</h1>
+          <h1 className={`font-semibold tracking-tight whitespace-nowrap transition-all duration-300 ${isExpanded ? 'text-xl' : 'text-lg'}`}>Geospatial review</h1>
           {!isExpanded && (
              <span className="flex h-2 w-2 relative mr-2 shrink-0">
                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75"></span>
@@ -110,7 +110,7 @@ export default function MapPage() {
         </div>
         <div className={`transition-all duration-700 ease-in-out ${isExpanded ? 'opacity-100 mt-1' : 'opacity-0 mt-0 h-0 pointer-events-none'}`}>
           <p className="text-sm text-muted-foreground">
-            Real-time national geospatial monitoring of AI-predicted crime hotspots and escalations.
+            Explore synthetic incident locations and area estimates. Map tiles are provided by OpenStreetMap.
           </p>
           <div className="mt-4 flex items-center justify-between text-sm">
             <div className="flex items-center gap-2">
@@ -118,10 +118,10 @@ export default function MapPage() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-destructive"></span>
               </span>
-              <span className="font-medium text-foreground whitespace-nowrap">LIVE STREAM</span>
+              <span className="font-medium text-foreground whitespace-nowrap">DEMO DATA</span>
             </div>
             <div className="text-muted-foreground font-medium whitespace-nowrap">
-              {filteredHotspots.length} ACTIVE ZONES
+              {filteredHotspots.length} AREAS SHOWN
             </div>
           </div>
         </div>

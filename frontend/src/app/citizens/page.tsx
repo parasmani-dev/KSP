@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { aiApi, graphApi } from "@/lib/api"
 import { Search, Activity, Users, User, X, UserX } from "lucide-react"
@@ -7,7 +7,7 @@ import { TopKpiCards, CitizenProfileCard, RiskScoreGauge, AiRiskExplanation } fr
 import { RelationshipNetwork, LinkedCasesWidget, ThreatProfilerWidget } from "@/components/citizens/CitizenWidgets2"
 import { RiskComparison, SimilarProfiles } from "@/components/citizens/CitizenWidgets3"
 
-export default function CitizensPage() {
+function CitizensPageContent() {
   const [search, setSearch] = useState("")
   const [result, setResult] = useState<any>(null)
   const [loading, setLoading] = useState(false)
@@ -199,22 +199,13 @@ export default function CitizensPage() {
     : []
 
   return (
-    <div className="p-6 h-full flex flex-col font-sans text-slate-300 overflow-y-auto">
+    <div className="ksp-page h-full flex flex-col font-sans text-slate-300 overflow-y-auto">
       {/* HEADER SECTION */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 pb-4 border-b border-slate-800/60 relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-transparent blur-3xl -z-10 pointer-events-none" />
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 pb-4 border-b ksp-rule relative">
         <div>
-          <div className="flex items-center gap-3 mb-1">
-            <div className="p-2 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg shadow-lg shadow-blue-500/20">
-              <Users className="text-white w-5 h-5" />
-            </div>
-            <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
-              Citizen Risk Intelligence
-            </h1>
-          </div>
-          <p className="text-sm text-slate-400 ml-1">
-            AI-powered risk evaluation of individuals based on behavior, associations and location patterns.
-          </p>
+          <div className="ksp-eyebrow mb-2">Entity records / synthetic data</div>
+          <h1 className="ksp-heading flex items-center gap-3"><Users className="text-[#d0ad71] w-6 h-6" /> Subject profiles</h1>
+          <p className="ksp-subheading mt-2">Search linked entities and cases. Scores in this prototype are exploratory model outputs.</p>
         </div>
       </div>
 
@@ -228,8 +219,8 @@ export default function CitizensPage() {
               type="text" 
               value={search} 
               onChange={e => { setSearch(e.target.value); setShowDropdown(true); }} 
-              placeholder="Search by Citizen Name or Entity ID..." 
-              className="w-full bg-[#0B1220]/80 backdrop-blur-md border border-slate-700/50 text-white rounded-xl py-3 pl-11 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all shadow-inner"
+              placeholder="Search name or entity ID"
+              className="w-full bg-[#14212a] border border-[#3d4d56] text-white rounded py-3 pl-11 pr-4 focus:outline-none focus:border-[#d1aa6c] transition-all"
             />
             {showDropdown && filteredCitizens.length > 0 && (
               <div className="absolute top-full left-0 right-0 mt-2 bg-[#111A2C]/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl max-h-60 overflow-y-auto z-50">
@@ -329,6 +320,10 @@ export default function CitizensPage() {
       )}
     </div>
   )
+}
+
+export default function CitizensPage() {
+  return <Suspense fallback={<div className="p-8 text-sm text-slate-400">Loading profiles…</div>}><CitizensPageContent /></Suspense>
 }
 
 

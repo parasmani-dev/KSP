@@ -16,6 +16,10 @@ from prediction.link_prediction_baseline import predict_hidden_links, predict_ac
 
 app = FastAPI(title="Graph API", version="1.0.0")
 
+@app.get("/health")
+def health():
+    return {"status": "ok", "nodes": GRAPH.number_of_nodes()}
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -69,8 +73,6 @@ def search_node(name: str):
 def get_hotspots_api():
     """Area-wise crime counts."""
     return {"hotspots": get_hotspots()}
-
-from prediction.gnn_inference import predict_links_gnn, predict_clusters_gnn
 
 @app.get("/predict/links")
 def predict_links_api():

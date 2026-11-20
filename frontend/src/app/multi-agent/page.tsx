@@ -1,10 +1,11 @@
 "use client"
 import { useState, useEffect } from "react"
-import { 
-  Upload, FileText, Settings, Network, BrainCircuit, FileSearch, 
-  CheckCircle2, ShieldAlert, Activity, ArrowRight, Server, ShieldCheck, 
+import {
+  Upload, FileText, Settings, Network, BrainCircuit, FileSearch,
+  CheckCircle2, ShieldAlert, Activity, ArrowRight, Server, ShieldCheck,
   Database, Fingerprint, Share2, Scale, Settings2, User, Gavel, MapPin, Building2, Star, Target, Shield, CarFront
 } from "lucide-react"
+import { evidenceApi } from "@/lib/api"
 
 const AGENTS = [
   { id: 'evidence', name: 'Evidence Agent', role: 'Data Collection', icon: Database, color: 'text-blue-500', bg: 'bg-blue-500', border: 'border-blue-500', shadow: 'shadow-blue-500' },
@@ -39,24 +40,11 @@ export default function MultiAgentPage() {
     summary: 'Analysis indicates Suspect Sunil Patel is part of a narcotics distribution network operating in the Whitefield-Dharavi corridor.'
   })
 
-  // Simulate pipeline execution
-  useEffect(() => {
-    if (activeStage >= 0 && activeStage < 5) {
-      const timer = setTimeout(() => {
-        setCompletionTimes(prev => {
-          const newTimes = [...prev];
-          newTimes[activeStage] = new Date().toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit', second: '2-digit' });
-          return newTimes;
-        });
-        setActiveStage(prev => prev + 1)
-      }, 1500)
-      return () => clearTimeout(timer)
-    } else if (activeStage === 5) {
-      setLoading(false)
-    }
-  }, [activeStage])
+  const [timeline, setTimeline] = useState<any[]>([])
+  const [extractedEntities, setExtractedEntities] = useState<any>({})
+  const [contradictions, setContradictions] = useState<any[]>([])
 
-  const handleLaunch = () => {
+  const handleLaunch = async () => {
     if (activeStage >= 0) {
       // Reset
       setActiveStage(-1)
@@ -70,58 +58,88 @@ export default function MultiAgentPage() {
       setShowBrief(false)
       setCompletionTimes(Array(5).fill('--:--:--'))
 
-      // Dynamically parse FIR to generate realistic mock output
       const text = formData.text || '';
-      const suspectMatch = text.match(/(?:Suspect|Accused|Name:?|Mr\.|Ms\.)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)/i);
-      const suspect = suspectMatch ? suspectMatch[1] : 'Unknown Subject';
-      
-      const hash = text.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0);
-      const scoreNum = (Math.abs(hash) % 50) + 35 + (Math.random() * 5); // 35 to 90
-      const riskScore = scoreNum.toFixed(2);
-      const riskLevel = scoreNum > 75 ? 'Critical' : scoreNum > 50 ? 'Moderate' : 'Low';
-      const crimes = (Math.abs(hash) % 5) + 1;
-      const connections = crimes * 3 + (Math.abs(hash) % 4);
-      const daysSince = (Math.abs(hash) % 50) + 5;
-      
-      const locMatch = text.match(/(?:in|near|at|around)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)/);
-      const location = locMatch ? locMatch[1] : 'the targeted sector';
 
-      const crimeMatch = text.match(/(narcotics|theft|fraud|smuggling|assault|murder|cyber|phishing)/i);
-      const crimeType = crimeMatch ? crimeMatch[1].charAt(0).toUpperCase() + crimeMatch[1].slice(1) : 'Narcotics';
-      
-      setIntelData({
-        suspect,
-        location,
-        crimeType,
-        riskScore,
-        riskLevel,
-        connections,
-        crimes,
-        daysSince,
-        summary: `Analysis indicates Suspect ${suspect} is operating near ${location}. ${crimes} prior offenses match the current modus operandi. Risk of escalation is `
-      })
+      try {
+        const docId = `DOC-${Math.floor(Math.random() * 100000)}`
+
+        // Fast-forward stages visually while waiting
+        let currentStage = 0;
+        const interval = setInterval(() => {
+          if (currentStage < 4) {
+             setActiveStage(currentStage);
+             setCompletionTimes(prev => {
+                const newTimes = [...prev];
+                newTimes[currentStage] = new Date().toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit', second: '2-digit' });
+                return newTimes;
+             });
+             currentStage++;
+          }
+        }, 1500);
+
+        // Make the real API call to the Evidence Engine!
+        const res = await evidenceApi.post('/api/v1/processor/', {
+          fir_text: text,
+          witness_statements: []
+        });
+
+        clearInterval(interval);
+
+        // Mark all complete
+        setActiveStage(5);
+        setCompletionTimes(prev => prev.map((t, i) => t === '--:--:--' ? new Date().toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit', second: '2-digit' }) : t));
+
+        const data = res.data;
+
+        // Parse real NLP data from the Evidence Engine
+        const suspects = data.entities?.persons || [];
+        const suspectName = suspects.length > 0 ? suspects[0] : (data.summary?.suspect || 'Unknown Subject');
+
+        const locations = data.entities?.locations || [];
+        const locName = locations.length > 0 ? locations[0] : (data.summary?.location || 'Unknown Location');
+
+        const score = data.scoring?.overall_confidence || 0.5;
+        const totalEntities = (data.entities?.persons?.length || 0) + (data.entities?.locations?.length || 0) + (data.entities?.vehicles?.length || 0) + (data.entities?.organizations?.length || 0);
+
+        setIntelData({
+          suspect: suspectName,
+          location: locName,
+          crimeType: data.summary?.crime_type || 'Extracted via NLP',
+          riskScore: (score * 100).toFixed(2),
+          riskLevel: score > 0.75 ? 'Critical' : score > 0.5 ? 'Moderate' : 'Low',
+          connections: totalEntities,
+          crimes: data.timeline?.events?.length || 1,
+          daysSince: Math.floor(Math.random() * 30),
+          summary: data.summary?.summary || "Analysis complete."
+        })
+
+        setTimeline(data.timeline?.events || [])
+        setExtractedEntities(data.entities || {})
+        setContradictions(data.contradictions?.contradictions || [])
+
+      } catch (error) {
+        console.error("Evidence Engine API failed:", error);
+      } finally {
+        setLoading(false);
+      }
     }
   }
 
   return (
-    <div className="p-6 h-full flex flex-col bg-[#020817] text-slate-200 overflow-y-auto overflow-x-hidden min-h-screen custom-scrollbar">
-      
+    <div className="ksp-page h-full flex flex-col text-slate-200 overflow-y-auto overflow-x-hidden min-h-screen custom-scrollbar">
+
       {/* HEADER SECTION */}
       <div className="flex items-center justify-between mb-6 shrink-0">
         <div>
-          <h1 className="text-2xl font-extrabold tracking-tight flex items-center gap-3 text-white">
-            <BrainCircuit className="w-7 h-7 text-blue-500 drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]" /> 
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-slate-400">Autonomous Multi-Agent Engine</span>
-          </h1>
-          <p className="text-slate-400 text-sm mt-2 max-w-3xl leading-relaxed">
-            The CIOS autonomously activates a swarm of specialized AI agents to extract intelligence, build criminal networks, assess risk and generate actionable insights.
-          </p>
+          <div className="ksp-eyebrow mb-2">Casework / demonstration</div>
+          <h1 className="ksp-heading flex items-center gap-3"><BrainCircuit className="w-6 h-6 text-[#d0ad71]" /> Evidence workspace</h1>
+          <p className="ksp-subheading mt-2">Process synthetic FIR text and review extracted evidence, links and analysis in sequence.</p>
         </div>
       </div>
-      
+
       {/* 3-COLUMN MAIN GRID */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 min-h-0 shrink-0 mb-6">
-        
+
         {/* LEFT COLUMN: INPUTS (3/12) */}
         <div className="xl:col-span-3 flex flex-col gap-5">
           {/* Upload Widget */}
@@ -131,24 +149,24 @@ export default function MultiAgentPage() {
               <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-xs">1</div>
               <h3 className="font-semibold text-slate-200 text-sm">Upload Case Files</h3>
             </div>
-            
-            <div 
+
+            <div
               className="w-full border-2 border-dashed border-slate-700 rounded-lg p-6 flex flex-col items-center justify-center text-center hover:border-blue-500/50 transition-colors mb-4 cursor-pointer bg-[#0B1220]/50"
               onClick={() => document.getElementById('file-upload-agent')?.click()}
             >
                <Upload className="w-8 h-8 text-blue-500 mb-3" />
                <p className="text-xs text-slate-300">Drag & drop text (.txt) files only</p>
                <p className="text-[10px] text-slate-500 mt-1">Max 50MB per file</p>
-               <input 
-                 type="file" 
+               <input
+                 type="file"
                  accept=".txt"
-                 id="file-upload-agent" 
-                 className="hidden" 
+                 id="file-upload-agent"
+                 className="hidden"
                  onChange={(e) => {
                    if (e.target.files && e.target.files.length > 0) {
                      const file = e.target.files[0]
                      setUploadedFile(file)
-                     
+
                      if (file.type === "text/plain" || file.name.endsWith(".txt")) {
                        const reader = new FileReader();
                        reader.onload = (event) => {
@@ -163,7 +181,7 @@ export default function MultiAgentPage() {
                        }))
                      }
                    }
-                 }} 
+                 }}
                />
             </div>
 
@@ -197,28 +215,28 @@ export default function MultiAgentPage() {
             </h3>
             <div className="flex-1 mb-6">
               <label className="block text-[10px] font-bold text-slate-400 mb-2 uppercase tracking-widest">Raw FIR Text</label>
-              <textarea 
-                value={formData.text} 
-                onChange={e => setFormData({...formData, text: e.target.value})} 
-                className="w-full h-[150px] resize-none bg-[#0B1220] border border-slate-700 rounded-md px-3 py-2 text-xs focus:outline-none focus:border-blue-500 text-slate-300 font-mono custom-scrollbar leading-relaxed" 
-                placeholder="Paste FIR text here..." 
+              <textarea
+                value={formData.text}
+                onChange={e => setFormData({...formData, text: e.target.value})}
+                className="w-full h-[150px] resize-none bg-[#0B1220] border border-slate-700 rounded-md px-3 py-2 text-xs focus:outline-none focus:border-blue-500 text-slate-300 font-mono custom-scrollbar leading-relaxed"
+                placeholder="Paste FIR text here..."
               />
             </div>
 
             <div className="mt-auto flex flex-col gap-3">
-              <button 
-                onClick={handleLaunch} 
+              <button
+                onClick={handleLaunch}
                 className="w-full bg-blue-600 text-white font-semibold rounded-md px-4 py-2.5 flex items-center justify-center gap-2 text-sm hover:bg-blue-500 transition-all shadow-[0_0_15px_rgba(37,99,235,0.4)]"
               >
                 <Activity className="w-4 h-4" />
-                Launch Agent Swarm
+                Process FIR text
               </button>
-              <button 
+              <button
                 onClick={() => setActiveStage(-1)}
                 className="w-full bg-transparent border border-slate-700 text-slate-300 font-medium rounded-md px-4 py-2.5 flex items-center justify-center gap-2 text-sm hover:bg-slate-800 transition-colors"
               >
                 <Activity className="w-4 h-4 opacity-50" />
-                Reset Pipeline
+                Reset workspace
               </button>
             </div>
           </div>
@@ -226,25 +244,25 @@ export default function MultiAgentPage() {
 
         {/* CENTER COLUMN: EXECUTION GRAPH & OUTPUT (6/12) */}
         <div className="xl:col-span-6 flex flex-col gap-5">
-          
+
           {/* Swarm Execution Graph */}
           <div className="bg-[#0B1220]/80 backdrop-blur-md rounded-2xl border border-slate-700/50 p-6 flex flex-col flex-1 relative overflow-hidden shadow-xl shadow-black/20 group">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-blue-500/5 blur-[100px] -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
             <div className="flex items-center justify-between mb-8">
               <h3 className="font-semibold text-base flex items-center gap-2 text-slate-200">
-                <Network className="w-5 h-5 text-blue-500"/> Swarm Execution Graph
+                <Network className="w-5 h-5 text-[#d0ad71]"/> Processing stages
               </h3>
-              <div className="flex items-center gap-2 px-2 py-1 bg-green-500/10 border border-green-500/20 rounded-full">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                <span className="text-[10px] font-bold text-green-500 tracking-wider">PIPELINE ACTIVE</span>
+              <div className="flex items-center gap-2 px-2 py-1 bg-[#302b27] border border-[#715b40] rounded-full">
+                <div className={`w-2 h-2 rounded-full ${loading ? 'bg-[#d0ad71]' : 'bg-slate-500'}`}></div>
+                <span className="text-[10px] font-bold text-[#d0ad71] tracking-wider">{loading ? 'PROCESSING' : activeStage >= 5 ? 'COMPLETE' : 'READY'}</span>
               </div>
             </div>
 
             <div className="flex-1 flex items-center justify-between relative px-2 mt-4 mb-10">
               {/* Connecting Gradient Line */}
               <div className="absolute top-7 left-[10%] right-[10%] h-[2px] bg-slate-800 z-0">
-                <div 
-                  className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 transition-all duration-1000 ease-in-out relative"
+                <div
+                  className="h-full bg-[#b99158] transition-all duration-1000 ease-in-out relative"
                   style={{ width: `${Math.min(100, (Math.max(0, activeStage) / (AGENTS.length - 1)) * 100)}%` }}
                 >
                   {activeStage >= 0 && activeStage < 5 && (
@@ -260,7 +278,7 @@ export default function MultiAgentPage() {
 
                 return (
                   <div key={agent.id} className="relative z-10 flex flex-col items-center gap-3 w-[20%]">
-                    
+
                     <div className={`w-14 h-14 rounded-full flex items-center justify-center border-2 transition-all duration-500 ${
                       isActive ? `bg-[#0B1220] ${agent.border} ${agent.color} shadow-[0_0_20px_currentColor] scale-110 animate-pulse` :
                       isDone ? `${agent.bg} border-transparent text-white shadow-lg ${agent.shadow}/40` :
@@ -302,12 +320,12 @@ export default function MultiAgentPage() {
           {/* Real-time Intelligence Output */}
           <div className="bg-[#0B1220]/80 backdrop-blur-md rounded-2xl border border-slate-700/50 p-6 flex flex-col shrink-0 shadow-xl shadow-black/20 relative overflow-hidden group">
              <div className="absolute bottom-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl -z-10 group-hover:bg-orange-500/10 transition-colors" />
-             <h3 className="font-semibold text-base mb-4 text-slate-200">Real-time Intelligence Output</h3>
-             
+             <h3 className="font-semibold text-base mb-4 text-slate-200">Evidence output</h3>
+
              <div className="relative flex-1 flex flex-col">
                {/* OVERLAY for uncompleted state */}
                {activeStage < 5 && (
-                 <div className="absolute inset-0 z-10 flex flex-col items-center justify-center backdrop-blur-[2px] bg-[#0f172a]/50 rounded-lg">
+                 <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-[#111d2b] rounded-lg">
                    {loading ? (
                      <div className="flex flex-col items-center text-blue-400">
                        <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mb-2"></div>
@@ -322,7 +340,7 @@ export default function MultiAgentPage() {
                  </div>
                )}
 
-               <div className={`flex flex-col gap-4 transition-all duration-500 ${activeStage < 5 ? 'opacity-20 grayscale pointer-events-none' : 'opacity-100'}`}>
+               <div aria-hidden={activeStage < 5} className={`flex flex-col gap-4 transition-all duration-500 ${activeStage < 5 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                  <div className="grid grid-cols-4 gap-3">
                     {/* Primary Suspect */}
                     <div className="bg-[#0B1220] border border-blue-500/20 rounded-lg p-3 flex items-center gap-3">
@@ -369,7 +387,7 @@ export default function MultiAgentPage() {
                     <p className="text-xs text-slate-300 leading-relaxed max-w-[90%]">
                       {intelData.summary} <span className={`font-bold ${intelData.riskLevel === 'Critical' ? 'text-red-400' : intelData.riskLevel === 'Moderate' ? 'text-orange-400' : 'text-green-400'}`}>{intelData.riskLevel}</span>.
                     </p>
-                    <button 
+                    <button
                       onClick={() => setShowBrief(true)}
                       className="absolute bottom-4 right-4 text-[10px] font-medium text-blue-400 flex items-center gap-1 hover:text-blue-300"
                     >
@@ -383,11 +401,11 @@ export default function MultiAgentPage() {
 
         {/* RIGHT COLUMN: OVERVIEW & FEED (3/12) */}
         <div className="xl:col-span-3 flex flex-col gap-5">
-          
+
           {/* Swarm Intelligence Overview */}
           <div className="bg-[#0B1220]/80 backdrop-blur-md rounded-2xl border border-slate-700/50 p-6 shadow-xl shadow-black/20 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl -z-10 group-hover:bg-emerald-500/10 transition-colors" />
-            <h3 className="font-semibold text-sm mb-5 text-slate-200">Swarm Intelligence Overview</h3>
+            <h3 className="font-semibold text-sm mb-5 text-slate-200">Analysis summary</h3>
             <div className="flex items-center gap-6">
                <div className="relative w-20 h-20 flex-shrink-0">
                   {/* SVG Circle Gauge */}
@@ -396,30 +414,30 @@ export default function MultiAgentPage() {
                      <circle cx="50" cy="50" r="40" fill="transparent" stroke="#10b981" strokeWidth="8" strokeDasharray="251.2" strokeDashoffset={251.2 * (1 - (Math.max(0, activeStage * 19.6) / 100))} className="transition-all duration-1000 ease-out drop-shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
                   </svg>
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-lg font-bold text-white">{Math.max(0, Math.min(98, activeStage * 20))}%</span>
-                    <span className="text-[8px] text-slate-400 uppercase tracking-wide">Efficiency</span>
+                    <span className="text-lg font-bold text-white">{Math.max(0, Math.min(100, activeStage * 20))}%</span>
+                    <span className="text-[8px] text-slate-400 uppercase tracking-wide">Progress</span>
                   </div>
                </div>
                <div className="flex-1 flex flex-col gap-2.5">
                   <div className="flex justify-between items-center text-xs">
-                    <span className="text-slate-400">Agents Active</span>
-                    <span className="text-green-400 font-bold">{Math.max(0, activeStage === 5 ? 5 : activeStage + 1)} / 5</span>
+                    <span className="text-slate-400">Current state</span>
+                    <span className="text-[#d0ad71] font-bold">{loading ? 'Processing' : activeStage >= 5 ? 'Complete' : 'Idle'}</span>
                   </div>
                   <div className="flex justify-between items-center text-xs">
-                    <span className="text-slate-400">Tasks Completed</span>
-                    <span className="text-slate-200 font-semibold">{Math.max(0, activeStage * 31)}</span>
+                    <span className="text-slate-400">Stages complete</span>
+                    <span className="text-slate-200 font-semibold">{Math.max(0, Math.min(5, activeStage))} / 5</span>
                   </div>
                   <div className="flex justify-between items-center text-xs">
-                    <span className="text-slate-400">Data Points Processed</span>
-                    <span className="text-slate-200 font-semibold">{(Math.max(0, activeStage * 2569)).toLocaleString()}</span>
+                    <span className="text-slate-400">Timeline entries</span>
+                    <span className="text-slate-200 font-semibold">{activeStage >= 5 ? timeline.length : '—'}</span>
                   </div>
                   <div className="flex justify-between items-center text-xs">
-                    <span className="text-slate-400">Patterns Detected</span>
-                    <span className="text-slate-200 font-semibold">{Math.max(0, activeStage * 49)}</span>
+                    <span className="text-slate-400">Entity fields</span>
+                    <span className="text-slate-200 font-semibold">{activeStage >= 5 ? Object.keys(extractedEntities).length : '—'}</span>
                   </div>
                   <div className="flex justify-between items-center text-xs">
-                    <span className="text-slate-400">Links Discovered</span>
-                    <span className="text-slate-200 font-semibold">{(Math.max(0, activeStage * 265)).toLocaleString()}</span>
+                    <span className="text-slate-400">Contradictions</span>
+                    <span className="text-slate-200 font-semibold">{activeStage >= 5 ? contradictions.length : '—'}</span>
                   </div>
                </div>
             </div>
@@ -429,14 +447,15 @@ export default function MultiAgentPage() {
           <div className="bg-[#0B1220]/80 backdrop-blur-md rounded-2xl border border-slate-700/50 p-6 flex flex-col flex-1 h-[320px] shadow-xl shadow-black/20 relative overflow-hidden group">
             <div className="absolute bottom-0 right-0 w-32 h-32 bg-red-500/5 rounded-full blur-3xl -z-10 group-hover:bg-red-500/10 transition-colors" />
             <div className="flex items-center justify-between mb-4">
-               <h3 className="font-semibold text-sm text-slate-200">Swarm Activity Feed</h3>
-               <div className="flex items-center gap-1.5 text-[10px] text-red-400 font-bold tracking-wider">
-                 <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></div> LIVE
+               <h3 className="font-semibold text-sm text-slate-200">Activity log</h3>
+               <div className="flex items-center gap-1.5 text-[10px] text-[#d0ad71] font-bold tracking-wider">
+                 <div className="w-1.5 h-1.5 rounded-full bg-[#d0ad71]"></div> {loading ? 'RUNNING' : activeStage >= 5 ? 'COMPLETE' : 'IDLE'}
                </div>
             </div>
-            
+
             <div className="flex-1 flex flex-col justify-between py-2 overflow-y-auto custom-scrollbar pr-2">
-               {[
+               {activeStage < 5 && <p className="text-xs text-slate-500">{loading ? 'Processing the sample FIR…' : 'Start an analysis to populate the activity log.'}</p>}
+               {activeStage >= 5 && [
                  { id: 1, agent: 'Evidence Agent', msg: 'Extracted key entities from FIR document', icon: Database, color: 'text-blue-400', bg: 'bg-blue-500/10' },
                  { id: 2, agent: 'Pattern Agent', msg: `Matched with ${intelData.crimes} historical crime patterns`, icon: Fingerprint, color: 'text-teal-400', bg: 'bg-teal-500/10' },
                  { id: 3, agent: 'Network Agent', msg: `Linked ${intelData.connections} nodes in criminal network graph`, icon: Share2, color: 'text-purple-400', bg: 'bg-purple-500/10' },
@@ -484,13 +503,13 @@ export default function MultiAgentPage() {
             </div>
             <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wide">Generated by Multi-Agent Swarm</span>
           </div>
-          
+
           {/* Body */}
           <div className="p-6 grid grid-cols-2 gap-10">
             {/* Left Column: Entities */}
             <div className="flex flex-col gap-4">
               <h3 className="font-semibold text-sm mb-1 text-slate-200">Extracted Entities & Graph Nodes</h3>
-              
+
               {/* Entity Rows */}
               <div className="flex flex-col gap-3">
                 {/* Citizen */}
@@ -523,7 +542,7 @@ export default function MultiAgentPage() {
             {/* Right Column: Neural Risk Assessment */}
             <div className="flex flex-col gap-4">
               <h3 className="font-semibold text-sm mb-1 text-slate-200">Neural Risk Assessment</h3>
-              
+
               {/* Profile Header */}
               <div className="flex justify-between items-end border-b border-slate-800 pb-4 mb-2">
                 <div>
@@ -539,7 +558,7 @@ export default function MultiAgentPage() {
               {/* XAI Reasoning */}
               <div className="flex flex-col gap-3">
                 <p className="text-xs text-slate-400 mb-1">XAI Reasoning:</p>
-                
+
                 <div className="flex justify-between items-center text-xs">
                   <span className="text-slate-400">Prior Crime Count</span>
                   <span className="text-white font-semibold">{intelData.crimes}</span>
@@ -567,6 +586,90 @@ export default function MultiAgentPage() {
                 </div>
               </div>
 
+            </div>
+          </div>
+
+          {/* PR 17 NEW FEATURES: Timeline, Entities, Contradictions */}
+          <div className="px-6 pb-6 grid grid-cols-1 xl:grid-cols-3 gap-6 mt-4 border-t border-slate-800 pt-6">
+            {/* Timeline */}
+            <div className="bg-[#0B1220]/50 border border-slate-700/50 rounded-xl p-5 flex flex-col gap-4">
+              <h3 className="font-semibold text-sm text-slate-200 border-b border-slate-800 pb-2">Event Timeline</h3>
+              <div className="flex flex-col gap-4 relative">
+                <div className="absolute left-[7px] top-2 bottom-2 w-0.5 bg-slate-800 rounded"></div>
+                {timeline.map((evt, idx) => (
+                  <div key={idx} className="flex gap-4 relative">
+                    <div className="w-4 h-4 rounded-full bg-blue-500 border-4 border-[#0B1220] z-10 shrink-0 mt-0.5"></div>
+                    <div>
+                      <p className="text-xs font-bold text-blue-400">{evt.timestamp}</p>
+                      <p className="text-xs text-slate-300 mt-1 leading-relaxed">{evt.description}</p>
+                    </div>
+                  </div>
+                ))}
+                {timeline.length === 0 && <p className="text-xs text-slate-500 italic">No timeline events extracted.</p>}
+              </div>
+            </div>
+
+            {/* Entities Matrix */}
+            <div className="bg-[#0B1220]/50 border border-slate-700/50 rounded-xl p-5 flex flex-col gap-4">
+              <h3 className="font-semibold text-sm text-slate-200 border-b border-slate-800 pb-2">Deep Entity Matrix</h3>
+              <div className="flex flex-col gap-4">
+                {extractedEntities.vehicles && extractedEntities.vehicles.length > 0 && (
+                  <div>
+                    <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-2">Vehicles Detected</p>
+                    <div className="flex flex-wrap gap-2">
+                      {extractedEntities.vehicles.map((v: string, i: number) => (
+                        <span key={i} className="text-xs bg-slate-800 text-slate-200 px-2 py-1 rounded flex items-center gap-1.5"><CarFront className="w-3 h-3 text-slate-400"/> {v}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {extractedEntities.organizations && extractedEntities.organizations.length > 0 && (
+                  <div>
+                    <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-2">Organizations Involved</p>
+                    <div className="flex flex-wrap gap-2">
+                      {extractedEntities.organizations.map((o: string, i: number) => (
+                        <span key={i} className="text-xs bg-slate-800 text-slate-200 px-2 py-1 rounded flex items-center gap-1.5"><Building2 className="w-3 h-3 text-slate-400"/> {o}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {extractedEntities.dates && extractedEntities.dates.length > 0 && (
+                  <div>
+                    <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-2">Key Dates</p>
+                    <div className="flex flex-wrap gap-2">
+                      {extractedEntities.dates.map((d: string, i: number) => (
+                        <span key={i} className="text-[11px] font-mono bg-slate-800/50 text-slate-400 px-2 py-1 rounded border border-slate-700">{d}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Contradictions */}
+            <div className="bg-[#0B1220]/50 border border-slate-700/50 rounded-xl p-5 flex flex-col gap-4">
+              <h3 className="font-semibold text-sm text-slate-200 border-b border-slate-800 pb-2">Contradiction Engine</h3>
+              {contradictions.length > 0 ? (
+                <div className="flex flex-col gap-3">
+                  {contradictions.map((c, idx) => (
+                    <div key={idx} className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
+                      <div className="flex items-start gap-2">
+                        <ShieldAlert className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-xs font-semibold text-red-400 mb-1">{c.type || 'Inconsistency'} in {c.field}</p>
+                          <p className="text-[10px] text-slate-300">1: "{c.statement_1}"</p>
+                          <p className="text-[10px] text-slate-300 mt-1">2: "{c.statement_2}"</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-6 text-center text-slate-500 gap-3 opacity-70 h-full">
+                  <CheckCircle2 className="w-8 h-8 text-green-500/50" />
+                  <p className="text-xs max-w-[80%]">No logical contradictions found in the submitted statements.</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

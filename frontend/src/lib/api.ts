@@ -1,19 +1,15 @@
 import axios from 'axios';
 
-const hostname = typeof window !== 'undefined' ? window.location.hostname : 'localhost';
-
-// AI Services running on 8000
 export const aiApi = axios.create({
-  baseURL: `http://${hostname}:8000`,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: '/api/services/ai',
+});
+
+// Evidence Engine running on 8002
+export const evidenceApi = axios.create({
+  baseURL: '/api/services/evidence',
 });
 
 // Graph Services running on 8001
 export const graphApi = axios.create({
-  baseURL: `http://${hostname}:8001`,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: '/api/services/graph',
 });

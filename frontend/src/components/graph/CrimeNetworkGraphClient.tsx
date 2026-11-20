@@ -6,7 +6,7 @@ import cytoscape from 'cytoscape';
 
 const CytoscapeComponent = dynamic(() => import('react-cytoscapejs'), { ssr: false });
 
-const cytoscapeStyle: cytoscape.Stylesheet[] = [
+const cytoscapeStyle: cytoscape.StylesheetJson = [
   {
     selector: 'node',
     style: {
@@ -16,7 +16,7 @@ const cytoscapeStyle: cytoscape.Stylesheet[] = [
       'text-margin-y': 6,
       'font-size': 10,
       'font-family': 'Inter, system-ui, sans-serif',
-      'font-weight': '600',
+      'font-weight': 600,
       'min-zoomed-font-size': 4,
       'text-outline-width': 2,
       'text-outline-color': '#020817',
@@ -87,6 +87,7 @@ const MAX_NODES = 200;
 interface CrimeNetworkGraphClientProps {
   searchQuery?: string;
   onStatsLoaded?: (stats: any) => void;
+  onNodeSelected?: (node: any) => void;
 }
 
 export default function CrimeNetworkGraphClient({ searchQuery, onNodeSelected, onStatsLoaded }: CrimeNetworkGraphClientProps = {}) {
@@ -108,8 +109,7 @@ export default function CrimeNetworkGraphClient({ searchQuery, onNodeSelected, o
     let isMounted = true;
     const fetchGraph = async () => {
       try {
-        const hostname = typeof window !== 'undefined' && window.location.hostname !== 'localhost' ? window.location.hostname : '127.0.0.1';
-        const res = await fetch(`http://${hostname}:8001/graph/network`);
+        const res = await fetch('/api/services/graph/graph/network');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         if (!isMounted) return;
@@ -233,7 +233,7 @@ export default function CrimeNetworkGraphClient({ searchQuery, onNodeSelected, o
       } catch (err) {
         if (!isMounted) return;
         console.error('Failed to load graph:', err);
-        setError('Could not connect to API server. Ensure FastAPI is running on port 8001.');
+        setError('Network service unavailable.');
         setLoading(false);
       }
     };
@@ -320,7 +320,7 @@ export default function CrimeNetworkGraphClient({ searchQuery, onNodeSelected, o
       // Zoom to node
       cy.animate({
         zoom: 0.8,
-        center: { ele: node }
+        center: { eles: node }
       }, { duration: 500 });
       
       // Manually apply highlight logic instead of relying on emit('tap')

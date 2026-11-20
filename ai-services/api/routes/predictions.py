@@ -184,7 +184,18 @@ def get_trend(area: str = None, days: int = 14):
     """Returns day-by-day historical and predicted incident counts."""
     load_models()
     if 'prophet' not in models:
-        raise HTTPException(status_code=503, detail="Prophet model not available.")
+        # Show observed sample counts without presenting an invented forecast.
+        source = pd.read_csv(os.path.join(DATA_DIR, "crime_records_sample.csv"))
+        source['date'] = pd.to_datetime(source['date'], errors='coerce')
+        source = source.dropna(subset=['date'])
+        if area:
+            source = source[source['area'] == area]
+        if source.empty:
+            return {"trend": [], "source": "synthetic_history", "forecast_available": False}
+        end = source['date'].max().normalize()
+        dates = pd.date_range(end=end, periods=days, freq='-1D')[::-1]
+        counts = source.groupby(source['date'].dt.normalize()).size()
+        return {"trend": [{"day": day.strftime('%m/%d'), "historical": int(counts.get(day, 0)), "predicted": None} for day in dates], "source": "synthetic_history", "forecast_available": False}
     
     trend_data = []
     today = pd.Timestamp.today().normalize()

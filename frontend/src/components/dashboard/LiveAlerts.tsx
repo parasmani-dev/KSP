@@ -5,8 +5,7 @@ import { AlertTriangle, Info, ShieldAlert, WifiOff, Play, Square, Clock, Activit
 import { aiApi } from "@/lib/api"
 
 export function LiveAlerts() {
-  const hostname = typeof window !== 'undefined' ? window.location.hostname : 'localhost'
-  const { data, error } = useSSE(`http://${hostname}:8000/stream/alerts`)
+  const { data, error } = useSSE('/api/services/ai/stream/alerts')
   const [alerts, setAlerts] = useState<any[]>([])
   const [activeTab, setActiveTab] = useState<'live'|'history'>('live')
   const [history, setHistory] = useState<any[]>([])
@@ -66,24 +65,24 @@ export function LiveAlerts() {
   }
 
   return (
-    <div className="bg-[#0B1220]/80 backdrop-blur-md border border-slate-700/50 rounded-2xl shadow-xl shadow-black/20 h-full flex flex-col overflow-hidden w-full relative group">
+    <div className="ksp-panel h-full flex flex-col overflow-hidden w-full relative group">
       <div className="absolute top-0 left-0 w-32 h-32 bg-red-500/5 rounded-full blur-[40px] -z-10 group-hover:bg-red-500/10 transition-colors"></div>
       
-      <div className="p-4 border-b border-slate-700/50 flex justify-between items-center bg-[#0B1220]/50 shrink-0">
-        <h3 className="font-semibold text-white flex items-center gap-2">
-          <ShieldAlert className="h-4 w-4 text-red-500" />
-          Alert Center
+      <div className="p-4 border-b ksp-rule flex flex-col items-start gap-3 bg-[#14212a] shrink-0">
+        <h3 className="font-semibold text-white flex items-center gap-2 whitespace-nowrap">
+          <ShieldAlert className="h-4 w-4 text-[#ca665e]" />
+          Alert centre
         </h3>
-        <div className="flex bg-[#0B1220]/80 p-1 rounded-md border border-slate-700/50 shadow-inner">
+        <div className="flex bg-[#1d2d37] p-1 rounded border border-[#31404a]">
           <button 
             onClick={() => setActiveTab('live')} 
-            className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide rounded transition-colors ${activeTab === 'live' ? 'bg-blue-600 text-white shadow-sm' : 'text-muted-foreground hover:text-white'}`}
+            className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide rounded transition-colors ${activeTab === 'live' ? 'bg-[#a8824c] text-[#101922]' : 'text-muted-foreground hover:text-white'}`}
           >
             Live
           </button>
           <button 
             onClick={() => setActiveTab('history')} 
-            className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide rounded transition-colors ${activeTab === 'history' ? 'bg-blue-600 text-white shadow-sm' : 'text-muted-foreground hover:text-white'}`}
+            className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide rounded transition-colors ${activeTab === 'history' ? 'bg-[#a8824c] text-[#101922]' : 'text-muted-foreground hover:text-white'}`}
           >
             System
           </button>
@@ -103,8 +102,8 @@ export function LiveAlerts() {
                     <WifiOff className="w-3 h-3 text-red-400" /> Disconnected
                   </span>
                 ) : (
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-green-400 flex items-center gap-1.5">
-                    <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" /> STREAM ACTIVE
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                    <div className={`h-2 w-2 rounded-full ${data ? 'bg-green-500' : 'bg-slate-500'}`} /> {data ? 'DEMO STREAM ACTIVE' : 'CONNECTING'}
                   </span>
                 )}
             </div>
@@ -117,7 +116,7 @@ export function LiveAlerts() {
                       <span className="text-[10px] text-muted-foreground font-medium">Just now</span>
                       <div className="flex items-center gap-1.5 bg-red-500/10 border border-red-500/20 px-2 py-0.5 rounded text-[9px] font-bold text-red-400 uppercase tracking-wider">
                          <div className="h-1.5 w-1.5 rounded-full bg-red-500" />
-                         CRITICAL
+                         {String(alert.severity || 'EVENT').toUpperCase()}
                       </div>
                     </div>
                     <div className="min-w-0">

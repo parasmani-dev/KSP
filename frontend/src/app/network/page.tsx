@@ -13,7 +13,7 @@ export default function CrimeNetworkPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedNode, setSelectedNode] = useState<any>(null);   // committed node (shown in panel)
   const [pendingNode, setPendingNode] = useState<any>(null);     // node clicked but not yet analyzed
-  const [graphStats, setGraphStats] = useState({ nodes: 0, edges: 0 });
+  const [graphStats, setGraphStats] = useState<{ nodes: number; edges: number; totalNodes: number; clusters: number; density: number; allLinks: any[]; allNodes: any[]; crimeTypes: any[]; areas: any[]; riskBins: number[] }>({ nodes: 0, edges: 0, totalNodes: 0, clusters: 0, density: 0, allLinks: [], allNodes: [], crimeTypes: [], areas: [], riskBins: [] });
   const [activeTab, setActiveTab] = useState<'overview'|'connections'|'history'|'ai'>('overview');
 
   useEffect(() => {
@@ -23,17 +23,14 @@ export default function CrimeNetworkPage() {
   }, []);
 
   return (
-    <div className="p-6 h-full flex flex-col bg-[#020817] text-slate-200 overflow-y-auto overflow-x-hidden min-h-screen custom-scrollbar">
+    <div className="ksp-page h-full flex flex-col text-slate-200 overflow-y-auto overflow-x-hidden min-h-screen custom-scrollbar">
       
       {/* HEADER SECTION */}
       <div className="flex items-center justify-between mb-6 shrink-0">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight flex items-center gap-3 text-white">
-            <Network className="w-7 h-7 text-blue-500" /> Crime Network Discovery
-          </h1>
-          <p className="text-slate-400 text-sm mt-1 max-w-3xl">
-            Interactive graph visualization of entities, crimes, and hidden connections.
-          </p>
+          <div className="ksp-eyebrow mb-2">Graph / synthetic records</div>
+          <h1 className="ksp-heading flex items-center gap-3"><Network className="w-6 h-6 text-[#d0ad71]" /> Network analysis</h1>
+          <p className="ksp-subheading mt-2">Explore relationships between case records, entities and locations.</p>
         </div>
       </div>
 
@@ -44,7 +41,7 @@ export default function CrimeNetworkPage() {
          <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 min-h-[650px]">
             
             {/* GRAPH CANVAS (col-span-3) */}
-            <div className="xl:col-span-3 bg-[#0B1220] rounded-xl border border-slate-800 relative overflow-hidden flex flex-col shadow-lg">
+            <div className="xl:col-span-3 ksp-panel relative overflow-hidden flex flex-col">
                
                {/* Background Grid Pattern */}
                <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 

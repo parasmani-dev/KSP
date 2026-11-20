@@ -18,7 +18,7 @@ export function CrimeTrendChart() {
     <div className="h-full flex flex-col gap-4">
       <div className="flex items-center gap-2">
         <TrendingUp className="h-4 w-4 text-blue-400" />
-        <h3 className="font-semibold text-white">Crime Trend (Overall Year)</h3>
+        <h3 className="font-semibold text-white">Recorded sample by month</h3>
       </div>
       
       <div className="flex-1 w-full relative">
@@ -49,10 +49,8 @@ export function CrimeTrendChart() {
               itemStyle={{ fontSize: '12px' }}
               labelStyle={{ fontSize: '12px', color: '#94a3b8' }}
             />
-            {/* Previous Period - Dashed Line */}
-            <Line type="monotone" dataKey="previous" stroke="#475569" strokeWidth={2} strokeDasharray="5 5" dot={false} name="Previous Year" />
-            {/* Current Period - Area */}
-            <Area type="monotone" dataKey="current" stroke="#3b82f6" strokeWidth={3} fillOpacity={1} fill="url(#colorCurrent)" name="Current Year" />
+            <Line type="monotone" dataKey="previous" stroke="#475569" strokeWidth={2} strokeDasharray="5 5" dot={false} name="Prior sample year" />
+            <Area type="monotone" dataKey="current" stroke="#3b82f6" strokeWidth={3} fillOpacity={1} fill="url(#colorCurrent)" name="Latest sample year" />
           </AreaChart>
         </ResponsiveContainer>
       </div>

@@ -21,7 +21,11 @@ async function proxy(request: NextRequest, context: { params: Promise<{ service:
     : request.method === 'POST' && ((service === 'ai' && ['fusion/start-simulation', 'fusion/stop-simulation', 'fusion/simulate-fir', 'copilot/chat', 'predictions/emerging_threats'].includes(endpoint)) || (service === 'evidence' && endpoint === 'api/v1/processor'));
   if (!allowed) return Response.json({ error: 'Operation unavailable' }, { status: 404 });
 
-  const target = new URL(`${origin.replace(/\/$/, '')}/${path.map(encodeURIComponent).join('/')}`);
+  // FastAPI declares the processor route with a trailing slash. Avoid its 307
+  // redirect because a streamed POST body cannot always be replayed by fetch.
+  const routePath = path.map(encodeURIComponent).join('/');
+  const slash = service === 'evidence' && endpoint === 'api/v1/processor' ? '/' : '';
+  const target = new URL(`${origin.replace(/\/$/, '')}/${routePath}${slash}`);
   target.search = request.nextUrl.search;
   const headers = new Headers();
   const contentType = request.headers.get('content-type');
@@ -45,7 +49,8 @@ async function proxy(request: NextRequest, context: { params: Promise<{ service:
       responseHeaders.set('x-accel-buffering', 'no');
     }
     return new Response(upstream.body, { status: upstream.status, headers: responseHeaders });
-  } catch {
+  } catch (error) {
+    console.error(`Proxy request failed for ${service}/${endpoint}:`, error);
     return Response.json({ error: `${service} service unavailable` }, { status: 503 });
   }
 }

@@ -38,7 +38,7 @@ export default function DashboardPage() {
 
   return <div className="ksp-page mx-auto max-w-[1800px] space-y-6">
     <section className="flex flex-wrap items-end justify-between gap-4 border-b ksp-rule pb-6">
-      <div><div className="ksp-eyebrow mb-2 flex items-center gap-2"><Database size={13} /> KSP / synthetic intelligence dataset</div><h1 className="ksp-heading">Command overview</h1><p className="ksp-subheading mt-2">Case activity, geographic patterns and model outputs from the research dataset.</p></div>
+      <div><div className="ksp-eyebrow mb-2 flex items-center gap-2"><Database size={13} /> KSP / synthetic multi-city test corpus</div><h1 className="ksp-heading">Command overview</h1><p className="ksp-subheading mt-2">Explore fictional case activity, geographic patterns, and research scenarios.</p></div>
       <Link href="/predictions" className="ksp-action">Review forecasts <ArrowUpRight size={15} /></Link>
     </section>
     <KpiCards />

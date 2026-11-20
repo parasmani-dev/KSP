@@ -1,11 +1,11 @@
 "use client";
-import { ShieldAlert, Users, Activity, Server, Target } from "lucide-react";
+import { ShieldAlert, MapPin, Activity, Server, Target } from "lucide-react";
 import { useEffect, useState } from "react";
 import { aiApi } from "@/lib/api";
 
 export function KpiCards() {
   const [data, setData] = useState<null | {
-    total_incidents: number; active_cases: number; solved_cases: number; arrests: number; clearance_rate: number;
+    total_incidents: number; active_cases: number; solved_cases: number; cities_represented: number; clearance_rate: number;
   }>(null);
 
   useEffect(() => {
@@ -16,9 +16,9 @@ export function KpiCards() {
 
   const stats = [
     { label: "Total incidents", value: data?.total_incidents.toLocaleString() ?? '—', icon: Activity },
-    { label: "Active cases", value: data?.active_cases.toLocaleString() ?? '—', icon: ShieldAlert },
+    { label: "Under investigation", value: data?.active_cases.toLocaleString() ?? '—', icon: ShieldAlert },
     { label: "Closed cases", value: data?.solved_cases.toLocaleString() ?? '—', icon: Target },
-    { label: "Estimated arrests", value: data?.arrests.toLocaleString() ?? '—', icon: Users },
+    { label: "Cities in sample", value: data?.cities_represented.toLocaleString() ?? '—', icon: MapPin },
     { label: "Closure rate", value: data ? `${data.clearance_rate}%` : '—', icon: Server },
   ];
 

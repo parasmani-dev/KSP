@@ -24,28 +24,24 @@ interface CopilotWidgetProps {
 const INITIAL_MESSAGE: Message = {
   id: "welcome",
   role: "assistant",
-  english: "Namaskara. I am CIOS Copilot — your AI intelligence assistant. I can answer questions about active hotspots, criminal networks, FIR analysis, and predictions. Ask me anything.",
-  kannada: "ನಮಸ್ಕಾರ. ನಾನು CIOS ಕೊಪೈಲಟ್ — ನಿಮ್ಮ AI ಬುದ್ಧಿಮತ್ತೆ ಸಹಾಯಕ. ಸಕ್ರಿಯ ಹಾಟ್‌ಸ್ಪಾಟ್‌ಗಳು, ಅಪರಾಧ ನೆಟ್‌ವರ್ಕ್‌ಗಳು ಮತ್ತು ಭವಿಷ್ಯವಾಣಿಗಳ ಬಗ್ಗೆ ನನ್ನನ್ನು ಕೇಳಿ.",
-  source: "semantic_cache",
-  confidence: 1.0,
+  english: "Namaskara. I can guide you through this synthetic research demo. Ask about the map, network, forecasts, patrol overview, or evidence workspace.",
+  kannada: "ನಮಸ್ಕಾರ. ಈ ಕೃತಕ ಸಂಶೋಧನಾ ಪ್ರದರ್ಶನದ ಪುಟಗಳನ್ನು ಪರಿಚಯಿಸಲು ನಾನು ಸಹಾಯ ಮಾಡುತ್ತೇನೆ.",
+  source: "demo_guide",
+  confidence: 0,
   timestamp: new Date(),
 }
 
 const SUGGESTION_CHIPS = [
-  { icon: ShieldAlert, label: "Current threat level?", color: "text-red-400" },
-  { icon: Map, label: "Why is Banjara Hills risky?", color: "text-orange-400" },
-  { icon: Network, label: "Show connected suspects", color: "text-blue-400" },
-  { icon: TrendingUp, label: "Explain this FIR", color: "text-purple-400" },
-  { icon: Users, label: "Patrol status?", color: "text-teal-400" },
+  { icon: Map, label: "Explore the sample map", color: "text-orange-400" },
+  { icon: Network, label: "Show the synthetic network", color: "text-blue-400" },
+  { icon: TrendingUp, label: "What can forecast review show?", color: "text-purple-400" },
+  { icon: ShieldAlert, label: "How does evidence preview work?", color: "text-red-400" },
+  { icon: Users, label: "Show patrol overview", color: "text-teal-400" },
 ]
 
 const SOURCE_LABELS: Record<string, { label: string; color: string }> = {
-  semantic_cache:     { label: "Instant Cache",     color: "text-emerald-400" },
-  navigation_engine:  { label: "Navigation",         color: "text-blue-400" },
-  groq_primary:       { label: "Groq AI · Verified", color: "text-purple-400" },
-  gemini_fallback:    { label: "Gemini · Verified",  color: "text-indigo-400" },
-  verified_deflection:{ label: "Verified Deflection",color: "text-yellow-400" },
-  smart_deflection:   { label: "Safe Deflection",    color: "text-slate-400" },
+  demo_guide: { label: "Demo guide", color: "text-emerald-400" },
+  smart_deflection: { label: "Unavailable", color: "text-slate-400" },
 }
 
 export function CopilotWidget({ isOpen, onClose, dashboardContext }: CopilotWidgetProps) {
@@ -120,8 +116,8 @@ export function CopilotWidget({ isOpen, onClose, dashboardContext }: CopilotWidg
       setMessages(prev => [...prev, {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        english: "Secure intelligence servers are currently handling high load. Please try again in a moment.",
-        kannada: "ಸುರಕ್ಷಿತ ಸರ್ವರ್‌ಗಳು ಪ್ರಸ್ತುತ ಲಭ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+        english: "The demo guide is temporarily unavailable. Please try again shortly.",
+        kannada: "ಪ್ರದರ್ಶನ ಮಾರ್ಗದರ್ಶಿ ಈಗ ಲಭ್ಯವಿಲ್ಲ. ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಪ್ರಯತ್ನಿಸಿ.",
         source: "smart_deflection",
         confidence: 0,
         timestamp: new Date(),

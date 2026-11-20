@@ -12,6 +12,8 @@ from services.interfaces import (
 
 # Initialize Gemini Client
 def get_gemini_client():
+    if not settings.gemini_api_key:
+        return None
     client = genai.Client(api_key=settings.gemini_api_key)
     return client
 

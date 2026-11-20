@@ -19,7 +19,7 @@ export function PatrolStatus() {
     <div className="h-full flex flex-col gap-4">
       <div className="flex items-center gap-2">
         <CarFront className="h-4 w-4 text-teal-400" />
-        <h3 className="font-semibold text-white">Patrol Status</h3>
+        <h3 className="font-semibold text-white">Patrol log sample</h3>
       </div>
       
       <div className="flex-1 flex flex-col items-center justify-center relative">
@@ -52,7 +52,7 @@ export function PatrolStatus() {
           {/* Center Text (Adjusted for semi-circle) */}
           <div className="absolute inset-x-0 bottom-6 flex flex-col items-center justify-center pointer-events-none">
             <span className="text-2xl font-bold text-white">{coverage}%</span>
-            <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">Coverage</span>
+            <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">Hotspot share</span>
           </div>
         </div>
         
